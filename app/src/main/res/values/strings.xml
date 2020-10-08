@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PFA</string>
+    <string name="title_home">Home</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_record">Record</string>
+    <string name="title_target">Target</string>
+    <string name="title_report">Report</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_guide">Quick Guide</string>
+    <string name="title_category">Category</string>
+</resources>

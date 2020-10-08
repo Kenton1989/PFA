@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="sg.edu.ntu.gg4u.pfa.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_record"
+        android:name="sg.edu.ntu.gg4u.pfa.ui.record.RecordFragment"
+        android:label="@string/title_record"
+        tools:layout="@layout/fragment_record" />
+
+    <fragment
+        android:id="@+id/navigation_target"
+        android:name="sg.edu.ntu.gg4u.pfa.ui.target.TargetFragment"
+        android:label="@string/title_target"
+        tools:layout="@layout/fragment_target" />
+    <fragment
+        android:id="@+id/navigation_report"
+        android:name="sg.edu.ntu.gg4u.pfa.ui.report.ReportFragment"
+        android:label="@string/title_report"
+        tools:layout="@layout/fragment_report" />
+</navigation>
