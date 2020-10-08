@@ -19,6 +19,8 @@ public class UserProfile {
     private JobField jobField;
     private int familySize;
     private double income;
+    private int age;
+    private AcademicQualification qualification;
 
     @Ignore
     public UserProfile(String _name, Gender _gender, JobField _jobField,
