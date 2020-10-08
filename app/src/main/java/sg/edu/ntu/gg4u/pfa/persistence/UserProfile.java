@@ -17,42 +17,46 @@ public class UserProfile {
     private String name;
     private Gender gender;
     private JobField jobField;
-    private int familySize;
-    private double income;
-    private int age;
+    private Integer familySize;
+    private Double income;
+    private Integer age;
     private AcademicQualification qualification;
 
     @Ignore
-    public UserProfile(String _name, Gender _gender, JobField _jobField,
-                       int _familySize, double _income) {
+    public UserProfile() {
         userId = UUID.randomUUID().toString();
 
-        name = _name;
-        gender = _gender;
-        jobField = _jobField;
-        familySize = _familySize;
-        income = _income;
+        name = null;
+        gender = null;
+        jobField = null;
+        familySize = null;
+        income = null;
+        age = null;
+        qualification = null;
     }
 
     public UserProfile(@NonNull String id, String _name, Gender _gender, JobField _jobField,
-                       int _familySize, double _income) {
+                       Integer _familySize, Double _income, Integer _age,
+                       AcademicQualification _qualification) {
         userId = id;
         name = _name;
         gender = _gender;
         jobField = _jobField;
         familySize = _familySize;
         income = _income;
+        age = _age;
+        qualification = _qualification;
     }
 
-    // after that, all getter and setter stuff...
-
-
+    // All getter and setter
     @NonNull
     public String getUserId() {
         return userId;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public Gender getGender() {
         return gender;
@@ -62,11 +66,21 @@ public class UserProfile {
         return jobField;
     }
 
-    public int getFamilySize() {
+    public Integer getFamilySize() {
         return familySize;
     }
 
-    public double getIncome() { return income; }
+    public Double getIncome() {
+        return income;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public AcademicQualification getQualification() {
+        return qualification;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -80,11 +94,19 @@ public class UserProfile {
         this.jobField = jobField;
     }
 
-    public void setIncome(double income) {
+    public void setIncome(Double income) {
         this.income = income;
     }
 
-    public void setFamilySize(int familySize) {
+    public void setFamilySize(Integer familySize) {
         this.familySize = familySize;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public void setQualification(AcademicQualification qualification) {
+        this.qualification = qualification;
     }
 }
