@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "266636942e617bba454a03afa753a2cc",
+    "identityHash": "4821373ffca1ef294836a3e390e53118",
     "entities": [
       {
         "tableName": "UserProfile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `name` TEXT, `gender` INTEGER, `jobField` INTEGER, `familySize` INTEGER NOT NULL, `income` REAL NOT NULL, `age` INTEGER NOT NULL, `qualification` INTEGER, PRIMARY KEY(`userId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `name` TEXT, `gender` INTEGER, `jobField` INTEGER, `familySize` INTEGER, `income` REAL, `age` INTEGER, `qualification` INTEGER, PRIMARY KEY(`userId`))",
         "fields": [
           {
             "fieldPath": "userId",
@@ -36,19 +36,19 @@
             "fieldPath": "familySize",
             "columnName": "familySize",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "income",
             "columnName": "income",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "age",
             "columnName": "age",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "qualification",
@@ -70,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '266636942e617bba454a03afa753a2cc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4821373ffca1ef294836a3e390e53118')"
     ]
   }
 }

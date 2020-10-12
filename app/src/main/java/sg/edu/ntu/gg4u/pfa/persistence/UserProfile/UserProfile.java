@@ -41,7 +41,7 @@ public class UserProfile {
         gender = Gender.MALE;
         jobField = JobField.UNKNOWN;
         familySize = 0;
-        income = 0;
+        income = 0.0;
         qualification = AcademicQualification.UNKNOWN;
     }
 
@@ -72,14 +72,6 @@ public class UserProfile {
     }
 
     public Integer getAge() {
-        return age;
-    }
-
-    public AcademicQualification getQualification() {
-        return qualification;
-    }
-
-    public int getAge() {
         return age;
     }
 
