@@ -7,6 +7,7 @@ import androidx.room.Query;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -16,11 +17,11 @@ public interface TargetDao {
 
     @Query("SELECT * FROM Target WHERE categoryName = :name AND" +
             " startDate >= :startDate AND startDate <= :endDate")
-    Flowable<ArrayList<Target>> getTarget(String name, LocalDate startDate,
-                                          LocalDate endDate);
+    Flowable<List<Target>> getTarget(String name, LocalDate startDate,
+                                     LocalDate endDate);
 
     @Query("SELECT * FROM Target WHERE categoryName = :name AND startDate >= :startDate")
-    Flowable<ArrayList<Target>> getTarget(String name, LocalDate startDate);
+    Flowable<List<Target>> getTarget(String name, LocalDate startDate);
 
     @Query("SELECT * FROM Target WHERE startDate = " +
             "(SELECT MAX(startDate) FROM Target WHERE categoryName = :name)" +
@@ -30,6 +31,6 @@ public interface TargetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable setCurrentTarget(Target target);
 
-    @Query("DELETE FROM Target")
-    void deleteTarget(Target target);
+    @Query("DELETE FROM Target WHERE categoryName = :name AND startDate = :date")
+    void deleteTarget(String name, LocalDate date);
 }

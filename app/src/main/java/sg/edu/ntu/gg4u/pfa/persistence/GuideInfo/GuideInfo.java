@@ -13,27 +13,29 @@ public class GuideInfo {
     @PrimaryKey
     private Integer pageNumber;
 
-    private int imgPath;
+    private Integer imgPath;
     private String textIntro;
 
-    @Ignore
+
     public GuideInfo() {
         pageNumber = -1;
         imgPath = 0;
         textIntro = "dummy";
     }
 
-    public GuideInfo(int number, int imgPath, String intro) {
+    @Ignore
+    public GuideInfo(@NonNull Integer number, Integer imgPath, String intro) {
         this.imgPath = imgPath;
         textIntro = intro;
         pageNumber = number;
     }
 
-    public int getImgPath() {
+    public Integer getImgPath() {
         return imgPath;
     }
 
-    public int getPageNumber() {
+    @NonNull
+    public Integer getPageNumber() {
         return pageNumber;
     }
 
@@ -41,11 +43,11 @@ public class GuideInfo {
         return textIntro;
     }
 
-    public void setImgPath(int imgPath) {
+    public void setImgPath(Integer imgPath) {
         this.imgPath = imgPath;
     }
 
-    public void setPageNumber(int pageNumber) {
+    public void setPageNumber(@NonNull Integer pageNumber) {
         this.pageNumber = pageNumber;
     }
 

@@ -7,10 +7,12 @@ import androidx.annotation.RequiresApi;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.time.LocalDate;
 
 @Entity(tableName = "Target", primaryKeys = {"categoryName", "startDate"})
+@TypeConverters({LocalDateConverter.class})
 public class Target {
 
     @NonNull
@@ -22,7 +24,7 @@ public class Target {
     private double amount;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    @Ignore
+
     public Target() {
         categoryName = "dummy";
         startDate = LocalDate.now();
@@ -30,6 +32,7 @@ public class Target {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
+    @Ignore
     public Target(@NonNull String name, double value) {
         categoryName = name;
         startDate = LocalDate.of(LocalDate.now().getYear(),

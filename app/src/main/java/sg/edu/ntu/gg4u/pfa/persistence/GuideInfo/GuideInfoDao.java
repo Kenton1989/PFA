@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -14,11 +15,11 @@ import io.reactivex.Flowable;
 @Dao
 public interface GuideInfoDao {
     @Query("SELECT * FROM GuideInfo")
-    Flowable<ArrayList<GuideInfo>> getGuideInfo();
+    Flowable<List<GuideInfo>> getGuideInfo();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable updateGuideInfo(GuideInfo guideInfo);
 
-    @Query("DELETE FROM GuideInfo")
-    void deleteGuideInfo(GuideInfo guideInfo);
+    @Query("DELETE FROM GuideInfo WHERE pageNumber = :pageNum")
+    void deleteGuideInfo(int pageNum);
 }

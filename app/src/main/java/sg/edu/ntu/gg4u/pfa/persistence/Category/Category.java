@@ -9,13 +9,14 @@ import java.security.PublicKey;
 import java.util.UUID;
 
 @Entity(tableName = "Category")
-    public class Category {
+public class Category {
 
+    @NonNull
     @PrimaryKey
     private String name;
 
     @Ignore
-    public Category(String _name) {
+    public Category(@NonNull String _name) {
         name = _name;
     }
 
@@ -23,11 +24,12 @@ import java.util.UUID;
         name = "dummy";
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 }
