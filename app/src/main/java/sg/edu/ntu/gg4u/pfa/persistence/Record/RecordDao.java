@@ -1,12 +1,17 @@
 package sg.edu.ntu.gg4u.pfa.persistence.Record;
 
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
+@Dao
 public interface RecordDao {
     @Query("SELECT * FROM Record WHERE timestamp > :start " +
             "AND timestamp < :end")
@@ -16,4 +21,10 @@ public interface RecordDao {
             "AND timestamp < :end AND categoryName = :name")
     Flowable<ArrayList<Record>> getRecord(LocalDateTime start, LocalDateTime end,
                                           String name);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    Completable addRecord(Record record);
+
+    @Query("DELETE FROM Record")
+    void deleteRecord(Record record);
 }
