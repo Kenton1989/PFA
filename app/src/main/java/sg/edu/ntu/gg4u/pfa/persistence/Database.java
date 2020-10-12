@@ -6,6 +6,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.CategoryDao;
+import sg.edu.ntu.gg4u.pfa.persistence.GuideInfo.GuideInfo;
+import sg.edu.ntu.gg4u.pfa.persistence.GuideInfo.GuideInfoDao;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.RecordDao;
+import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
+import sg.edu.ntu.gg4u.pfa.persistence.Target.TargetDao;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.AcademicQualification;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.AcademicQualificationConverter;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.GenderConverter;
@@ -20,6 +28,10 @@ public abstract class Database extends RoomDatabase {
 
     private static volatile Database INSTANCE;
 
+    public abstract CategoryDao categoryDao();
+    public abstract GuideInfoDao guideInfoDao();
+    public abstract RecordDao recordDao();
+    public abstract TargetDao targetDao();
     public abstract UserProfileDao userProfileDao();
 
     public static Database getINSTANCE(Context context) {
