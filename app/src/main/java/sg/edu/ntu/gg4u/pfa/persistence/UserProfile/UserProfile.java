@@ -17,9 +17,9 @@ public class UserProfile {
     private String name;
     private Gender gender;
     private JobField jobField;
-    private int familySize;
-    private double income;
-    private int age;
+    private Integer familySize;
+    private Double income;
+    private Integer age;
     private AcademicQualification qualification;
 
     @Ignore
@@ -45,15 +45,15 @@ public class UserProfile {
         qualification = AcademicQualification.UNKNOWN;
     }
 
-    // after that, all getter and setter stuff...
-
-
+    // All getter and setter
     @NonNull
     public String getUserId() {
         return userId;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public Gender getGender() {
         return gender;
@@ -63,11 +63,21 @@ public class UserProfile {
         return jobField;
     }
 
-    public int getFamilySize() {
+    public Integer getFamilySize() {
         return familySize;
     }
 
-    public double getIncome() { return income; }
+    public Double getIncome() {
+        return income;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public AcademicQualification getQualification() {
+        return qualification;
+    }
 
     public int getAge() {
         return age;
@@ -89,15 +99,15 @@ public class UserProfile {
         this.jobField = jobField;
     }
 
-    public void setIncome(double income) {
+    public void setIncome(Double income) {
         this.income = income;
     }
 
-    public void setFamilySize(int familySize) {
+    public void setFamilySize(Integer familySize) {
         this.familySize = familySize;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
