@@ -21,7 +21,8 @@ import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobFieldConverter;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfileDao;
 
-@androidx.room.Database(entities = {UserProfile.class}, version = 1)
+@androidx.room.Database(entities = {Category.class, GuideInfo.class, Record.class, Target.class,
+        UserProfile.class}, version = 1)
 @TypeConverters({GenderConverter.class, JobFieldConverter.class,
         AcademicQualificationConverter.class})
 public abstract class Database extends RoomDatabase {
