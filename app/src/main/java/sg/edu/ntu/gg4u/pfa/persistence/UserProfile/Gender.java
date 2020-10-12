@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa.persistence;
+package sg.edu.ntu.gg4u.pfa.persistence.UserProfile;
 
 enum Gender {
     // TODO: add conversion support

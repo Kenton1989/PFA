@@ -5,6 +5,9 @@ import android.content.Context;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfileDao;
+
 @androidx.room.Database(entities = {UserProfile.class}, version = 1)
 public abstract class Database extends RoomDatabase {
 

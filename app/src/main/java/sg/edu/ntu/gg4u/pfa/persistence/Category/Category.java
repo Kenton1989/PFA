@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa.persistence;
+package sg.edu.ntu.gg4u.pfa.persistence.Category;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
