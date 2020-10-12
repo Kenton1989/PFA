@@ -12,5 +12,4 @@ public class AcademicQualificationConverter {
     public static AcademicQualification toAcademicQualification(int val) {
         return (AcademicQualification.values()[val]);
     }
-
 }
