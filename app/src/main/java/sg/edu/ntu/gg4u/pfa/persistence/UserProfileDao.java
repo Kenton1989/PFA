@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa.persistence.UserProfile;
+package sg.edu.ntu.gg4u.pfa.persistence;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
