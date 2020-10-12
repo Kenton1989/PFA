@@ -24,7 +24,7 @@ public class UserProfile {
 
     @Ignore
     public UserProfile(String _name, Gender _gender, JobField _jobField,
-                       int _familySize, double _income) {
+                       int _familySize, double _income, AcademicQualification aq) {
         userId = UUID.randomUUID().toString();
 
         name = _name;
@@ -32,16 +32,17 @@ public class UserProfile {
         jobField = _jobField;
         familySize = _familySize;
         income = _income;
+        qualification = aq;
     }
 
-    public UserProfile(@NonNull String id, String _name, Gender _gender, JobField _jobField,
-                       int _familySize, double _income) {
-        userId = id;
-        name = _name;
-        gender = _gender;
-        jobField = _jobField;
-        familySize = _familySize;
-        income = _income;
+    public UserProfile() {
+        userId = "dummy";
+        name = "dummy";
+        gender = Gender.MALE;
+        jobField = JobField.UNKNOWN;
+        familySize = 0;
+        income = 0;
+        qualification = AcademicQualification.UNKNOWN;
     }
 
     // after that, all getter and setter stuff...
@@ -68,6 +69,14 @@ public class UserProfile {
 
     public double getIncome() { return income; }
 
+    public int getAge() {
+        return age;
+    }
+
+    public AcademicQualification getQualification() {
+        return qualification;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -86,5 +95,17 @@ public class UserProfile {
 
     public void setFamilySize(int familySize) {
         this.familySize = familySize;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setQualification(AcademicQualification qualification) {
+        this.qualification = qualification;
+    }
+
+    public void setUserId(@NonNull String userId) {
+        this.userId = userId;
     }
 }

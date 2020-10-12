@@ -1,8 +1,13 @@
 package sg.edu.ntu.gg4u.pfa.persistence.UserProfile;
 
-enum Gender {
-    // TODO: add conversion support
-    UNKNOWN, MALE, FEMALE, SPECIAL;
+public enum Gender {
+    UNKNOWN(0), MALE(1), FEMALE(2), SPECIAL(3);
+
+    private final int value;
+
+    Gender(int val) {
+        value = val;
+    }
 
 //    public int toInt() {
 //        switch (this) {
