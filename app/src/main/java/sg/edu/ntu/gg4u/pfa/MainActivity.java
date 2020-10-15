@@ -1,7 +1,12 @@
 package sg.edu.ntu.gg4u.pfa;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -11,6 +16,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
