@@ -1,5 +1,6 @@
 package sg.edu.ntu.gg4u.pfa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         Log.i("MainActivity", "Hello");
+
     }
 
     @Override
