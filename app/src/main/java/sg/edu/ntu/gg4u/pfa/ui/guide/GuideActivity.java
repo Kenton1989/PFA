@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa;
+package sg.edu.ntu.gg4u.pfa.ui.guide;
 
 import android.os.Bundle;
 
@@ -7,6 +7,7 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.ui.guide.SectionsPagerAdapter;
 
 public class GuideActivity extends AppCompatActivity {

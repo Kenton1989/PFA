@@ -1,13 +1,5 @@
 package sg.edu.ntu.gg4u.pfa;
 
-import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,7 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Calendar;
+import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        Log.i("MainActivity", "Hello");
-
     }
 
     @Override
@@ -62,14 +53,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_guide:
-                openUserGuide();
+                open(GuideActivity.class);
+                break;
+            case R.id.menu_profile:
+                open(ProfileActivity.class);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void openUserGuide() {
-        Intent intent = new Intent(this, GuideActivity.class);
+    private void open(Class<?> toOpen) {
+        Intent intent = new Intent(this, toOpen);
         startActivity(intent);
     }
 }

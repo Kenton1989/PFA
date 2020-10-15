@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GuideActivity"
+            android:name=".ui.guide.GuideActivity"
             android:label="@string/title_activity_guide"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
