@@ -8,4 +8,8 @@
     <string name="title_profile">Profile</string>
     <string name="title_guide">Quick Guide</string>
     <string name="title_category">Category</string>
+    <string name="title_activity_guide">GuideActivity</string>
+    <string name="tab_text_1"></string>
+    <string name="tab_text_2"></string>
+    <string name="guide_title">Quick Guide</string>
 </resources>
