@@ -1,16 +1,15 @@
-package sg.edu.ntu.gg4u.pfa.ui.home;
+package sg.edu.ntu.gg4u.pfa.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
-
+public class ProfileViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public ProfileViewModel() {
         mText = new MutableLiveData<>();
-       // mText.setValue("This is home fragment");
+        // mText.setValue("This is home fragment");
     }
 
     public LiveData<String> getText() {

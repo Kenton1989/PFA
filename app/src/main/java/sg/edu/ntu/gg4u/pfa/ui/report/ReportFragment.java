@@ -28,7 +28,7 @@ public class ReportFragment extends Fragment {
 
     private ReportViewModel reportViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
+   /* public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         reportViewModel =
                 ViewModelProviders.of(this).get(ReportViewModel.class);
@@ -76,5 +76,5 @@ public class ReportFragment extends Fragment {
 
 
         return root;
-    }
+    }*/
 }

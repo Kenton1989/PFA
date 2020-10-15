@@ -8,4 +8,10 @@
     <string name="title_profile">Profile</string>
     <string name="title_guide">Quick Guide</string>
     <string name="title_category">Category</string>
+    <string name="expenseCat">FOOD</string>
+    <string name="expenseAmount">1000</string>
+    <string name="transportCat">Transportation</string>
+    <string name="transportAmount">25</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
