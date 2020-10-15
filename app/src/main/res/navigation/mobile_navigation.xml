@@ -26,4 +26,6 @@
         android:name="sg.edu.ntu.gg4u.pfa.ui.report.ReportFragment"
         android:label="@string/title_report"
         tools:layout="@layout/fragment_report" />
+
+
 </navigation>

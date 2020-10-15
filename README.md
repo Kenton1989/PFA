@@ -1,2 +1,2 @@
 # PFA
-Personal Finantial Advisor
+Personal Financial Adviser
