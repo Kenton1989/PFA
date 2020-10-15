@@ -46,9 +46,9 @@ public class RecordFragment extends Fragment {
             "22-02-2020",
             "31-02-2021",
             "01-20-2021"
-    } ;
+    };
 
-    String[] cat_in_list= {
+    String[] cat_in_list = {
             "Food",
             "Transportation",
             "Leisure",
@@ -69,8 +69,6 @@ public class RecordFragment extends Fragment {
     //};
 
 
-
-
     private RecordViewModel recordViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -84,72 +82,68 @@ public class RecordFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 //textView.setText(s);
+            }
+        });
 
 
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-        final TextView todaydate  = root.findViewById(R.id.date);
-                todaydate.setText(date_n);
+        final TextView todaydate = root.findViewById(R.id.date);
+        todaydate.setText(date_n);
 
 
-                CustomList adapter = new
-                        CustomList(getActivity(), dates_in_list , cat_in_list);
-                list=root.findViewById(R.id.listView);
-                list.setAdapter(adapter);
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        CustomList adapter = new
+                CustomList(getActivity(), dates_in_list, cat_in_list);
+        list = root.findViewById(R.id.listView);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getActivity(), "You Clicked at " + dates_in_list[+position], Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        dateTXT_from = root.findViewById(R.id.date_from);
+        cal_from = root.findViewById(R.id.calpicker_from);
+
+        cal_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar Cal = Calendar.getInstance();
+                int mDate = Cal.get(Calendar.DATE);
+                int mMonth = Cal.get(Calendar.MONTH);
+                int mYear = Cal.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        Toast.makeText(getActivity(), "You Clicked at " + dates_in_list[+position], Toast.LENGTH_SHORT).show();
+                    public void onDateSet(DatePicker view, int year, int month, int date) {
+                        dateTXT_from.setText(date + "-" + month + "-" + year);
                     }
-                });
+                }, mYear, mMonth, mDate);
+                datePickerDialog.show();
+            }
+        });
+
+        dateTXT_to = root.findViewById(R.id.date_to);
+        cal_to = root.findViewById(R.id.calpicker_to);
 
 
-
-            dateTXT_from = root.findViewById(R.id.date_from);
-            cal_from = root.findViewById(R.id.calpicker_from);
-
-            cal_from.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final Calendar Cal = Calendar.getInstance();
-                    int mDate = Cal.get(Calendar.DATE);
-                    int mMonth= Cal.get(Calendar.MONTH);
-                    int mYear= Cal.get(Calendar.YEAR);
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int date) {
-                            dateTXT_from.setText(date+"-" + month + "-" + year);
-                        }
-                    }, mYear,mMonth,mDate);
-                    datePickerDialog.show();
-                }
-            });
-
-            dateTXT_to = root.findViewById(R.id.date_to);
-            cal_to = root.findViewById(R.id.calpicker_to);
-
-
-            cal_to.setOnClickListener(new View.OnClickListener() {
+        cal_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar Cal1 = Calendar.getInstance();
+                int mDate = Cal1.get(Calendar.DATE);
+                int mMonth = Cal1.get(Calendar.MONTH);
+                int mYear = Cal1.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onClick(View view) {
-                        final Calendar Cal1 = Calendar.getInstance();
-                        int mDate = Cal1.get(Calendar.DATE);
-                        int mMonth= Cal1.get(Calendar.MONTH);
-                        int mYear= Cal1.get(Calendar.YEAR);
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int date) {
-                                dateTXT_to.setText(date+"-" + month + "-" + year);
-                            }
-                        }, mYear,mMonth,mDate);
-                        //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());
-                        datePickerDialog.show();
+                    public void onDateSet(DatePicker view, int year, int month, int date) {
+                        dateTXT_to.setText(date + "-" + month + "-" + year);
                     }
-                });
-
-
-
+                }, mYear, mMonth, mDate);
+                //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());
+                datePickerDialog.show();
             }
         });
         return root;
