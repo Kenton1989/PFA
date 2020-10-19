@@ -119,7 +119,7 @@ public class RecordFragment extends Fragment {
                     DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int date) {
-                            dateTXT_from.setText(date+"-" + month + "-" + year);
+                            dateTXT_from.setText(date+"-" + (month + 1)  + "-" + year);
                         }
                     }, mYear,mMonth,mDate);
                     datePickerDialog.show();

@@ -7,7 +7,7 @@
     tools:context=".ui.record.RecordFragment">
 
     <View
-        android:id="@+id/view6"
+        android:id="@+id/record_view6"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginBottom="40dp"
@@ -254,7 +254,7 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="420dp"
+        android:layout_width="409dp"
         android:layout_height="403dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -273,7 +273,7 @@
                 android:id="@+id/listView"
                 android:layout_width="wrap_content"
                 android:layout_height="399dp"
-                android:paddingLeft="10dp" >
+                android:paddingLeft="10dp">
 
 
             </ListView>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/list_date"
+        android:id="@+id/recordlist_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10-01-2020"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.073" />
 
     <TextView
-        android:id="@+id/category"
+        android:id="@+id/recordlist_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Food"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_date"
+        app:layout_constraintTop_toBottomOf="@+id/recordlist_date"
         app:layout_constraintVertical_bias="0.031" />
 <!--
     <TextView
