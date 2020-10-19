@@ -25,8 +25,8 @@
         android:id="@+id/stacked_Barchart"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-16dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

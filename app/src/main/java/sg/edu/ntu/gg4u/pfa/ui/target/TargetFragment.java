@@ -15,9 +15,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import sg.edu.ntu.gg4u.pfa.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
@@ -31,11 +33,11 @@ public class TargetFragment extends Fragment {
     int[] targetOverColor = new int[]{Color.RED, Color.BLUE};
 
     //test
-    int[] target = new int[10];
-    int[] current = new int[10];
+    ArrayList<Integer> target = new ArrayList<>();
+    ArrayList<Integer> current = new ArrayList<>();
 
     List<IBarDataSet> bars = new ArrayList<IBarDataSet>();
-    BarDataSet[] barDatasets = new BarDataSet[10];
+    List<BarDataSet> barDatasets = new ArrayList<>();
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //targetViewModel =
@@ -51,34 +53,39 @@ public class TargetFragment extends Fragment {
         stackedChart = (BarChart) root.findViewById(R.id.stacked_Barchart);
 
         //test
-        target[0] = 30;
-        target[1] = 20;
-        target[2] = 50;
-        current[0] = 9;
-        current[1] = 25;
-        current[2] = 38;
+        target.add(30);
+        target.add(20);
+        target.add(50);
+        current.add(9);
+        current.add(25);
+        current.add(38);
 
 
-        for (int i=0;i<target.length;i++)
+        for (int i=0;i<target.size();i++)
         {
-            barDatasets[i] = new BarDataSet(dataValues1(target[i], current[i], 2*i),  "");
+            barDatasets.add(new BarDataSet(dataValues1(target.get(i), current.get(i), 2*i),  "Test"));
 
-            if(target[i] >current[i]) //if current is lesser than target than green blue
-                barDatasets[i].setColors(currentOverColor);
+            if(target.get(i) >current.get(i)) //if current is lesser than target than green blue
+                barDatasets.get(i).setColors(currentOverColor);
             else // else red blue
-                barDatasets[i].setColors(targetOverColor);
-            bars.add(barDatasets[i]);
+                barDatasets.get(i).setColors(targetOverColor);
+            bars.add(barDatasets.get(i));
         }
        // BarDataSet barDataSet = new BarDataSet(dataValues1(target[0], current[0], 0),  "BarDataSet");
         //barDataSet.setColors(currentOverColor);
         BarData data = new BarData(bars);
-        data.setBarWidth(0.8f); // set custom bar width
+        data.setBarWidth(1f); // set custom bar width
       //  data.groupBars(0, 0.06f, 0);
-        stackedChart.getLegend().setEnabled(false);
+       // stackedChart.getLegend().setEnabled(false);
         stackedChart.setData(data);
         stackedChart.setFitBars(true);
         stackedChart.setTouchEnabled(false);
 
+        XAxis xAxis = stackedChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        final String[] labels = new String[] {"Food", "Transport", "Utilities"};
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
 
         return root;
     }
