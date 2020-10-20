@@ -1,10 +1,13 @@
 package sg.edu.ntu.gg4u.pfa.persistence.GuideInfo;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.room.Entity;
 import androidx.room.Ignore;
-import androidx.room.Insert;
 import androidx.room.PrimaryKey;
+
+import sg.edu.ntu.gg4u.pfa.R;
 
 @Entity(tableName = "GuideInfo")
 public class GuideInfo {
@@ -13,25 +16,29 @@ public class GuideInfo {
     @PrimaryKey
     private Integer pageNumber;
 
-    private Integer imgPath;
-    private String textIntro;
+    @DrawableRes
+    private Integer imgRes;
+
+    @StringRes
+    private Integer textIntroRes;
 
 
     public GuideInfo() {
         pageNumber = -1;
-        imgPath = 0;
-        textIntro = "dummy";
+        imgRes = R.drawable.dummy;
+        textIntroRes = R.string.dummy;
     }
 
     @Ignore
-    public GuideInfo(@NonNull Integer number, Integer imgPath, String intro) {
-        this.imgPath = imgPath;
-        textIntro = intro;
+    public GuideInfo(@NonNull Integer number, Integer imgRes, Integer intro) {
+        this.imgRes = imgRes;
+        textIntroRes = intro;
         pageNumber = number;
     }
 
-    public Integer getImgPath() {
-        return imgPath;
+    @DrawableRes
+    public Integer getImgRes() {
+        return imgRes;
     }
 
     @NonNull
@@ -39,19 +46,20 @@ public class GuideInfo {
         return pageNumber;
     }
 
-    public String getTextIntro() {
-        return textIntro;
+    @StringRes
+    public Integer getTextIntroRes() {
+        return textIntroRes;
     }
 
-    public void setImgPath(Integer imgPath) {
-        this.imgPath = imgPath;
+    public void setImgRes(Integer imgRes) {
+        this.imgRes = imgRes;
     }
 
     public void setPageNumber(@NonNull Integer pageNumber) {
         this.pageNumber = pageNumber;
     }
 
-    public void setTextIntro(String textIntro) {
-        this.textIntro = textIntro;
+    public void setTextIntroRes(Integer textIntroRes) {
+        this.textIntroRes = textIntroRes;
     }
 }

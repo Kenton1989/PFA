@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
+import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
 import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
@@ -57,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_profile:
                 open(ProfileActivity.class);
+                break;
+            case R.id.menu_category:
+                open(CategoryActivity.class);
                 break;
         }
         return super.onOptionsItemSelected(item);

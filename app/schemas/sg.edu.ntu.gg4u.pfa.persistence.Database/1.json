@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e267bcfbb8ed7c7db610a4a8704ecb31",
+    "identityHash": "54811bac10f331ba66094804ce86b1c0",
     "entities": [
       {
         "tableName": "Category",
@@ -26,7 +26,7 @@
       },
       {
         "tableName": "GuideInfo",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pageNumber` INTEGER NOT NULL, `imgPath` INTEGER, `textIntro` TEXT, PRIMARY KEY(`pageNumber`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pageNumber` INTEGER NOT NULL, `imgRes` INTEGER, `textIntroRes` INTEGER, PRIMARY KEY(`pageNumber`))",
         "fields": [
           {
             "fieldPath": "pageNumber",
@@ -35,15 +35,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "imgPath",
-            "columnName": "imgPath",
+            "fieldPath": "imgRes",
+            "columnName": "imgRes",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "textIntro",
-            "columnName": "textIntro",
-            "affinity": "TEXT",
+            "fieldPath": "textIntroRes",
+            "columnName": "textIntroRes",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -187,7 +187,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e267bcfbb8ed7c7db610a4a8704ecb31')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '54811bac10f331ba66094804ce86b1c0')"
     ]
   }
 }
