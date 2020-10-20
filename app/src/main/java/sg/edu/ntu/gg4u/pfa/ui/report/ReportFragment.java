@@ -37,13 +37,15 @@ import java.util.Calendar;
 import java.util.List;
 
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
+import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 
 public class ReportFragment extends Fragment {
 
 
 
     private ReportViewModel reportViewModel;
-    LineChart lineChart;
+   // LineChart lineChart;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
        // //reportViewModel =
@@ -56,54 +58,43 @@ public class ReportFragment extends Fragment {
        //         textView.setText(s);
       //      }
      //   });
-        lineChart = (LineChart) root.findViewById(R.id.chart);
-        PieChart pieChart = root.findViewById(R.id.pieChart);
+      //  lineChart = (LineChart) root.findViewById(R.id.chart);
 
-        lineChart.setData(dataValues());
 
-        drawChart(pieChart);
+       /* LineChartVisualizer lcv = new LineChartVisualizer();
+
+        float[] tempData = new float[5];
+
+        tempData[0] = 100;
+        tempData[1] = 200;
+        tempData[2] = 400;
+
+        lcv.createLine(lineChart, tempData, "temp chart");*/
+
+       /* PieChart pieChart = (PieChart) root.findViewById(R.id.pieChart);
+
+        PieChartVisualizer pcv = new PieChartVisualizer();
+
+        String[] labels = new String[5];
+        float[] data = new float[5];
+
+        labels[0] = "January";
+        labels[1] = "February";
+        labels[2] = "March";
+        labels[3] = "April";
+        labels[4] = "May";
+
+        data[0] = 8f;
+        data[1] = 15f;
+        data[2] = 12f;
+        data[3] = 25f;
+        data[4] = 23f;
+
+        pcv.drawPie(pieChart, labels, data);*/
 
         return root;
     }
 
-    private LineData dataValues(){
-        ArrayList<Entry> values = new ArrayList<>();
-        values.add(new Entry(1, 50));
-        values.add(new Entry(2, 100));
-        values.add(new Entry(3, 800));
-
-        LineDataSet set1 = new LineDataSet(values, "Data set 1");
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
-        dataSets.add(set1);
-        LineData data = new LineData(dataSets);
-
-        return data;
-    }
-
-    private void drawChart(PieChart pieChart) {
-        pieChart.setUsePercentValues(true);
-
-        ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
-        yvalues.add(new PieEntry(8f, "January", 0));
-        yvalues.add(new PieEntry(15f, "February", 1));
-        yvalues.add(new PieEntry(12f, "March", 2));
-        yvalues.add(new PieEntry(25f, "April", 3));
-        yvalues.add(new PieEntry(23f, "May", 4));
-
-        PieDataSet dataSet = new PieDataSet(yvalues, "Pie Chart");
-        PieData data = new PieData(dataSet);
-
-        data.setValueFormatter(new PercentFormatter());
-        pieChart.setData(data);
-        Description description = new Description();
-        pieChart.setTransparentCircleRadius(58f);
-        pieChart.setHoleRadius(58f);
-        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        data.setValueTextSize(10f);
-        data.setValueTextColor(Color.DKGRAY);
-    }
 
    /* public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
