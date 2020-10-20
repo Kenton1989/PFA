@@ -47,21 +47,19 @@ public class UserProfileDaoTest {
 
     @Test
     public void writeAndReadUserProfileTest() {
-          System.out.println("Test Started...");
+        System.out.println("Test Started...");
         UserProfile userProfile = TestUtil.createUserProfile();
         String name = "Peter Wen";
         userProfile.setName(name);
-
-
 
         System.out.println("Updating profile...");
         userProfileDao.updateUserProfile(userProfile);
 
         System.out.println("Getting profile...");
-        Flowable<UserProfile> returnFlowable = userProfileDao.getUserProfile();
+        List<UserProfile> returnFlowable = userProfileDao.getUserProfile();
 
         System.out.println("Loading profile...");
-        UserProfile returnProfile = returnFlowable.blockingFirst();
+        UserProfile returnProfile = returnFlowable.get(0);
 
         System.out.println("Checking correctness...");
         assertThat(returnProfile.getName(), equalTo(name));

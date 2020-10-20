@@ -1,11 +1,53 @@
 package sg.edu.ntu.gg4u.pfa.persistence.UserProfile;
 
+import java.util.HashMap;
+
 public enum AcademicQualification {
-    UNKNOWN(0);
+    UNKNOWN("unknown"),
+    NO_AQ("No Qualification"),
+    PRIMARY("Primary"),
+    LOWER_SEC("Lower Secondary"),
+    SECONDARY("Secondary"),
+    POST_SEC("Post Secondary (Non-Tertiary)"),
+    POLY("Polytechnic"),
+    PROFESSIONAL("Professional Qualification & Other Diploma"),
+    UNIVERSITY("University");
 
-    private final int value;
+    private static final String TAG = "UserProfile.AcademicQualification";
 
-    AcademicQualification(int val) {
-        value = val;
+    private final String fullName;
+    private static HashMap<String, AcademicQualification> str2AQ = null;
+
+    AcademicQualification(String fullName) {
+        if (getMap() == null) {
+            initMap();
+        }
+        if (getMap().containsKey(fullName)) {
+            throw new RuntimeException("The full name of academic qualification" +
+                    " must be unique");
+        }
+        this.fullName = fullName;
+        getMap().put(fullName, this);
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public static AcademicQualification toAcademicQualification(String fullName) {
+        return str2AQ.get(fullName);
+    }
+
+    @Override
+    public String toString() {
+        return getFullName();
+    }
+
+    private HashMap<String, AcademicQualification> getMap() {
+        return str2AQ;
+    }
+
+    private void initMap() {
+        str2AQ = new HashMap<>();
     }
 }
