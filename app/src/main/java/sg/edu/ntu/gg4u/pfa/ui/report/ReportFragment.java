@@ -45,7 +45,7 @@ public class ReportFragment extends Fragment {
 
 
     private ReportViewModel reportViewModel;
-   // LineChart lineChart;
+    //LineChart lineChart;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
        // //reportViewModel =
@@ -58,7 +58,7 @@ public class ReportFragment extends Fragment {
        //         textView.setText(s);
       //      }
      //   });
-      //  lineChart = (LineChart) root.findViewById(R.id.chart);
+      // lineChart = (LineChart) root.findViewById(R.id.chart);
 
 
        /* LineChartVisualizer lcv = new LineChartVisualizer();
@@ -68,6 +68,9 @@ public class ReportFragment extends Fragment {
         tempData[0] = 100;
         tempData[1] = 200;
         tempData[2] = 400;
+        tempData[3] = 100;
+        tempData[4] = 200;
+
 
         lcv.createLine(lineChart, tempData, "temp chart");*/
 
