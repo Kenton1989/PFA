@@ -58,15 +58,15 @@ public class RecordFragment extends Fragment {
             "Vacation"
     };
 
-    //String[] amount_in_list= {
-    //        "10",
-    //        "14",
-    //        "50",
-    //        "144",
-    //        "77",
-    //        "88",
-    //        "900"
-    //};
+    String[] amount_in_list= {
+            "10",
+            "14",
+            "50",
+            "144",
+            "77",
+            "88",
+            "900"
+    };
 
 
 
