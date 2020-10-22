@@ -1,5 +1,6 @@
 package sg.edu.ntu.gg4u.pfa.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import sg.edu.ntu.gg4u.pfa.GuideActivity;
 import sg.edu.ntu.gg4u.pfa.R;
 
 import sg.edu.ntu.gg4u.pfa.MainActivity;
+import sg.edu.ntu.gg4u.pfa.addIncome;
 
 public class HomeFragment extends Fragment {
 
@@ -66,6 +72,15 @@ public class HomeFragment extends Fragment {
                 list.setAdapter(adapter);
             }
         });
+        FloatingActionButton fab =(FloatingActionButton)root.findViewById(R.id.addItemBtn);
+         fab.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 Intent i= new Intent(HomeFragment.this.getActivity(), addIncome.class);
+                 startActivity(i);
+             }
+         });
         return root;
     }
+
 }

@@ -24,20 +24,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:textSize="20dp"
                 android:text="Total Expense :"
-                tools:ignore="MissingConstraints"
-              />
+                android:textSize="20dp"
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/totalIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Income :"
                 android:layout_marginLeft="15dp"
+                android:text="Total Income :"
                 android:textSize="20dp"
-                tools:ignore="MissingConstraints"
-            />
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addItemBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_launcher_pen"
+                app:backgroundTint="@color/colorPrimary" />
 
         </LinearLayout>
 
@@ -46,7 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -55,16 +62,20 @@
                     android:id="@+id/listHome"
                     android:layout_width="match_parent"
                     android:layout_height="590dp"
-                    android:paddingLeft="10dp"
+                    android:divider="@null"
                     android:dividerHeight="0dp"
-                    android:divider="@null">
+                    android:paddingLeft="10dp">
+
+
 
                 </ListView>
-            </LinearLayout>
+
+            </RelativeLayout>
 
         </ScrollView>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
