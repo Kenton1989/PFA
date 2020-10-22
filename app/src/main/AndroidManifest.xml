@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< Updated upstream
+
         <activity
             android:name=".ui.category.CreateCategoryActivity"
             android:label="@string/title_category"
@@ -26,13 +26,8 @@
             android:name=".ui.profile.ProfileActivity"
             android:label="@string/title_profile"
             android:parentActivityName=".MainActivity" />
-=======
-        <activity android:name=".ui.category.CreateCategoryActivity"></activity>
-        <activity android:name=".ui.category.CategoryActivity" />
-        <activity android:name=".ui.profile.EditProfileActivity" />
-        <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".addIncome"/>
->>>>>>> Stashed changes
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

@@ -66,33 +66,15 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_category:
                 open(CategoryActivity.class);
                 break;
-            case R.id.menu_profile:
-                openUserProfile();
-                break;
-            case R.id.menu_category:
-                openCategory();
-                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< Updated upstream
+
     private void open(Class<?> toOpen) {
         Intent intent = new Intent(this, toOpen);
-=======
-      private void openUserGuide() {
-        Intent intent = new Intent(this, GuideActivity.class);
->>>>>>> Stashed changes
-        startActivity(intent);
     }
 
-    private void openUserProfile() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-    }
-    private void openCategory() {
-        Intent intent = new Intent(this, CategoryActivity.class);
-        startActivity(intent);
-    }
 
 }
