@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.report.ReportFragment">
 
-<!--
-    <TextView
+    <!--<TextView
         android:id="@+id/text_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,8 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
--->
+        app:layout_constraintTop_toTopOf="parent" />-->
 
 
     <View
@@ -99,10 +97,29 @@
         app:layout_constraintTop_toTopOf="@+id/report_upview"
         app:layout_constraintVertical_bias="0.0">
 
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+          <!--  <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="48dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="0dp" />-->
+-->
+           <!-- <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />-->
 
         </LinearLayout>
     </ScrollView>

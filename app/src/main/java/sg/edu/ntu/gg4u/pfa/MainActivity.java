@@ -1,15 +1,13 @@
 package sg.edu.ntu.gg4u.pfa;
 
-import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -17,7 +15,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Calendar;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
+import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
+import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
+
+import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
     }
 
     @Override
@@ -48,4 +53,29 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_guide:
+                open(GuideActivity.class);
+                break;
+            case R.id.menu_profile:
+                open(ProfileActivity.class);
+                break;
+            case R.id.menu_category:
+                open(CategoryActivity.class);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void open(Class<?> toOpen) {
+        Intent intent = new Intent(this, toOpen);
+        startActivity(intent);
+    }
+
+
 }

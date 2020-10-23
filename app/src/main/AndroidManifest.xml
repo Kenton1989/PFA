@@ -8,15 +8,40 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".ui.category.CreateCategoryActivity"
+            android:label="@string/title_category"
+            android:parentActivityName=".ui.category.CategoryActivity" />
+        <activity
+            android:name=".ui.category.CategoryActivity"
+            android:label="@string/title_category"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ui.profile.EditProfileActivity"
+            android:label="@string/title_profile"
+            android:parentActivityName=".ui.profile.ProfileActivity" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:label="@string/title_profile"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".addIncome"/>
+
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.guide.GuideActivity"
+            android:label="@string/title_guide"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

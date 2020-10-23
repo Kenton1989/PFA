@@ -46,9 +46,9 @@ public class RecordFragment extends Fragment {
             "22-02-2020",
             "31-02-2021",
             "01-20-2021"
-    } ;
+    };
 
-    String[] cat_in_list= {
+    String[] cat_in_list = {
             "Food",
             "Transportation",
             "Leisure",
@@ -69,8 +69,6 @@ public class RecordFragment extends Fragment {
     //};
 
 
-
-
     private RecordViewModel recordViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -84,6 +82,8 @@ public class RecordFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 //textView.setText(s);
+            }
+        });
 
 
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
@@ -126,11 +126,19 @@ public class RecordFragment extends Fragment {
                 }
             });
 
-            dateTXT_to = root.findViewById(R.id.record_date_to);
-            cal_to = root.findViewById(R.id.record_calpicker_to);
 
 
-            cal_to.setOnClickListener(new View.OnClickListener() {
+        dateTXT_to = root.findViewById(R.id.record_date_to);
+        cal_to = root.findViewById(R.id.record_date_to);
+
+        cal_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar Cal1 = Calendar.getInstance();
+                int mDate = Cal1.get(Calendar.DATE);
+                int mMonth = Cal1.get(Calendar.MONTH);
+                int mYear = Cal1.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onClick(View view) {
                         final Calendar Cal1 = Calendar.getInstance();
@@ -145,12 +153,8 @@ public class RecordFragment extends Fragment {
                         }, mYear,mMonth,mDate);
                         //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());
                         datePickerDialog.show();
-                    }
-                });
-
-
-
             }
+   
         });
         return root;
     }
