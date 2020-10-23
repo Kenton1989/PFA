@@ -20,6 +20,9 @@ import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
 import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
+import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,12 +66,16 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_category:
                 open(CategoryActivity.class);
                 break;
+
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void open(Class<?> toOpen) {
         Intent intent = new Intent(this, toOpen);
         startActivity(intent);
     }
+
+
 }
