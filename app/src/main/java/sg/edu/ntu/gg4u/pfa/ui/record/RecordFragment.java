@@ -87,13 +87,13 @@ public class RecordFragment extends Fragment {
 
 
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-        final TextView todaydate  = root.findViewById(R.id.date);
+        final TextView todaydate  = root.findViewById(R.id.record_current_date);
                 todaydate.setText(date_n);
 
 
                 CustomList adapter = new
                         CustomList(getActivity(), dates_in_list , cat_in_list);
-                list=root.findViewById(R.id.listView);
+                list=root.findViewById(R.id.record_listView);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -106,8 +106,8 @@ public class RecordFragment extends Fragment {
 
 
 
-            dateTXT_from = root.findViewById(R.id.date_from);
-            cal_from = root.findViewById(R.id.calpicker_from);
+            dateTXT_from = root.findViewById(R.id.record_date_from);
+            cal_from = root.findViewById(R.id.record_calpicker_from);
 
             cal_from.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -126,8 +126,8 @@ public class RecordFragment extends Fragment {
                 }
             });
 
-            dateTXT_to = root.findViewById(R.id.date_to);
-            cal_to = root.findViewById(R.id.calpicker_to);
+            dateTXT_to = root.findViewById(R.id.record_date_to);
+            cal_to = root.findViewById(R.id.record_calpicker_to);
 
 
             cal_to.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +140,7 @@ public class RecordFragment extends Fragment {
                         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int date) {
-                                dateTXT_to.setText(date+"-" + month + "-" + year);
+                                dateTXT_to.setText(date+"-" + (month + 1) + "-" + year);
                             }
                         }, mYear,mMonth,mDate);
                         //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());

@@ -43,7 +43,7 @@ public class ReportFragment extends Fragment {
 
         ImageButton dec, inc;
 
-        final TextView month = root.findViewById(R.id.month);
+        final TextView month = root.findViewById(R.id.report_month);
         final Calendar cal= Calendar.getInstance();
 
         final SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
