@@ -24,14 +24,14 @@ public class UserProfile {
 
     @Ignore
     public UserProfile(String _name, Gender _gender, JobField _jobField,
-                       int _familySize, double _income, AcademicQualification aq) {
+                       int _familySize, double _income, int _age, AcademicQualification aq) {
         userId = UUID.randomUUID().toString();
-
         name = _name;
         gender = _gender;
         jobField = _jobField;
         familySize = _familySize;
         income = _income;
+        age = _age;
         qualification = aq;
     }
 
@@ -42,6 +42,7 @@ public class UserProfile {
         jobField = JobField.UNKNOWN;
         familySize = 0;
         income = 0.0;
+        age = 0;
         qualification = AcademicQualification.UNKNOWN;
     }
 

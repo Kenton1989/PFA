@@ -41,7 +41,11 @@
         <activity
             android:name=".ui.guide.GuideActivity"
             android:label="@string/title_guide"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <uses-library android:name="android.test.runner" />
+        <uses-library android:name="android.test.base" />
+        <uses-library android:name="android.test.mock" />
     </application>
 
 </manifest>

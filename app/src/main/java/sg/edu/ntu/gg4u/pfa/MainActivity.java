@@ -2,6 +2,7 @@ package sg.edu.ntu.gg4u.pfa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -17,6 +18,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobField;
 import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        Log.d("MainActivity", JobField.OTHERS.toString());
     }
 
     @Override
