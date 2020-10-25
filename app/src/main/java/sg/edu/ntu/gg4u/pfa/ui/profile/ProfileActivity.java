@@ -92,14 +92,14 @@ public class ProfileActivity extends AppCompatActivity {
         mDisposable.clear();
     }
 
-    private void whenProfileUpdated(UserProfile profile) {
-        userName.setText(profile.getName());
-        userGender.setText(profile.getGender().toString());
-        userJobfield.setText(profile.getJobField().toString());
-        userIncome.setText(String.valueOf(profile.getIncome()));
-        userFamilySize.setText(String.valueOf(profile.getAge()));
+    private void whenProfileUpdated(UserProfile newProfile) {
+        userName.setText(newProfile.getName());
+        userGender.setText(newProfile.getGender().toString());
+        userJobfield.setText(newProfile.getJobField().toString());
+        userIncome.setText(String.valueOf(newProfile.getIncome()));
+        userFamilySize.setText(String.valueOf(newProfile.getFamilySize()));
         // TODO two more text view required to display information
-//        String.valueOf(profile.getAge());
-//        profile.getQualification().toString()
+//        String.valueOf(newProfile.getFamilySize());
+//        newProfile.getQualification().toString()
     }
 }
