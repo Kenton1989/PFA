@@ -24,7 +24,7 @@ public class UserProfile {
 
     @Ignore
     public UserProfile(String _name, Gender _gender, JobField _jobField,
-                       int _familySize, double _income, int _age, AcademicQualification aq) {
+                       Integer _familySize, Double _income, Integer _age, AcademicQualification aq) {
         userId = UUID.randomUUID().toString();
         name = _name;
         gender = _gender;

@@ -20,7 +20,7 @@ public enum JobField {
     private static final String TAG = "UserProfile.JobField";
 
     private final String fullName;
-    private static HashMap<String, JobField> str2job = null;
+    private static HashMap<String, JobField> str2job;
 
     JobField(String fullName) {
         if (getMap() == null) {
@@ -54,6 +54,8 @@ public enum JobField {
     }
 
     public static String[] getAllJobField() {
-        return (String[]) str2job.keySet().toArray();
+        String[] ret = new String[0];
+        ret = str2job.keySet().toArray(ret);
+        return ret;
     }
 }

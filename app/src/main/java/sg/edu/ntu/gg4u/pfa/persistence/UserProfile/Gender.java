@@ -1,5 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.persistence.UserProfile;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 public enum Gender {
@@ -11,7 +13,7 @@ public enum Gender {
     private static final String TAG = "UserProfile.Gender";
 
     private final String fullName;
-    private static HashMap<String, Gender> str2gen = null;
+    private static HashMap<String, Gender> str2gen;
 
     Gender(String fullName) {
         if (getMap() == null) {
@@ -21,6 +23,8 @@ public enum Gender {
             throw new RuntimeException("The full name of gender must be unique");
         }
         this.fullName = fullName;
+
+        Log.d("enum Gender", fullName + " created");
         getMap().put(fullName, this);
     }
 
@@ -45,7 +49,9 @@ public enum Gender {
     }
 
     public static String[] getAllGender() {
-        return (String[]) str2gen.keySet().toArray();
+        String[] ret = new String[0];
+        ret = str2gen.keySet().toArray(ret);
+        return ret;
     }
 
 }

@@ -45,6 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // TODO add view for age and academic qualification
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_profile);
@@ -92,6 +93,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void whenProfileUpdated(UserProfile profile) {
-
+        userName.setText(profile.getName());
+        userGender.setText(profile.getGender().toString());
+        userJobfield.setText(profile.getJobField().toString());
+        userIncome.setText(String.valueOf(profile.getIncome()));
+        userFamilySize.setText(String.valueOf(profile.getAge()));
+        // TODO two more text view required to display information
+//        String.valueOf(profile.getAge());
+//        profile.getQualification().toString()
     }
 }

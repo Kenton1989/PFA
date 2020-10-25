@@ -16,7 +16,7 @@ public enum AcademicQualification {
     private static final String TAG = "UserProfile.AcademicQualification";
 
     private final String fullName;
-    private static HashMap<String, AcademicQualification> str2AQ = null;
+    private static HashMap<String, AcademicQualification> str2AQ;
 
     AcademicQualification(String fullName) {
         if (getMap() == null) {
@@ -52,6 +52,8 @@ public enum AcademicQualification {
     }
 
     public static String[] getAllAcademicQualification() {
-        return (String[]) str2AQ.keySet().toArray();
+        String[] ret = new String[0];
+        ret = str2AQ.keySet().toArray(ret);
+        return ret;
     }
 }

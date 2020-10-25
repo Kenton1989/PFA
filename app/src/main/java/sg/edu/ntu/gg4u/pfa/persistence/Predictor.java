@@ -111,7 +111,7 @@ public class Predictor {
     @RequiresApi(api = Build.VERSION_CODES.R)
     public static void main(String[] args) {
         UserProfile userProfile = new UserProfile("Peter Wen", Gender.MALE, JobField.NOT_WORKING,
-                4, 500, 19, AcademicQualification.UNIVERSITY);
+                4, 500.0, 19, AcademicQualification.UNIVERSITY);
         HashMap<String, Double> prediction = new HashMap<>(), distribution = new HashMap<>();
         generatePrediction(userProfile, prediction, distribution);
         System.out.println(prediction);
