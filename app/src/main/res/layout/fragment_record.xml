@@ -234,8 +234,8 @@
 
     <ScrollView
         android:id="@+id/record_scrollView"
-        android:layout_width="420dp"
-        android:layout_height="403dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

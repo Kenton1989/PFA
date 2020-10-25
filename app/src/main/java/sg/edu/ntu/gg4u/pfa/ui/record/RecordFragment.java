@@ -91,11 +91,11 @@ public class RecordFragment extends Fragment {
                 todaydate.setText(date_n);
 
 
-                CustomList adapter = new
-                        CustomList(getActivity(), dates_in_list , cat_in_list);
-                list=root.findViewById(R.id.record_listView);
-                list.setAdapter(adapter);
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        CustomList adapter = new
+                CustomList(getActivity(), dates_in_list , cat_in_list);
+        list=root.findViewById(R.id.record_listView);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
@@ -129,7 +129,7 @@ public class RecordFragment extends Fragment {
 
 
         dateTXT_to = root.findViewById(R.id.record_date_to);
-        cal_to = root.findViewById(R.id.record_date_to);
+        cal_to = root.findViewById(R.id.record_calpicker_to);
 
         cal_to.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,13 +139,6 @@ public class RecordFragment extends Fragment {
                 int mMonth = Cal1.get(Calendar.MONTH);
                 int mYear = Cal1.get(Calendar.YEAR);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final Calendar Cal1 = Calendar.getInstance();
-                        int mDate = Cal1.get(Calendar.DATE);
-                        int mMonth= Cal1.get(Calendar.MONTH);
-                        int mYear= Cal1.get(Calendar.YEAR);
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int date) {
                                 dateTXT_to.setText(date+"-" + (month + 1) + "-" + year);
