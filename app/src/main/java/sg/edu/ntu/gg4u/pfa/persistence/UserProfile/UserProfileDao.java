@@ -13,7 +13,7 @@ import io.reactivex.Flowable;
 @Dao
 public interface UserProfileDao {
     @Query("SELECT * FROM UserProfile")
-    List<UserProfile> getUserProfile();
+    Flowable<UserProfile> getUserProfile();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable updateUserProfile(UserProfile userProfile);

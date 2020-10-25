@@ -54,11 +54,6 @@ public class LineChartVisualizer {
         lineChart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
 
 
-
-
-
-
-
         lineChart.setData(lineData);
     }
  /*   public class FooFormatter extends ValueFormatter {

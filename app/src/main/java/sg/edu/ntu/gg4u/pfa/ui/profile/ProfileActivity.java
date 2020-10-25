@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -16,19 +17,29 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.addIncome;
+import sg.edu.ntu.gg4u.pfa.ui.Injection;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 import sg.edu.ntu.gg4u.pfa.ui.home.HomeFragment;
 import sg.edu.ntu.gg4u.pfa.ui.home.HomeViewModel;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private ProfileViewModel profileViewModel;
-    TextView userName,userGender,userJobfield,userIncome,userFamilySize;
+    private TextView userName,userGender,userJobfield,userIncome,userFamilySize;
+
+    private ViewModelFactory mViewModelFactory;
+
+    private ProfileViewModel mViewModel;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile);
         userName = findViewById(R.id.profile_name);
         userGender=findViewById(R.id.profile_gender);
@@ -49,5 +60,17 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        mViewModelFactory = Injection.provideViewModelFactory(this);
+        mViewModel = new ViewModelProvider(this, mViewModelFactory)
+                .get(ProfileViewModel.class);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // mDisposable.add()
     }
 }
