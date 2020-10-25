@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,12 +40,35 @@ import java.util.Calendar;
 import java.util.List;
 
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.ui.record.CustomList;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 
 public class ReportFragment extends Fragment {
 
 
+    ListView list;
+
+    String[] cat_in_list = {
+            "Food",
+            "Transportation",
+            "Leisure",
+            "Entertainment"
+    };
+
+    String[] percent_in_list = {
+            " ",
+            " ",
+            " ",
+            " "
+    };
+
+    String[] sugg_in_list = {
+            " ",
+            " ",
+            " ",
+            " "
+    };
 
     private ReportViewModel reportViewModel;
     //LineChart lineChart;
@@ -58,10 +84,15 @@ public class ReportFragment extends Fragment {
        //         textView.setText(s);
       //      }
      //   });
-      // lineChart = (LineChart) root.findViewById(R.id.chart);
 
 
-       /* LineChartVisualizer lcv = new LineChartVisualizer();
+
+
+
+        LineChart lineChart = (LineChart) root.findViewById(R.id.chart);
+
+
+       LineChartVisualizer lcv = new LineChartVisualizer();
 
         float[] tempData = new float[5];
 
@@ -72,9 +103,9 @@ public class ReportFragment extends Fragment {
         tempData[4] = 200;
 
 
-        lcv.createLine(lineChart, tempData, "temp chart");*/
+        lcv.createLine(lineChart, tempData, "temp chart");
 
-       /* PieChart pieChart = (PieChart) root.findViewById(R.id.pieChart);
+       PieChart pieChart = (PieChart) root.findViewById(R.id.pieChart);
 
         PieChartVisualizer pcv = new PieChartVisualizer();
 
@@ -93,7 +124,59 @@ public class ReportFragment extends Fragment {
         data[3] = 25f;
         data[4] = 23f;
 
-        pcv.drawPie(pieChart, labels, data);*/
+        pcv.drawPie(pieChart, labels, data);
+
+
+
+
+
+
+        ImageButton dec, inc;
+
+        final TextView month = root.findViewById(R.id.report_month);
+        final Calendar cal= Calendar.getInstance();
+
+        final SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
+        String selectedMonth=month_date.format(cal.getTime());
+        month.setText(selectedMonth);
+
+        dec = root.findViewById(R.id.left_arrow);
+        inc = root.findViewById(R.id.right_arrow);
+
+        dec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cal.add(Calendar.MONTH, -1);
+                String selectedMonth=month_date.format(cal.getTime());
+                month.setText(selectedMonth);
+            }
+        });
+
+        inc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal.add(Calendar.MONTH, 1);
+                String selectedMonth=month_date.format(cal.getTime());
+                month.setText(selectedMonth);
+
+            }
+        });
+
+
+
+        CustomListReport adapter = new
+                CustomListReport(getActivity() , cat_in_list, percent_in_list, sugg_in_list);
+        list=root.findViewById(R.id.report_listView);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getActivity(), "You Clicked at " + cat_in_list[+position], Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return root;
     }
@@ -114,7 +197,7 @@ public class ReportFragment extends Fragment {
 
         ImageButton dec, inc;
 
-        final TextView month = root.findViewById(R.id.month);
+        final TextView month = root.findViewById(R.id.report_month);
         final Calendar cal= Calendar.getInstance();
 
         final SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
