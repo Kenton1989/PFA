@@ -5,8 +5,6 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.UUID;
-
 @Entity(tableName = "UserProfile")
 public class UserProfile {
     private static String THE_ONLY_ID = "10271ryh9e";
