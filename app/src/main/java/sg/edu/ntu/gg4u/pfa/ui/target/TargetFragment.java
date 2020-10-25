@@ -91,16 +91,10 @@ public class TargetFragment extends Fragment {
         //View root = inflater.inflate(R.layout.fragment_target, container, false);
         //final TextView textView = root.findViewById(R.id.actualAmount);
         final View root = inflater.inflate(R.layout.fragment_target, container, false);
-        targetViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-              //  textView.setText(s);
-                CustomListTarget adapter = new
-                        CustomListTarget(getActivity(),  targetCat_in_list , targetAmt_in_List, actualAmt_in_List);
-                list=root.findViewById(R.id.listViewTarget);
-                list.setAdapter(adapter);
-            }
-        });
+        CustomListTarget adapter = new
+                CustomListTarget(getActivity(),  targetCat_in_list , targetAmt_in_List, actualAmt_in_List);
+        list=root.findViewById(R.id.listViewTarget);
+        list.setAdapter(adapter);
         return root;
     }
 
