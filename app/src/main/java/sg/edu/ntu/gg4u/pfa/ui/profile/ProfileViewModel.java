@@ -12,8 +12,6 @@ public class ProfileViewModel extends ViewModel {
 
     private final ProfileDataSource mDataSource;
 
-    private UserProfile mUserProfile;
-
     public ProfileViewModel(ProfileDataSource dataSource) {
         mDataSource = dataSource;
     }
@@ -23,7 +21,6 @@ public class ProfileViewModel extends ViewModel {
     }
 
     public Completable updateUserProfile(final UserProfile userProfile) {
-        mUserProfile = userProfile;
         return mDataSource.updateUserProfile(userProfile);
     }
 }

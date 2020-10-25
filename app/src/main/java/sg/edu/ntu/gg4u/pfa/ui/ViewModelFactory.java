@@ -6,13 +6,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
+import sg.edu.ntu.gg4u.pfa.ui.target.TargetDataSource;
+import sg.edu.ntu.gg4u.pfa.ui.target.TargetViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private final ProfileDataSource mProfileDataSource;
+    private final TargetDataSource mTargetDataSource;
 
-    public ViewModelFactory(ProfileDataSource profileDataSource) {
+    public ViewModelFactory(ProfileDataSource profileDataSource,
+                            TargetDataSource targetDataSource) {
         mProfileDataSource = profileDataSource;
+        mTargetDataSource = targetDataSource;
     }
 
     @NonNull
@@ -20,6 +25,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ProfileViewModel.class)) {
             return (T) new ProfileViewModel(mProfileDataSource);
+        }
+        if (modelClass.isAssignableFrom(TargetViewModel.class)) {
+            return (T) new TargetViewModel(mTargetDataSource);
         }
 
         return null;
