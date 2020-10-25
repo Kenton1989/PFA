@@ -27,5 +27,5 @@ public interface RecordDao {
     Completable addRecord(Record record);
 
     @Query("DELETE FROM Record WHERE timestamp = :timestamp")
-    void deleteRecord(LocalDateTime timestamp);
+    Completable deleteRecord(LocalDateTime timestamp);
 }
