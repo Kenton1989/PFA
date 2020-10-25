@@ -1,6 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.ui.profile;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +14,13 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
 public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -29,6 +34,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private ProfileViewModel mViewModel;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +79,23 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-
-
-
+        mViewModelFactory = Injection.provideViewModelFactory(this);
+        mViewModel = new ViewModelProvider(this, mViewModelFactory)
+                .get(ProfileViewModel.class);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mDisposable.clear();
+    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -92,6 +111,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     }
 
     public void updateProfile(UserProfile userProfile) {
-
+        mDisposable.add(mViewModel.updateUserProfile(userProfile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
+
 }
