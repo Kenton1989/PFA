@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa.ui.category;
+package sg.edu.ntu.gg4u.pfa.ui;
 
 import java.util.List;
 

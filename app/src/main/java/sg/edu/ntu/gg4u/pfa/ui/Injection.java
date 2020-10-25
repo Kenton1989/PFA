@@ -4,9 +4,7 @@ import android.content.Context;
 
 import sg.edu.ntu.gg4u.pfa.persistence.Database;
 import sg.edu.ntu.gg4u.pfa.ui.profile.LocalProfileDataSource;
-import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.target.LocalTargetDataSource;
-import sg.edu.ntu.gg4u.pfa.ui.target.TargetDataSource;
 
 public class Injection {
 

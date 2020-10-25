@@ -1,7 +1,5 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.time.LocalDate;
@@ -10,8 +8,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
-import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
-import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileDataSource;
+import sg.edu.ntu.gg4u.pfa.ui.TargetDataSource;
 
 public class TargetViewModel extends ViewModel {
     private final TargetDataSource mDataSource;

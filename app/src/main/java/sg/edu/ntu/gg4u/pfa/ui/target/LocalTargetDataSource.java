@@ -7,9 +7,9 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.TargetDao;
-import sg.edu.ntu.gg4u.pfa.ui.profile.LocalProfileDataSource;
+import sg.edu.ntu.gg4u.pfa.ui.TargetDataSource;
 
-public class LocalTargetDataSource implements TargetDataSource{
+public class LocalTargetDataSource implements TargetDataSource {
 
     private final TargetDao mTargetDao;
 

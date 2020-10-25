@@ -6,6 +6,7 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.CategoryDao;
+import sg.edu.ntu.gg4u.pfa.ui.CategoryDataSource;
 
 public class LocalCategoryDataSource implements CategoryDataSource {
 

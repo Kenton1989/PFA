@@ -7,8 +7,9 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.RecordDao;
+import sg.edu.ntu.gg4u.pfa.ui.RecordDataSource;
 
-public class LocalRecordDataSource implements RecordDataSource{
+public class LocalRecordDataSource implements RecordDataSource {
 
     private final RecordDao mDao;
 

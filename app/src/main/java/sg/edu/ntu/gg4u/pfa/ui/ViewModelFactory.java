@@ -4,9 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
-import sg.edu.ntu.gg4u.pfa.ui.target.TargetDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.target.TargetViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {

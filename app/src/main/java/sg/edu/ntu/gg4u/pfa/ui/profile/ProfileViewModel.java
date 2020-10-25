@@ -1,12 +1,11 @@
 package sg.edu.ntu.gg4u.pfa.ui.profile;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.ui.ProfileDataSource;
 
 public class ProfileViewModel extends ViewModel {
 

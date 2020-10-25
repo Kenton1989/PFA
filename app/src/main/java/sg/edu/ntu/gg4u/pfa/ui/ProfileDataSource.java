@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa.ui.profile;
+package sg.edu.ntu.gg4u.pfa.ui;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
