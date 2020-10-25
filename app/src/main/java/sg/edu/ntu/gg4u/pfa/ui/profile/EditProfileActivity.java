@@ -13,13 +13,22 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
 public class EditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String[] gender={"Female","Male","others"};
     String[] job={"Engineer","Accountant","students","teacher","others"};
     String[] income={"1000-2000","2000-3000","3000-4000","4000-5000","above 5000","no income"};
     String[] familySize={"1","2","3","4","5","above 5"};
+
+    private ViewModelFactory mViewModelFactory;
+
+    private ProfileViewModel mViewModel;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
                 startActivity(i);
             }
         });
+
+
+
+
     }
 
     @Override
@@ -75,6 +88,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public void updateProfile(UserProfile userProfile) {
 
     }
 }

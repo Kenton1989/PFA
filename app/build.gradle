@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
@@ -54,12 +56,9 @@ dependencies {
     
     implementation "com.androidplot:androidplot-core:1.5.7"
 
-
-}
-
-dependencies {
-
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    // Lifecycle components
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"

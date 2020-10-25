@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,21 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.addIncome;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 import sg.edu.ntu.gg4u.pfa.ui.home.HomeFragment;
 import sg.edu.ntu.gg4u.pfa.ui.home.HomeViewModel;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private static final String TAG = "This is a tag";
 
     private ProfileViewModel profileViewModel;
     private TextView userName,userGender,userJobfield,userIncome,userFamilySize;
@@ -71,6 +78,20 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        // mDisposable.add()
+        mDisposable.add(mViewModel.getUserProfile()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenProfileUpdated));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mDisposable.clear();
+    }
+
+    private void whenProfileUpdated(UserProfile profile) {
+
     }
 }
