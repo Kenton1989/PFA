@@ -115,9 +115,9 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    public void updateProfile(UserProfile userProfile) {
+    public void updateProfile(UserProfile newUserProfile) {
         confirmButton.setEnabled(false);
-        mDisposable.add(mViewModel.updateUserProfile(userProfile)
+        mDisposable.add(mViewModel.updateUserProfile(newUserProfile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(()->confirmButton.setEnabled(true)));
