@@ -5,9 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addItemBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_launcher_pen"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <LinearLayout
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
 
@@ -15,8 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="80dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             tools:ignore="MissingConstraints">
 
             <TextView
@@ -36,14 +51,6 @@
                 android:text="Total Income :"
                 android:textSize="20dp"
                 tools:ignore="MissingConstraints" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addItemBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:src="@drawable/ic_launcher_pen"
-                app:backgroundTint="@color/colorPrimary" />
 
         </LinearLayout>
 
@@ -65,7 +72,6 @@
                     android:divider="@null"
                     android:dividerHeight="0dp"
                     android:paddingLeft="10dp">
-
 
 
                 </ListView>

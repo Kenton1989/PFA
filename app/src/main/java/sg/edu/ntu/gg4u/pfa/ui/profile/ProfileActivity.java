@@ -1,34 +1,23 @@
 package sg.edu.ntu.gg4u.pfa.ui.profile;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import sg.edu.ntu.gg4u.pfa.R;
-import sg.edu.ntu.gg4u.pfa.addIncome;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
-import sg.edu.ntu.gg4u.pfa.ui.home.HomeFragment;
-import sg.edu.ntu.gg4u.pfa.ui.home.HomeViewModel;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -36,8 +25,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private ProfileViewModel profileViewModel;
     private TextView userName,userGender,userJobfield,userIncome,userFamilySize;
-
-    private ViewModelFactory mViewModelFactory;
 
     private ProfileViewModel mViewModel;
 
@@ -54,11 +41,11 @@ public class ProfileActivity extends AppCompatActivity {
         userJobfield = findViewById(R.id.profile_job);
         userIncome=findViewById(R.id.profile_incomeGrp);
         userFamilySize=findViewById(R.id.profile_familySize);
-        userName.setText("YeRy");
-        userGender.setText("F");
-        userJobfield.setText("Engineer");
-        userIncome.setText("100-200");
-        userFamilySize.setText("10");
+        userName.setText("Nameless");
+        userGender.setText("Unknown");
+        userJobfield.setText("Secret");
+        userIncome.setText("Unknown");
+        userFamilySize.setText("at least 1");
 
         FloatingActionButton fab =(FloatingActionButton)findViewById(R.id.btnProfile);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +56,10 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        mViewModelFactory = Injection.provideViewModelFactory(this);
+        // Database stuff
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(ProfileViewModel.class);
-
     }
 
     @Override

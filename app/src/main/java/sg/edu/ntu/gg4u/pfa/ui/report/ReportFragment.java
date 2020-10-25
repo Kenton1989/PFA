@@ -74,19 +74,8 @@ public class ReportFragment extends Fragment {
     //LineChart lineChart;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       // //reportViewModel =
-      //          ViewModelProviders.of(this).get(ReportViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_report, container, false);
-     //   final TextView textView = root.findViewById(R.id.text_report);
-      //  reportViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-      //      @Override
-       //     public void onChanged(@Nullable String s) {
-       //         textView.setText(s);
-      //      }
-     //   });
-
-
-
 
 
         LineChart lineChart = (LineChart) root.findViewById(R.id.chart);
@@ -125,11 +114,6 @@ public class ReportFragment extends Fragment {
         data[4] = 23f;
 
         pcv.drawPie(pieChart, labels, data);
-
-
-
-
-
 
         ImageButton dec, inc;
 
@@ -182,53 +166,5 @@ public class ReportFragment extends Fragment {
     }
 
 
-   /* public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        reportViewModel =
-                ViewModelProviders.of(this).get(ReportViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_report, container, false);
-        //final TextView textView = root.findViewById(R.id.text_report);
-        reportViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-          //      textView.setText(s);
-            }
-        });
-
-        ImageButton dec, inc;
-
-        final TextView month = root.findViewById(R.id.report_month);
-        final Calendar cal= Calendar.getInstance();
-
-        final SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
-        String selectedMonth=month_date.format(cal.getTime());
-        month.setText(selectedMonth);
-
-        dec = root.findViewById(R.id.left_arrow);
-        inc = root.findViewById(R.id.right_arrow);
-
-        dec.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cal.add(Calendar.MONTH, -1);
-                String selectedMonth=month_date.format(cal.getTime());
-                month.setText(selectedMonth);
-            }
-        });
-
-        inc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cal.add(Calendar.MONTH, 1);
-                String selectedMonth=month_date.format(cal.getTime());
-                month.setText(selectedMonth);
-
-            }
-        });
-
-
-
-
-        return root;
-    }*/
+    // TODO add interface (Mainly update)
 }

@@ -21,13 +21,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 
 public class RecordFragment extends Fragment {
 
@@ -73,59 +76,47 @@ public class RecordFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        recordViewModel =
-                ViewModelProviders.of(this).get(RecordViewModel.class);
-        //View root = inflater.inflate(R.layout.fragment_record, container, false);
+
         final View root = inflater.inflate(R.layout.fragment_record, container, false);
-        //final TextView textView = root.findViewById(R.id.text_record);
-        recordViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+
+        String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
+        final TextView todaydate = root.findViewById(R.id.record_current_date);
+        todaydate.setText(date_n);
+
+
+        CustomList adapter = new
+                CustomList(getActivity(), dates_in_list, cat_in_list);
+        list = root.findViewById(R.id.record_listView);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getActivity(), "You Clicked at " + dates_in_list[+position], Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-        final TextView todaydate  = root.findViewById(R.id.record_current_date);
-                todaydate.setText(date_n);
+        dateTXT_from = root.findViewById(R.id.record_date_from);
+        cal_from = root.findViewById(R.id.record_calpicker_from);
 
-
-        CustomList adapter = new
-                CustomList(getActivity(), dates_in_list , cat_in_list);
-        list=root.findViewById(R.id.record_listView);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+        cal_from.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar Cal = Calendar.getInstance();
+                int mDate = Cal.get(Calendar.DATE);
+                int mMonth = Cal.get(Calendar.MONTH);
+                int mYear = Cal.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view,
-                                            int position, long id) {
-                        Toast.makeText(getActivity(), "You Clicked at " + dates_in_list[+position], Toast.LENGTH_SHORT).show();
+                    public void onDateSet(DatePicker view, int year, int month, int date) {
+                        dateTXT_from.setText(date + "-" + (month + 1) + "-" + year);
                     }
-                });
-
-
-
-            dateTXT_from = root.findViewById(R.id.record_date_from);
-            cal_from = root.findViewById(R.id.record_calpicker_from);
-
-            cal_from.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    final Calendar Cal = Calendar.getInstance();
-                    int mDate = Cal.get(Calendar.DATE);
-                    int mMonth= Cal.get(Calendar.MONTH);
-                    int mYear= Cal.get(Calendar.YEAR);
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int date) {
-                            dateTXT_from.setText(date+"-" + (month + 1)  + "-" + year);
-                        }
-                    }, mYear,mMonth,mDate);
-                    datePickerDialog.show();
-                }
-            });
-
+                }, mYear, mMonth, mDate);
+                datePickerDialog.show();
+            }
+        });
 
 
         dateTXT_to = root.findViewById(R.id.record_date_to);
@@ -139,16 +130,35 @@ public class RecordFragment extends Fragment {
                 int mMonth = Cal1.get(Calendar.MONTH);
                 int mYear = Cal1.get(Calendar.YEAR);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int date) {
-                                dateTXT_to.setText(date+"-" + (month + 1) + "-" + year);
-                            }
-                        }, mYear,mMonth,mDate);
-                        //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());
-                        datePickerDialog.show();
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int date) {
+                        dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
+                    }
+                }, mYear, mMonth, mDate);
+                //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());
+                datePickerDialog.show();
             }
-   
+
         });
         return root;
+    }
+
+    void resetDateRange(LocalDate beginDate, LocalDate lastDate) {
+        // TODO: UI group: implement this function
+        //                 update the UI related to date
+        //                 and use this function when date range need to change
+
+
+
+        // TODO: DB group: implement this function
+        //                 re-select the data from the database
+
+
+
+    }
+
+    void whenRecordListUpdated(List<Record> newRecords) {
+        // TODO: UI group: implement this function
+        // TODO: DB group: call this function when data changes
     }
 }

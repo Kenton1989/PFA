@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa;
+package sg.edu.ntu.gg4u.pfa.ui.record;
 
 import android.os.Bundle;
 
@@ -7,9 +7,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.ui.guide.SectionsPagerAdapter;
 
-public class addIncome extends AppCompatActivity {
+public class AddRecordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,5 +20,10 @@ public class addIncome extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.addTab);
 
 
+    }
+
+    public void insertRecord(Record record) {
+        // TODO: Database group: implement this function
+        // TODO: UI group: use this function
     }
 }
