@@ -1,44 +1,51 @@
 package sg.edu.ntu.gg4u.pfa.persistence.UserProfile;
 
+import java.util.HashMap;
+
 public enum Gender {
-    UNKNOWN(0), MALE(1), FEMALE(2), SPECIAL(3);
+    UNKNOWN("Unknown"),
+    MALE("Male"),
+    FEMALE("Female"),
+    SPECIAL("Special");
 
-    private final int value;
+    private static final String TAG = "UserProfile.Gender";
 
-    Gender(int val) {
-        value = val;
+    private final String fullName;
+    private static HashMap<String, Gender> str2gen = null;
+
+    Gender(String fullName) {
+        if (getMap() == null) {
+            initMap();
+        }
+        if(getMap().containsKey(fullName)) {
+            throw new RuntimeException("The full name of gender must be unique");
+        }
+        this.fullName = fullName;
+        getMap().put(fullName, this);
     }
 
-//    public int toInt() {
-//        switch (this) {
-//            case UNKNOWN:
-//                return 0;
-//            case MALE:
-//                return 1;
-//            case FEMALE:
-//                return 2;
-//            case SPECIAL:
-//                return 3;
-//            default:
-//                return -1;
-//        }
-//    }
-//
-//    public static int toInt(Gender g) {
-//        return g.toInt();
-//    }
-//
-//    public static Gender fromInt(int val) {
-//        switch (val) {
-//            case 1:
-//                return MALE;
-//            case 2:
-//                return FEMALE;
-//            case 3:
-//                return SPECIAL;
-//            default:
-//                return UNKNOWN;
-//        }
-//    }
+    public String getFullName() {
+        return fullName;
+    }
+
+    public static Gender toGender(String fullName) {
+        return str2gen.get(fullName);
+    }
+
+    @Override
+    public String toString() {
+        return getFullName();
+    }
+
+    private HashMap<String, Gender> getMap() {
+        return str2gen;
+    }
+    private void initMap() {
+        str2gen = new HashMap<>();
+    }
+
+    public static String[] getAllGender() {
+        return (String[]) str2gen.keySet().toArray();
+    }
 
 }

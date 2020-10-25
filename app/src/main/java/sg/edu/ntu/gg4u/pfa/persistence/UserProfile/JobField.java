@@ -52,4 +52,8 @@ public enum JobField {
     private void initMap() {
         str2job = new HashMap<>();
     }
+
+    public static String[] getAllJobField() {
+        return (String[]) str2job.keySet().toArray();
+    }
 }
