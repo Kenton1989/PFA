@@ -4,8 +4,9 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfileDao;
+import sg.edu.ntu.gg4u.pfa.ui.ProfileDataSource;
 
-public class LocalProfileDataSource implements ProfileDataSource{
+public class LocalProfileDataSource implements ProfileDataSource {
 
     private final UserProfileDao mUserProfileDao;
 

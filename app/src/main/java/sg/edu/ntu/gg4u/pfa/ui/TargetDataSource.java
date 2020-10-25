@@ -1,4 +1,4 @@
-package sg.edu.ntu.gg4u.pfa.ui.target;
+package sg.edu.ntu.gg4u.pfa.ui;
 
 import java.time.LocalDate;
 import java.util.List;

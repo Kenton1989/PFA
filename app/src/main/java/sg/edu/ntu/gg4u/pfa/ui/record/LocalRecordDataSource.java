@@ -1,38 +1,39 @@
 package sg.edu.ntu.gg4u.pfa.ui.record;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.RecordDao;
 import sg.edu.ntu.gg4u.pfa.ui.RecordDataSource;
 
-public class RecordViewModel extends ViewModel {
+public class LocalRecordDataSource implements RecordDataSource {
 
-    private final RecordDataSource mDataSource;
-    
-    public RecordViewModel(RecordDataSource recordDataSource) {
-        mDataSource = recordDataSource;
+    private final RecordDao mDao;
+
+    public LocalRecordDataSource(RecordDao recordDao) {
+        mDao = recordDao;
     }
 
+    @Override
     public Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end) {
-        return mDataSource.getRecord(start, end);
+        return mDao.getRecord(start, end);
     }
 
+    @Override
     public Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end, String name) {
-        return mDataSource.getRecord(start, end, name);
+        return mDao.getRecord(start, end, name);
     }
 
+    @Override
     public Completable addRecord(Record record) {
-        return mDataSource.addRecord(record);
+        return mDao.addRecord(record);
     }
 
+    @Override
     public Completable deleteRecord(Record record) {
-        return mDataSource.deleteRecord(record);
+        return mDao.deleteRecord(record.getTimestamp());
     }
 }
