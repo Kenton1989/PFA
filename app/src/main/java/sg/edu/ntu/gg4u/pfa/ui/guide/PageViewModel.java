@@ -6,21 +6,21 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
+import io.reactivex.Flowable;
+import sg.edu.ntu.gg4u.pfa.persistence.GuideInfo.GuideInfo;
+import sg.edu.ntu.gg4u.pfa.ui.GuideInfoDataSource;
+
 public class PageViewModel extends ViewModel {
 
-    private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
-    private LiveData<String> mText = Transformations.map(mIndex, new Function<Integer, String>() {
-        @Override
-        public String apply(Integer input) {
-            return "Hello world from section: " + input;
-        }
-    });
+    private final GuideInfoDataSource mDataSource;
 
-    public void setIndex(int index) {
-        mIndex.setValue(index);
+    public PageViewModel(GuideInfoDataSource guideInfoDataSource) {
+        mDataSource = guideInfoDataSource;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public Flowable<List<GuideInfo>> getGuideInfo() {
+        return mDataSource.getGuideInfo();
     }
 }
