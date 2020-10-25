@@ -50,4 +50,8 @@ public enum AcademicQualification {
     private void initMap() {
         str2AQ = new HashMap<>();
     }
+
+    public static String[] getAllAcademicQualification() {
+        return (String[]) str2AQ.keySet().toArray();
+    }
 }
