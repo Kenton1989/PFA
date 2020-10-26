@@ -1,5 +1,6 @@
 package sg.edu.ntu.gg4u.pfa.ui.category;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -20,8 +21,12 @@ import android.widget.Toast;
 
 import com.androidplot.util.PixelUtils;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
 public class CreateCategoryFragment extends DialogFragment {
 //    EditText mEdit = (EditText)findViewById(R.id.categoryInput);
@@ -37,6 +42,7 @@ public class CreateCategoryFragment extends DialogFragment {
         super.onAttach(context);
         listener = (NoticeDialogListener) context;
     }
+
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -60,6 +66,11 @@ public class CreateCategoryFragment extends DialogFragment {
         return builder.create();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 //    public void submitCategory(View view) {
 //        String categoryName = mEdit.getText().toString();
 //        Boolean isAvailable = false;
@@ -78,6 +89,7 @@ public class CreateCategoryFragment extends DialogFragment {
 
     private void insertCategory(Category newCategory) {
         // TODO: UI group: use this function
-        // TODO: DB group: implement this function
+        // TODO: DB group: DO NOT implement this function until further notice
+
     }
 }

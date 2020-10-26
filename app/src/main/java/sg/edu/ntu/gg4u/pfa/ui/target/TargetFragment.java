@@ -121,5 +121,14 @@ public class TargetFragment extends Fragment {
     }
 
 
+    private void insertOrUpdateTarget(Target record) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
+
+    private void deleteTarget(Target record) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
 
 }

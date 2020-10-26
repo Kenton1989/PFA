@@ -155,11 +155,22 @@ public class RecordFragment extends Fragment {
         // TODO: DB group: implement this function
         //                 re-select the data from the database
 
+
     }
 
     public void whenRecordListUpdated(List<Record> newRecords) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: call this function when data changes
+    }
+
+    private void insertOrUpdateRecord(Record record) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
+
+    private void deleteRecord(Record record) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
     }
 }
