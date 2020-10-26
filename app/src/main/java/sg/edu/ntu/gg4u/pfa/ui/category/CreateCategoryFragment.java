@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.androidplot.util.PixelUtils;
 
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 
 public class CreateCategoryFragment extends DialogFragment {
 //    EditText mEdit = (EditText)findViewById(R.id.categoryInput);
@@ -75,4 +76,8 @@ public class CreateCategoryFragment extends DialogFragment {
 //        /* in else block */ Toast.makeText(this, "Category already exists!", Toast.LENGTH_SHORT).show();
 //    }
 
+    private void insertCategory(Category newCategory) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
 }

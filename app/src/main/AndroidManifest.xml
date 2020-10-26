@@ -11,10 +11,6 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.category.CreateCategoryActivity"
-            android:label="@string/title_category"
-            android:parentActivityName=".ui.category.CategoryActivity" />
-        <activity
             android:name=".ui.category.CategoryActivity"
             android:label="@string/title_category"
             android:parentActivityName=".MainActivity" />
@@ -25,10 +21,6 @@
         <activity
             android:name=".ui.profile.ProfileActivity"
             android:label="@string/title_profile"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".ui.record.AddRecordActivity"
-            android:label="@string/title_add_record"
             android:parentActivityName=".MainActivity" />
 
         <activity

@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.List;
 
 import sg.edu.ntu.gg4u.pfa.R;
-import sg.edu.ntu.gg4u.pfa.addIncome;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.ui.home.CustomListHome;
 import sg.edu.ntu.gg4u.pfa.ui.home.HomeFragment;

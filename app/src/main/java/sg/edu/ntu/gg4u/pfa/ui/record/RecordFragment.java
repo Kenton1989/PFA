@@ -144,7 +144,9 @@ public class RecordFragment extends Fragment {
         return root;
     }
 
-    void resetDataRange(LocalDate beginDate, LocalDate lastDate, Category selectedCategory) {
+    private void resetDataRange(LocalDate beginDate, LocalDate endDate, Category selectedCategory) {
+        // When the selectedCategory is NULL, display all the record.
+
         // TODO: UI group: implement this function
         //                 update the UI related to date
         //                 and use this function when date range need to change
@@ -156,7 +158,8 @@ public class RecordFragment extends Fragment {
 
     }
 
-    void whenRecordListUpdated(List<Record> newRecords) {
+    public void whenRecordListUpdated(List<Record> newRecords) {
+        // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: call this function when data changes
     }

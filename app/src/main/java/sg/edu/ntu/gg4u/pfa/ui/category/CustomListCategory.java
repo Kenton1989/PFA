@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import java.util.ArrayList;
 
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 
 public class CustomListCategory extends ArrayAdapter<String>{
 
@@ -44,5 +45,10 @@ public class CustomListCategory extends ArrayAdapter<String>{
         catTitle.setText(catList.get(position));
 
         return rowView;
+    }
+
+    private void deleteCategory(Category category) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
     }
 }

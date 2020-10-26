@@ -1,6 +1,5 @@
 package sg.edu.ntu.gg4u.pfa.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
-import sg.edu.ntu.gg4u.pfa.ui.record.AddRecordActivity;
 
 public class HomeFragment extends Fragment {
 
@@ -55,37 +53,17 @@ public class HomeFragment extends Fragment {
         list.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.addItemBtn);
-        fab.setOnClickListener(view -> openEditorView());
+        fab.setOnClickListener(view -> openRecordEditor());
 
         return root;
     }
 
-    private void openEditorView() {
-        Intent i = new Intent(HomeFragment.this.getActivity(), AddRecordActivity.class);
-        startActivity(i);
+    private void openRecordEditor() {
+
     }
 
-
-    public void whenCategoryListUpdated(List<Category> newCategoryList) {
-        // this activity will be called when the fragment is created.
-        // TODO: UI group: implement this function
-        // TODO: DB group: use this function when data changes
-    }
-
-    public void whenTodayRecordListUpdated(List<Record> newRecordInToday) {
-        // this activity will be called when the fragment is created.
-        // TODO: UI group: implement this function
-        // TODO: DB group: use this function when data changes
-    }
-
-    public void whenTargetListUpdated(List<Target> newTargetList) {
-        // this activity will be called when the fragment is created.
-        // TODO: UI group: implement this function
-        // TODO: DB group: use this function when data changes
-    }
-
-    public void whenDataUpdated(List<Category> newCategoryList, List<Record> newRecordInToday, List<Target> newTargetList) {
-        // this activity will be called when the fragment is created.
+    public void whenDataUpdated(List<Category> newCategoryList, List<Record> newRecordsInToday, List<Target> newTargetList) {
+        // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
     }
