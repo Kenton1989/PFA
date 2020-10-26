@@ -2,6 +2,7 @@ package sg.edu.ntu.gg4u.pfa.ui.record;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 
-public class EditRecordFragment extends Fragment {
+public class EditRecordFragment extends DialogFragment {
 
     EditRecordFragment() {
         // Required empty public constructor
@@ -33,11 +34,11 @@ public class EditRecordFragment extends Fragment {
 
     private void insertOrUpdateRecord(Record record) {
         // TODO: UI group: use this function
-        // TODO: DB group: implement this function
+        // TODO: DB group: DO NOT implement this function until further notice
     }
 
     private void deleteRecord(Record record) {
         // TODO: UI group: use this function
-        // TODO: DB group: implement this function
+        // TODO: DB group: DO NOT implement this function until further notice
     }
 }

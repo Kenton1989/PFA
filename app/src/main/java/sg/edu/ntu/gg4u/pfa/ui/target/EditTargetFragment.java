@@ -2,6 +2,7 @@ package sg.edu.ntu.gg4u.pfa.ui.target;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
  * Use the {@link EditTargetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditTargetFragment extends Fragment {
+public class EditTargetFragment extends DialogFragment {
 
     public EditTargetFragment() {
         // Required empty public constructor
@@ -38,11 +39,11 @@ public class EditTargetFragment extends Fragment {
 
     private void insertOrUpdateTarget(Target record) {
         // TODO: UI group: use this function
-        // TODO: DB group: implement this function
+        // TODO: DB group: DO NOT implement this function until further notice
     }
 
     private void deleteTarget(Target record) {
         // TODO: UI group: use this function
-        // TODO: DB group: implement this function
+        // TODO: DB group: DO NOT implement this function until further notice
     }
 }

@@ -13,6 +13,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 
@@ -21,12 +25,19 @@ public class CustomListCategory extends ArrayAdapter<String>{
     private final Activity context;
     private final ArrayList<String> catList;
 
+    // Database view model stuffs
+    CategoryViewModel mViewModel;
+    CompositeDisposable mDisposable = new CompositeDisposable();
+    // Database view model stuffs END
+
     public CustomListCategory(Activity context,
-                              ArrayList<String> catList) {
+                              ArrayList<String> catList,
+                              CategoryViewModel viewModel) {
         super(context, R.layout.activity_category_listview, catList);
         this.context = context;
         this.catList = catList;
 
+        this.mViewModel = viewModel;
 
     }
     @Override
@@ -50,5 +61,10 @@ public class CustomListCategory extends ArrayAdapter<String>{
     private void deleteCategory(Category category) {
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
+
+        mDisposable.add(mViewModel.createNewCategory(category)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
 }
