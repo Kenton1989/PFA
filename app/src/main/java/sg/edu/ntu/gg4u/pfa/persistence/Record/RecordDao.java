@@ -14,10 +14,7 @@ import io.reactivex.Flowable;
 @Dao
 public interface RecordDao {
 
-    class SumByCategory {
-        public String categoryName;
-        public Double sum;
-    }
+
 
     @Query("SELECT * FROM Record WHERE timestamp > :start " +
             "AND timestamp < :end")
@@ -35,10 +32,15 @@ public interface RecordDao {
             "AND categoryName = :name")
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end, String name);
 
-    @Query("SELECT categoryName, SUM(amount) " +
+    @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
             "FROM Record WHERE timestamp > :start AND timestamp < :end " +
             "GROUP BY categoryName")
     Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end);
+
+    class SumByCategory {
+        public String categoryName;
+        public Double sum;
+    }
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     Completable addRecord(Record record);
