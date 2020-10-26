@@ -5,11 +5,9 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.UUID;
-
 @Entity(tableName = "UserProfile")
 public class UserProfile {
-
+    private static String THE_ONLY_ID = "10271ryh9e";
     @NonNull
     @PrimaryKey
     private String userId;
@@ -24,24 +22,25 @@ public class UserProfile {
 
     @Ignore
     public UserProfile(String _name, Gender _gender, JobField _jobField,
-                       int _familySize, double _income, AcademicQualification aq) {
-        userId = UUID.randomUUID().toString();
-
+                       Integer _familySize, Double _income, Integer _age, AcademicQualification aq) {
+        userId = THE_ONLY_ID;
         name = _name;
         gender = _gender;
         jobField = _jobField;
         familySize = _familySize;
         income = _income;
+        age = _age;
         qualification = aq;
     }
 
     public UserProfile() {
-        userId = "dummy";
+        userId = THE_ONLY_ID;
         name = "dummy";
         gender = Gender.MALE;
         jobField = JobField.UNKNOWN;
         familySize = 0;
         income = 0.0;
+        age = 0;
         qualification = AcademicQualification.UNKNOWN;
     }
 

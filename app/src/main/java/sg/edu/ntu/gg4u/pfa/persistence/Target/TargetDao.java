@@ -32,5 +32,5 @@ public interface TargetDao {
     Completable setCurrentTarget(Target target);
 
     @Query("DELETE FROM Target WHERE categoryName = :name AND startDate = :date")
-    void deleteTarget(String name, LocalDate date);
+    Completable deleteTarget(String name, LocalDate date);
 }

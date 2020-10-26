@@ -59,11 +59,11 @@ public abstract class Database extends RoomDatabase {
     public GuideInfo[] getGuideInfoList() {
         return new GuideInfo[]{
                 new GuideInfo(1, R.drawable.guide_img_1, R.string.guide_intro_1),
-                new GuideInfo(1, R.drawable.guide_img_2, R.string.guide_intro_2),
-                new GuideInfo(1, R.drawable.guide_img_3, R.string.guide_intro_3),
-                new GuideInfo(1, R.drawable.guide_img_4, R.string.guide_intro_4),
-                new GuideInfo(1, R.drawable.guide_img_5, R.string.guide_intro_5),
-                new GuideInfo(1, R.drawable.guide_img_6, R.string.guide_intro_6)
+                new GuideInfo(2, R.drawable.guide_img_2, R.string.guide_intro_2),
+                new GuideInfo(3, R.drawable.guide_img_3, R.string.guide_intro_3),
+                new GuideInfo(4, R.drawable.guide_img_4, R.string.guide_intro_4),
+                new GuideInfo(5, R.drawable.guide_img_5, R.string.guide_intro_5),
+                new GuideInfo(6, R.drawable.guide_img_6, R.string.guide_intro_6)
         };
     }
 }

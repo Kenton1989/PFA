@@ -60,4 +60,9 @@ public class CustomListCategory extends ArrayAdapter<String>{
 
         return rowView;
     }
+
+    private void deleteCategory(Category category) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
 }

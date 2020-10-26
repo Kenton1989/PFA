@@ -21,5 +21,5 @@ public interface CategoryDao {
     Completable createNewCategory(Category category);
 
     @Query("DELETE FROM Category WHERE name = :name")
-    void deleteCategory(String name);
+    Completable deleteCategory(String name);
 }

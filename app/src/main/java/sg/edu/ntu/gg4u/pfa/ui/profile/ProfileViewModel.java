@@ -1,18 +1,25 @@
 package sg.edu.ntu.gg4u.pfa.ui.profile;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ProfileViewModel extends ViewModel {
-    private MutableLiveData<String> mText;
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.ui.ProfileDataSource;
 
-    public ProfileViewModel() {
-        mText = new MutableLiveData<>();
-        // mText.setValue("This is home fragment");
+public class ProfileViewModel extends ViewModel {
+
+    private final ProfileDataSource mDataSource;
+
+    public ProfileViewModel(ProfileDataSource dataSource) {
+        mDataSource = dataSource;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public Flowable<UserProfile> getUserProfile() {
+        return mDataSource.getUserProfile();
+    }
+
+    public Completable updateUserProfile(final UserProfile userProfile) {
+        return mDataSource.updateUserProfile(userProfile);
     }
 }

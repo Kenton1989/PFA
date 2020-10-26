@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import sg.edu.ntu.gg4u.pfa.R;
@@ -30,8 +29,8 @@ public class CustomList extends ArrayAdapter<String>{
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.fragment_record_listview, null, true);
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.list_date);
-        TextView catTitle = (TextView) rowView.findViewById(R.id.category);
+        TextView txtTitle = (TextView) rowView.findViewById(R.id.recordlist_date);
+        TextView catTitle = (TextView) rowView.findViewById(R.id.recordlist_category);
         //TextView amtTitle = (TextView) rowView.findViewById(R.id.amount);
         txtTitle.setText(dates_in_list[position]);
         catTitle.setText(cat_in_list[position]);

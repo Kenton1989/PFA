@@ -21,13 +21,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 
 public class RecordFragment extends Fragment {
 
@@ -73,27 +77,17 @@ public class RecordFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        recordViewModel =
-                ViewModelProviders.of(this).get(RecordViewModel.class);
-        //View root = inflater.inflate(R.layout.fragment_record, container, false);
-        final View root = inflater.inflate(R.layout.fragment_record, container, false);
-        //final TextView textView = root.findViewById(R.id.text_record);
-        recordViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
-            }
-        });
 
+        final View root = inflater.inflate(R.layout.fragment_record, container, false);
 
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-        final TextView todaydate = root.findViewById(R.id.date);
+        final TextView todaydate = root.findViewById(R.id.record_current_date);
         todaydate.setText(date_n);
 
 
         CustomList adapter = new
                 CustomList(getActivity(), dates_in_list, cat_in_list);
-        list = root.findViewById(R.id.listView);
+        list = root.findViewById(R.id.record_listView);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -105,8 +99,8 @@ public class RecordFragment extends Fragment {
         });
 
 
-        dateTXT_from = root.findViewById(R.id.date_from);
-        cal_from = root.findViewById(R.id.calpicker_from);
+        dateTXT_from = root.findViewById(R.id.record_date_from);
+        cal_from = root.findViewById(R.id.record_calpicker_from);
 
         cal_from.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,16 +112,16 @@ public class RecordFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
-                        dateTXT_from.setText(date + "-" + month + "-" + year);
+                        dateTXT_from.setText(date + "-" + (month + 1) + "-" + year);
                     }
                 }, mYear, mMonth, mDate);
                 datePickerDialog.show();
             }
         });
 
-        dateTXT_to = root.findViewById(R.id.date_to);
-        cal_to = root.findViewById(R.id.calpicker_to);
 
+        dateTXT_to = root.findViewById(R.id.record_date_to);
+        cal_to = root.findViewById(R.id.record_calpicker_to);
 
         cal_to.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,13 +133,33 @@ public class RecordFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
-                        dateTXT_to.setText(date + "-" + month + "-" + year);
+                        dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
                     }
                 }, mYear, mMonth, mDate);
                 //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());
                 datePickerDialog.show();
             }
+
         });
         return root;
+    }
+
+    private void resetDataRange(LocalDate beginDate, LocalDate endDate, Category selectedCategory) {
+        // When the selectedCategory is NULL, display all the record.
+
+        // TODO: UI group: 1. implement this function, update the UI related to date
+        //                 2. use this function when date range need to change
+
+
+
+        // TODO: DB group: implement this function
+        //                 re-select the data from the database
+
+    }
+
+    public void whenRecordListUpdated(List<Record> newRecords) {
+        // this function will be called when the fragment is created.
+        // TODO: UI group: implement this function
+        // TODO: DB group: call this function when data changes
     }
 }
