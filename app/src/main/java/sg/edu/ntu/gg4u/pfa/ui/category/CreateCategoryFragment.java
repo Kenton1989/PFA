@@ -58,21 +58,4 @@ public class CreateCategoryFragment extends DialogFragment {
                 });
         return builder.create();
     }
-
-//    public void submitCategory(View view) {
-//        String categoryName = mEdit.getText().toString();
-//        Boolean isAvailable = false;
-        // categoryIDs = getAllCategoryID()
-        // for (i = 0; i < categoryIDs.size(); i++) {
-        //     if (getCategoryInfo(categoryIDs[i]).name == categoryName)
-        //         break;
-        //     else isAvailable = true;
-        // if (isAvailable) {
-        //     createNewCategory(categoryName);
-//        /* in if block */ Toast.makeText(this, "Category created!", Toast.LENGTH_SHORT).show();
-//        // }
-//        // else
-//        /* in else block */ Toast.makeText(this, "Category already exists!", Toast.LENGTH_SHORT).show();
-//    }
-
 }

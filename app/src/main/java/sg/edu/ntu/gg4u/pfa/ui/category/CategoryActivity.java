@@ -41,7 +41,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
 
     EditText mEdit;
     ListView list;
-    ArrayList<String> catList = new ArrayList<>(Arrays.asList("Food", "Entertainment", "Leisure", "Transportation", "Others"));
+    ArrayList<String> catList = new ArrayList<>(Arrays.asList("Food", "Entertainment", "Leisure", "Transportation", "Others", "New"));
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
