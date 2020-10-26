@@ -181,16 +181,23 @@ public class ReportFragment extends Fragment {
 
     }
 
-    void whenTargetChanged(List<Target> newTargets) {
+    void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
         // this function will be called when the fragment is created.
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
     }
 
-    void whenRecordChanged(List<SumByCategory> newRecords) {
+    void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
     }
+
+    void whenRecordListUpdated(List<Record> newRecord) {
+        // this function will be called when the fragment is created.
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
+
 
 }

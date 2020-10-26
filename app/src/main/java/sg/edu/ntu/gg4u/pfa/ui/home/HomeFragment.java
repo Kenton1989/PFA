@@ -71,7 +71,6 @@ public class HomeFragment extends Fragment {
     }
 
     public void whenDataUpdated(List<SumByCategory> newDailyCost) {
-        // one category maps to one daily cost
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
