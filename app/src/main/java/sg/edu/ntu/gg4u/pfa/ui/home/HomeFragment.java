@@ -24,10 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
 
 import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.addIncome;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
 
@@ -50,36 +53,11 @@ public class HomeFragment extends Fragment {
             "7000"
     } ;
 
+    private ViewModelFactory mViewModelFactory;
 
+    private HomeViewModel mViewModel;
 
-    private HomeViewModel homeViewModel;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
- public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-     //   View root = inflater.inflate(R.layout.fragment_home, container, false);
-    //  final TextView textView = root.findViewById(R.id.totalExpense);
-        final View root = inflater.inflate(R.layout.fragment_home, container, false);
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//               // textView.setText(s);
-//                CustomListHome adapter = new
-//                        CustomListHome(getActivity(),  cat_in_list , amount_in_list);
-//                list= root.findViewById(R.id.listHome);
-//                list.setAdapter(adapter);
-//            }
-//        });
-        FloatingActionButton fab =(FloatingActionButton)root.findViewById(R.id.addItemBtn);
-         fab.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent i= new Intent(HomeFragment.this.getActivity(), addIncome.class);
-                 startActivity(i);
-             }
-         });
-        return root;
-    }
 
 }

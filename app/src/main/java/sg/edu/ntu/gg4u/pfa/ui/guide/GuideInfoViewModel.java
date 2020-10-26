@@ -12,11 +12,11 @@ import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.GuideInfo.GuideInfo;
 import sg.edu.ntu.gg4u.pfa.ui.GuideInfoDataSource;
 
-public class PageViewModel extends ViewModel {
+public class GuideInfoViewModel extends ViewModel {
 
     private final GuideInfoDataSource mDataSource;
 
-    public PageViewModel(GuideInfoDataSource guideInfoDataSource) {
+    public GuideInfoViewModel(GuideInfoDataSource guideInfoDataSource) {
         mDataSource = guideInfoDataSource;
     }
 

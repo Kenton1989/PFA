@@ -4,9 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import sg.edu.ntu.gg4u.pfa.persistence.GuideInfo.GuideInfoDao;
 import sg.edu.ntu.gg4u.pfa.ui.category.CategoryViewModel;
-import sg.edu.ntu.gg4u.pfa.ui.guide.PageViewModel;
+import sg.edu.ntu.gg4u.pfa.ui.guide.GuideInfoViewModel;
 import sg.edu.ntu.gg4u.pfa.ui.home.HomeViewModel;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 import sg.edu.ntu.gg4u.pfa.ui.record.RecordViewModel;
@@ -45,8 +44,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(RecordViewModel.class)) {
             return (T) new RecordViewModel(mRecordDataSource);
         }
-        if (modelClass.isAssignableFrom(PageViewModel.class)) {
-            return (T) new PageViewModel(mGuideInfoDataSource);
+        if (modelClass.isAssignableFrom(GuideInfoViewModel.class)) {
+            return (T) new GuideInfoViewModel(mGuideInfoDataSource);
         }
         if (modelClass.isAssignableFrom(CategoryViewModel.class)) {
             return (T) new CategoryViewModel(mCategoryDataSource);
@@ -56,7 +55,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     (mRecordDataSource, mTargetDataSource, mProfileDataSource);
         }
         if (modelClass.isAssignableFrom(HomeViewModel.class)) {
-            return (T) new HomeViewModel(mRecordDataSource, mTargetDataSource);
+            return (T) new HomeViewModel
+                    (mRecordDataSource, mTargetDataSource, mCategoryDataSource);
         }
         return null;
     }

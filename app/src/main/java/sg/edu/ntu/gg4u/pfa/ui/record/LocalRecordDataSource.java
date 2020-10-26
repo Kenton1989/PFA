@@ -38,6 +38,11 @@ public class LocalRecordDataSource implements RecordDataSource {
     }
 
     @Override
+    public Flowable<List<RecordDao.SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end){
+        return mDao.getGroupedRecordSum(start, end);
+    }
+
+    @Override
     public Completable addRecord(Record record) {
         return mDao.addRecord(record);
     }
