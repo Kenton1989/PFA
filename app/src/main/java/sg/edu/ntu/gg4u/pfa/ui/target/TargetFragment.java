@@ -103,6 +103,7 @@ public class TargetFragment extends Fragment {
     }
 
     private void resetMonth(Calendar calendar) {
+        // If the month is changed
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when month range need to change
 
@@ -113,7 +114,8 @@ public class TargetFragment extends Fragment {
 
     }
 
-    public void whenTargetListChanged(List<Target> newTargetList) {
+    public void whenDataChanged(List<Target> newTargetList, List<Double> newMonthlyCost) {
+        // One target maps to one monthly cost
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
     }

@@ -147,9 +147,8 @@ public class RecordFragment extends Fragment {
     private void resetDataRange(LocalDate beginDate, LocalDate endDate, Category selectedCategory) {
         // When the selectedCategory is NULL, display all the record.
 
-        // TODO: UI group: implement this function
-        //                 update the UI related to date
-        //                 and use this function when date range need to change
+        // TODO: UI group: 1. implement this function, update the UI related to date
+        //                 2. use this function when date range need to change
 
 
 

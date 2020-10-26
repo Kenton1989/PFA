@@ -17,11 +17,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
 
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
-import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
-import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
-import sg.edu.ntu.gg4u.pfa.MainActivity;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
-import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
 
@@ -65,11 +62,16 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    private void openRecordEditor(Category category) {
+
+    }
+
     private void openRecordEditor() {
 
     }
 
-    public void whenDataUpdated(List<Category> newCategoryList, List<Record> newRecordsInToday, List<Target> newTargetList) {
+    public void whenDataUpdated(List<SumByCategory> newDailyCost) {
+        // one category maps to one daily cost
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes

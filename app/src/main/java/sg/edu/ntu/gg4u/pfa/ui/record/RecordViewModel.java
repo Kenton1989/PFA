@@ -8,7 +8,7 @@ import java.util.List;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
-import sg.edu.ntu.gg4u.pfa.persistence.Record.RecordDao;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.ui.RecordDataSource;
 
 public class RecordViewModel extends ViewModel {
@@ -36,7 +36,7 @@ public class RecordViewModel extends ViewModel {
         return mDataSource.getRecordSum(start, end, name);
     }
 
-    public Flowable<List<RecordDao.SumByCategory>> getGroupedRecordSum
+    public Flowable<List<SumByCategory>> getGroupedRecordSum
             (LocalDateTime start, LocalDateTime end) {
         return mDataSource.getGroupedRecordSum(start, end);
     }

@@ -146,8 +146,4 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         // TODO: DB group: the function when data changes
 
     }
-    private void deleteCategory(Category category) {
-        // TODO: UI group: use this function to delete category
-        // TODO: DB group: implement this function
-    }
 }

@@ -41,6 +41,7 @@ import java.util.List;
 
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.ui.record.CustomList;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
@@ -180,15 +181,16 @@ public class ReportFragment extends Fragment {
 
     }
 
-    void whenRecordChanged(List<Record> newRecords) {
-        // this function will be called when the fragment is created.
-        // TODO: UI group: use this function
-        // TODO: DB group: implement this function
-    }
-
     void whenTargetChanged(List<Target> newTargets) {
         // this function will be called when the fragment is created.
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
     }
+
+    void whenRecordChanged(List<SumByCategory> newRecords) {
+        // this function will be called when the fragment is created.
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
+
 }
