@@ -23,7 +23,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "This is a tag";
 
-    private ProfileViewModel profileViewModel;
     private TextView userName,userGender,userJobfield,userIncome,userFamilySize;
 
     private ProfileViewModel mViewModel;

@@ -13,11 +13,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
 
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
+import sg.edu.ntu.gg4u.pfa.MainActivity;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
 
@@ -38,8 +42,11 @@ public class HomeFragment extends Fragment {
             "7000"
     };
 
+    private ViewModelFactory mViewModelFactory;
 
-    private HomeViewModel homeViewModel;
+    private HomeViewModel mViewModel;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

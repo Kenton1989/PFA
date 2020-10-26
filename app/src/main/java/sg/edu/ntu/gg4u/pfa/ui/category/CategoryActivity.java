@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import android.view.View.MeasureSpec;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,9 @@ import java.util.List;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.ui.home.CustomListHome;
@@ -37,6 +41,9 @@ import sg.edu.ntu.gg4u.pfa.ui.home.HomeFragment;
 import sg.edu.ntu.gg4u.pfa.ui.home.HomeViewModel;
 import sg.edu.ntu.gg4u.pfa.ui.profile.EditProfileActivity;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
+import sg.edu.ntu.gg4u.pfa.ui.Injection;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class CategoryActivity extends FragmentActivity implements CreateCategoryFragment.NoticeDialogListener {
 
@@ -91,6 +98,14 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         dialog.getDialog().cancel();
     }
 
+    private static final String TAG = "ui.CategoryActivity";
+
+    private ViewModelFactory mViewModelFactory;
+
+    private CategoryViewModel mViewModel;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +115,11 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         list.setAdapter(adapter);
         setListViewHeightBasedOnChildren(list);
 
+        mViewModelFactory = Injection.provideViewModelFactory(this);
+        mViewModel = new ViewModelProvider(this, mViewModelFactory)
+                .get(CategoryViewModel.class);
+
+
         Button cr8 = findViewById(R.id.createCategoryBtn);
         cr8.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +128,16 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
                 createFrag.show(getSupportFragmentManager(), "create");
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        mDisposable.add(mViewModel.getAllCategory()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenCategoryListChanged));
     }
 
     public void whenCategoryListChanged(List<Category> newList) {
