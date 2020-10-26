@@ -7,6 +7,7 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.RecordDao;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.ui.RecordDataSource;
 
 public class LocalRecordDataSource implements RecordDataSource {
@@ -38,7 +39,7 @@ public class LocalRecordDataSource implements RecordDataSource {
     }
 
     @Override
-    public Flowable<List<RecordDao.SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end){
+    public Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end){
         return mDao.getGroupedRecordSum(start, end);
     }
 

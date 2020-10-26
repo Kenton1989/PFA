@@ -11,10 +11,6 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.category.CreateCategoryActivity"
-            android:label="@string/title_category"
-            android:parentActivityName=".ui.category.CategoryActivity" />
-        <activity
             android:name=".ui.category.CategoryActivity"
             android:label="@string/title_category"
             android:parentActivityName=".MainActivity" />
@@ -26,7 +22,6 @@
             android:name=".ui.profile.ProfileActivity"
             android:label="@string/title_profile"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".addIncome"/>
 
         <activity
             android:name=".MainActivity"
@@ -41,8 +36,8 @@
         <activity
             android:name=".ui.guide.GuideActivity"
             android:label="@string/title_guide"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".MainActivity" />
+
         <uses-library android:name="android.test.runner" />
         <uses-library android:name="android.test.base" />
         <uses-library android:name="android.test.mock" />

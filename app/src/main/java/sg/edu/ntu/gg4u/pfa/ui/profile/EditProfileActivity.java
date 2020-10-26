@@ -88,6 +88,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         mViewModelFactory = Injection.provideViewModelFactory(this);
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(ProfileViewModel.class);
+
     }
 
     @Override
@@ -137,6 +138,10 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         Integer famSize = null;
         Integer age = null;
         AcademicQualification academicQualification = null;
+
+        if (name.length() == 0) {
+            name = "Nameless";
+        }
 
         int genderIndex = spinGender.getSelectedItemPosition();
         gender = Gender.toGender(genders[genderIndex]);

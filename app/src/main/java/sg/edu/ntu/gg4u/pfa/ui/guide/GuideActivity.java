@@ -24,12 +24,6 @@ public class GuideActivity extends AppCompatActivity {
 
     private static final String TAG = "ui.GuideActivity";
 
-    private ViewModelFactory mViewModelFactory;
-
-    private GuideInfoViewModel mViewModel;
-
-    private final CompositeDisposable mDisposable = new CompositeDisposable();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,21 +34,8 @@ public class GuideActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.guide_tabs);
         tabs.setupWithViewPager(viewPager);
-
-        mViewModelFactory = Injection.provideViewModelFactory(this);
-        mViewModel = new ViewModelProvider(this, mViewModelFactory)
-                .get(GuideInfoViewModel.class);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        mDisposable.add(mViewModel.getGuideInfo()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::whenGuideInfoUpdated));
-    }
 
     private void whenGuideInfoUpdated(List<GuideInfo> guideInfos) {
 

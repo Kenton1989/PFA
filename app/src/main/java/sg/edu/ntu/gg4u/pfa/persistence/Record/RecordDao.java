@@ -39,11 +39,6 @@ public interface RecordDao {
             "GROUP BY categoryName ORDER BY timestamp DESC")
     Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end);
 
-    class SumByCategory {
-        public String categoryName;
-        public Double sum;
-    }
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     Completable addRecord(Record record);
 
