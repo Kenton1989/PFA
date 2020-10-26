@@ -36,8 +36,7 @@
         <activity
             android:name=".ui.guide.GuideActivity"
             android:label="@string/title_guide"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".MainActivity" />
 
         <uses-library android:name="android.test.runner" />
         <uses-library android:name="android.test.base" />
