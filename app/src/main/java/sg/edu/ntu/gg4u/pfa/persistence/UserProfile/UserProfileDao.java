@@ -15,9 +15,6 @@ public interface UserProfileDao {
     @Query("SELECT * FROM UserProfile")
     Flowable<UserProfile> getUserProfile();
 
-    @Query("SELECT SUM(income) FROM UserProfile")
-    Flowable<Double> getIncomeSum();
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable updateUserProfile(UserProfile userProfile);
 

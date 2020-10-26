@@ -6,6 +6,5 @@ import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 
 public interface ProfileDataSource {
     Flowable<UserProfile> getUserProfile();
-    Flowable<Double> getIncomeSum();
     Completable updateUserProfile(UserProfile userProfile);
 }
