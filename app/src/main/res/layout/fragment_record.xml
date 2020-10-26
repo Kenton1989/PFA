@@ -45,6 +45,8 @@
         android:layout_width="98dp"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
+        android:autofillHints=""
+        android:enabled="false"
         android:hint="DD-MM-YYYY"
         android:inputType="datetime"
         android:textSize="15sp"
@@ -53,8 +55,7 @@
         app:layout_constraintHorizontal_bias="0.805"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_current_date"
-        app:layout_constraintVertical_bias="1.0"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <View
         android:id="@+id/record_end_view"
@@ -124,6 +125,8 @@
         android:id="@+id/record_date_from"
         android:layout_width="98dp"
         android:layout_height="40dp"
+        android:autofillHints=""
+        android:enabled="false"
         android:hint="DD-MM-YYYY"
         android:inputType="date"
         android:textSize="15sp"
@@ -132,21 +135,20 @@
         app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
-        app:layout_constraintVertical_bias="1.0"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/record_calpicker_from"
         android:layout_width="32dp"
         android:layout_height="35dp"
+        android:layout_toEndOf="@+id/record_date_from"
         android:layout_toRightOf="@+id/record_date_from"
         android:contentDescription="@string/dummy"
         android:src="@drawable/calendar"
         app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
         app:layout_constraintEnd_toStartOf="@+id/record_text_to"
         app:layout_constraintStart_toEndOf="@+id/record_date_from"
-        app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
-        android:layout_toEndOf="@+id/record_date_from" />
+        app:layout_constraintTop_toBottomOf="@+id/record_date_upview" />
 
     <TextView
         android:id="@+id/record_text_to"
@@ -228,6 +230,7 @@
         android:id="@+id/record_calpicker_to"
         android:layout_width="32dp"
         android:layout_height="35dp"
+        android:layout_toEndOf="@+id/record_date_to"
         android:layout_toRightOf="@+id/record_date_to"
         android:src="@drawable/calendar"
         app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
@@ -235,8 +238,7 @@
         app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toEndOf="@+id/record_date_to"
         app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
-        app:layout_constraintVertical_bias="0.625"
-        android:layout_toEndOf="@+id/record_date_to" />
+        app:layout_constraintVertical_bias="0.625" />
 
 
     <ListView
@@ -251,24 +253,24 @@
 
 
     </ListView>
-<!--    <ScrollView-->
-<!--        android:id="@+id/record_scrollView"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/record_list_upview"-->
-<!--        app:layout_constraintVertical_bias="0.0">-->
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/record_scrollView"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/record_list_upview"-->
+    <!--        app:layout_constraintVertical_bias="0.0">-->
 
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:orientation="vertical">-->
 
 
-<!--        </LinearLayout>-->
-<!--    </ScrollView>-->
+    <!--        </LinearLayout>-->
+    <!--    </ScrollView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
