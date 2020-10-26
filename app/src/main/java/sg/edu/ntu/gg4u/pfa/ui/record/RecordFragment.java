@@ -73,8 +73,8 @@ public class RecordFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        recordViewModel =
-                ViewModelProviders.of(this).get(RecordViewModel.class);
+//        recordViewModel =
+//                ViewModelProviders.of(this).get(RecordViewModel.class);
         //View root = inflater.inflate(R.layout.fragment_record, container, false);
         final View root = inflater.inflate(R.layout.fragment_record, container, false);
         //final TextView textView = root.findViewById(R.id.text_record);

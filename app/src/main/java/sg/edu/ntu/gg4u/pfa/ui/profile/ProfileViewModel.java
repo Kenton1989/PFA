@@ -19,6 +19,10 @@ public class ProfileViewModel extends ViewModel {
         return mDataSource.getUserProfile();
     }
 
+    public Flowable<Double> getIncomeSum() {
+        return mDataSource.getIncomeSum();
+    }
+
     public Completable updateUserProfile(final UserProfile userProfile) {
         return mDataSource.updateUserProfile(userProfile);
     }

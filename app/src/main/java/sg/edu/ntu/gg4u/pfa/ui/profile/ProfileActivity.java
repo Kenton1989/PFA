@@ -83,6 +83,11 @@ public class ProfileActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenProfileUpdated));
+
+        mDisposable.add(mViewModel.getIncomeSum()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenIncomeUpdated));
     }
 
     @Override
@@ -96,10 +101,14 @@ public class ProfileActivity extends AppCompatActivity {
         userName.setText(newProfile.getName());
         userGender.setText(newProfile.getGender().toString());
         userJobfield.setText(newProfile.getJobField().toString());
-        userIncome.setText(String.valueOf(newProfile.getIncome()));
+        // userIncome.setText(String.valueOf(newProfile.getIncome()));
         userFamilySize.setText(String.valueOf(newProfile.getFamilySize()));
         // TODO two more text view required to display information
 //        String.valueOf(newProfile.getFamilySize());
 //        newProfile.getQualification().toString()
+    }
+
+    private void whenIncomeUpdated(Double sum) {
+        userIncome.setText(String.valueOf(sum));
     }
 }

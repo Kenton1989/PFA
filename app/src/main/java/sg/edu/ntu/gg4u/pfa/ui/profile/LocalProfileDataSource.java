@@ -20,6 +20,11 @@ public class LocalProfileDataSource implements ProfileDataSource {
     }
 
     @Override
+    public Flowable<Double> getIncomeSum(){
+        return mUserProfileDao.getIncomeSum();
+    }
+
+    @Override
     public Completable updateUserProfile(UserProfile userProfile) {
         return mUserProfileDao.updateUserProfile(userProfile);
     }

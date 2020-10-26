@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.UUID;
+
 @Entity(tableName = "UserProfile")
 public class UserProfile {
     private static String THE_ONLY_ID = "10271ryh9e";
@@ -23,7 +25,7 @@ public class UserProfile {
     @Ignore
     public UserProfile(String _name, Gender _gender, JobField _jobField,
                        Integer _familySize, Double _income, Integer _age, AcademicQualification aq) {
-        userId = THE_ONLY_ID;
+        userId = UUID.randomUUID().toString();
         name = _name;
         gender = _gender;
         jobField = _jobField;
