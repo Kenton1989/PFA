@@ -1,6 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
 import android.graphics.Color;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +32,11 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import sg.edu.ntu.gg4u.pfa.MainActivity;
+import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
@@ -97,6 +100,22 @@ public class TargetFragment extends Fragment {
         list=root.findViewById(R.id.listViewTarget);
         list.setAdapter(adapter);
         return root;
+    }
+
+    private void resetMonth(Calendar calendar) {
+        // TODO: UI group: 1. implement this function, update the UI related to date
+        //                 2. use this function when month range need to change
+
+
+
+        // TODO: DB group: implement this function
+        //                 re-select the data from the database
+
+    }
+
+    public void whenTargetListChanged(List<Target> newTargetList) {
+        // TODO: UI group: implement this function
+        // TODO: DB group: use this function when data changes
     }
 
 

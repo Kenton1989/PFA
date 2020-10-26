@@ -17,6 +17,7 @@ import java.util.Map;
 
 import sg.edu.ntu.gg4u.pfa.R;
 
+import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.ui.record.AddRecordActivity;
 
 public class HomeFragment extends Fragment {
@@ -63,9 +64,8 @@ public class HomeFragment extends Fragment {
         startActivity(i);
     }
 
-    public void whenTotalPriceListUpdated(List<String> newCategories,
-                                          List<Double> newAmount) {
+    public void whenTodayRecordListUpdated(List<Record> newRecordInToday) {
         // TODO: UI group: implement this function
-        // TODO: Database group: use this function
+        // TODO: DB group: use this function when data changes
     }
 }

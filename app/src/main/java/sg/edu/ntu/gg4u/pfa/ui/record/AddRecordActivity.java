@@ -23,7 +23,12 @@ public class AddRecordActivity extends AppCompatActivity {
     }
 
     public void insertRecord(Record record) {
-        // TODO: Database group: implement this function
         // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+    }
+
+    public void updateRecord(Record record) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
     }
 }

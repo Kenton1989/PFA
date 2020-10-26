@@ -16,7 +16,7 @@ public class CreateCategoryActivity extends AppCompatActivity {
     }
 
     public void insertCategoryToDB(Category newCategory) {
-        // TODO UI group use this function to insert data after a Category is created
-        // TODO database group will implement this function
+        // TODO: UI group: use this function to insert data after a Category is created
+        // TODO: DB group: will implement this function
     }
 }

@@ -18,14 +18,14 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     public void whenCategoryChanged(Category newCategory) {
-        // TODO UI group implement this function
-        // TODO database activate the function when data chenges
+        // TODO: UI group: implement this function
+        // TODO: DB group: call the function when data changes
 
     }
 
     public void whenCategoryListChanged(List<Category> newList) {
-        // TODO UI group implement this function
-        // TODO database activate the function when data chenges
+        // TODO: UI group: implement this function
+        // TODO: DB group: the function when data changes
 
     }
 }

@@ -30,6 +30,7 @@ import java.util.Locale;
 
 import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 
 public class RecordFragment extends Fragment {
@@ -143,7 +144,7 @@ public class RecordFragment extends Fragment {
         return root;
     }
 
-    void resetDateRange(LocalDate beginDate, LocalDate lastDate) {
+    void resetDateRange(LocalDate beginDate, LocalDate lastDate, Category selectedCategory) {
         // TODO: UI group: implement this function
         //                 update the UI related to date
         //                 and use this function when date range need to change
@@ -152,8 +153,6 @@ public class RecordFragment extends Fragment {
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database
-
-
 
     }
 
