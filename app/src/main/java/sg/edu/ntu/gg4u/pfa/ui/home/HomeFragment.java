@@ -61,16 +61,16 @@ public class HomeFragment extends Fragment {
      //   View root = inflater.inflate(R.layout.fragment_home, container, false);
     //  final TextView textView = root.findViewById(R.id.totalExpense);
         final View root = inflater.inflate(R.layout.fragment_home, container, false);
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//               // textView.setText(s);
-//                CustomListHome adapter = new
-//                        CustomListHome(getActivity(),  cat_in_list , amount_in_list);
-//                list= root.findViewById(R.id.listHome);
-//                list.setAdapter(adapter);
-//            }
-//        });
+        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+               // textView.setText(s);
+                CustomListHome adapter = new
+                        CustomListHome(getActivity(),  cat_in_list , amount_in_list);
+                list= root.findViewById(R.id.listHome);
+                list.setAdapter(adapter);
+            }
+        });
         FloatingActionButton fab =(FloatingActionButton)root.findViewById(R.id.addItemBtn);
          fab.setOnClickListener(new View.OnClickListener() {
              @Override

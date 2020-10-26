@@ -78,12 +78,12 @@ public class RecordFragment extends Fragment {
         //View root = inflater.inflate(R.layout.fragment_record, container, false);
         final View root = inflater.inflate(R.layout.fragment_record, container, false);
         //final TextView textView = root.findViewById(R.id.text_record);
-//        recordViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                //textView.setText(s);
-//            }
-//        });
+        recordViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                //textView.setText(s);
+            }
+        });
 
 
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
