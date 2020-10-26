@@ -13,6 +13,7 @@ public interface RecordDataSource {
 
     Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end,
                                      String name);
+    Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end);
 
     Completable addRecord(Record record);
 
