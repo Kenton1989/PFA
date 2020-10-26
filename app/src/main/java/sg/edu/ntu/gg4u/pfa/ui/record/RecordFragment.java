@@ -144,7 +144,7 @@ public class RecordFragment extends Fragment {
         return root;
     }
 
-    void resetDateRange(LocalDate beginDate, LocalDate lastDate, Category selectedCategory) {
+    void resetDataRange(LocalDate beginDate, LocalDate lastDate, Category selectedCategory) {
         // TODO: UI group: implement this function
         //                 update the UI related to date
         //                 and use this function when date range need to change

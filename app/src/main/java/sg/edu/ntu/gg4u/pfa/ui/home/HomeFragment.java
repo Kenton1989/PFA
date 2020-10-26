@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-import java.util.Map;
 
 import sg.edu.ntu.gg4u.pfa.R;
 
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.ui.record.AddRecordActivity;
 
 public class HomeFragment extends Fragment {
@@ -64,7 +65,27 @@ public class HomeFragment extends Fragment {
         startActivity(i);
     }
 
+
+    public void whenCategoryListUpdated(List<Category> newCategoryList) {
+        // this activity will be called when the fragment is created.
+        // TODO: UI group: implement this function
+        // TODO: DB group: use this function when data changes
+    }
+
     public void whenTodayRecordListUpdated(List<Record> newRecordInToday) {
+        // this activity will be called when the fragment is created.
+        // TODO: UI group: implement this function
+        // TODO: DB group: use this function when data changes
+    }
+
+    public void whenTargetListUpdated(List<Target> newTargetList) {
+        // this activity will be called when the fragment is created.
+        // TODO: UI group: implement this function
+        // TODO: DB group: use this function when data changes
+    }
+
+    public void whenDataUpdated(List<Category> newCategoryList, List<Record> newRecordInToday, List<Target> newTargetList) {
+        // this activity will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
     }

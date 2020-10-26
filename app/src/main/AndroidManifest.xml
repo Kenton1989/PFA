@@ -26,7 +26,10 @@
             android:name=".ui.profile.ProfileActivity"
             android:label="@string/title_profile"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ui.record.AddRecordActivity"/>
+        <activity
+            android:name=".ui.record.AddRecordActivity"
+            android:label="@string/title_add_record"
+            android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".MainActivity"
@@ -43,6 +46,7 @@
             android:label="@string/title_guide"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <uses-library android:name="android.test.runner" />
         <uses-library android:name="android.test.base" />
         <uses-library android:name="android.test.mock" />

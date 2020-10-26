@@ -20,9 +20,12 @@ public class HomeViewModel extends ViewModel {
     private final RecordDataSource mRecordDataSource;
     private final TargetDataSource mTargetDataSource;
 
+    private MutableLiveData<String> mData;
+
     public HomeViewModel(RecordDataSource recordDataSource, TargetDataSource targetDataSource) {
         mRecordDataSource = recordDataSource;
         mTargetDataSource = targetDataSource;
+        mData = new MutableLiveData<>();
     }
 
     public Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end) {

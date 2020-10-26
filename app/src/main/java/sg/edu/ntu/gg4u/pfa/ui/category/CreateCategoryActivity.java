@@ -15,7 +15,7 @@ public class CreateCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_category);
     }
 
-    public void insertCategoryToDB(Category newCategory) {
+    private void insertCategory(Category newCategory) {
         // TODO: UI group: use this function to insert data after a Category is created
         // TODO: DB group: will implement this function
     }

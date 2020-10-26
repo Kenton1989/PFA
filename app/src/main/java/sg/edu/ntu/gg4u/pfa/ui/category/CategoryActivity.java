@@ -17,15 +17,14 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
     }
 
-    public void whenCategoryChanged(Category newCategory) {
-        // TODO: UI group: implement this function
-        // TODO: DB group: call the function when data changes
-
-    }
-
     public void whenCategoryListChanged(List<Category> newList) {
+        // This function will be called when the activity is created.
         // TODO: UI group: implement this function
         // TODO: DB group: the function when data changes
 
+    }
+    private void deleteCategory(Category category) {
+        // TODO: UI group: use this function to delete category
+        // TODO: DB group: implement this function
     }
 }

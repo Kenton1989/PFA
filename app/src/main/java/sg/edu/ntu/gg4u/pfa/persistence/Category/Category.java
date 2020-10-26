@@ -29,7 +29,7 @@ public class Category {
         return name;
     }
 
-    public void setName(@NonNull String name) {
-        this.name = name;
-    }
+//    public void setName(@NonNull String name) {
+//        this.name = name;
+//    }
 }
