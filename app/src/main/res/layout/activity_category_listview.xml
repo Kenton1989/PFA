@@ -20,15 +20,23 @@
         app:cardUseCompatPadding="true"
         android:layout_margin="8dp">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints">
+
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/food">
+                android:src="@drawable/food"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.444">
 
             </ImageView>
 
@@ -38,24 +46,44 @@
                 android:orientation="vertical"
                 tools:ignore="MissingConstraints">
 
-                <TextView
-                    android:id="@+id/catList"
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="@string/expenseCat"
-                    android:textColor="@color/white"
-                    android:textSize="26sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/deleteCat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/ap_transparent"
+                android:gravity="top"
+                android:text="x"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:clickable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/catList"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/expenseCat"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.529" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
