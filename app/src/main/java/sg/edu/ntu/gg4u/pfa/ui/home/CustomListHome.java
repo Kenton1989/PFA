@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import sg.edu.ntu.gg4u.pfa.R;
 
-public class CustomListHome extends ArrayAdapter<String> {
+public class CustomListHome extends ArrayAdapter<String>{
 
     private final Activity context;
     private final String[] cat_in_list;
