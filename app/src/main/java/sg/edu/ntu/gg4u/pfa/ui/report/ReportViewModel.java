@@ -9,9 +9,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.ui.CategoryDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.ProfileDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.RecordDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.TargetDataSource;
@@ -21,12 +23,14 @@ public class ReportViewModel extends ViewModel {
     private final RecordDataSource mRecordDataSource;
     private final TargetDataSource mTargetDataSource;
     private final ProfileDataSource mProfileDataSource;
+    private final CategoryDataSource mCategoryDataSource;
 
     public ReportViewModel(RecordDataSource recordDataSource, TargetDataSource targetDataSource,
-                           ProfileDataSource profileDataSource) {
+                           ProfileDataSource profileDataSource, CategoryDataSource categoryDataSource) {
         mRecordDataSource = recordDataSource;
         mTargetDataSource = targetDataSource;
         mProfileDataSource = profileDataSource;
+        mCategoryDataSource = categoryDataSource;
     }
 
     public Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end) {
@@ -49,5 +53,9 @@ public class ReportViewModel extends ViewModel {
 
     public Flowable<UserProfile> getUserProfile() {
         return mProfileDataSource.getUserProfile();
+    }
+
+    public Flowable<List<Category>> getAllCategory() {
+        return mCategoryDataSource.getAllCategory();
     }
 }
