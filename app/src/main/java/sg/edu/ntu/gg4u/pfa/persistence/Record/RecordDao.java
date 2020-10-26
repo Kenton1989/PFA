@@ -26,6 +26,10 @@ public interface RecordDao {
     @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end")
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end);
 
+    @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end " +
+            "AND categoryName = :name")
+    Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end, String name);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     Completable addRecord(Record record);
 

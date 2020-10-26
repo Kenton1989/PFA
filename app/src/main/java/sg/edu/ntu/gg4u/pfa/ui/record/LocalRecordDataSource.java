@@ -26,9 +26,15 @@ public class LocalRecordDataSource implements RecordDataSource {
     public Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end, String name) {
         return mDao.getRecord(start, end, name);
     }
+
     @Override
     public Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end) {
         return mDao.getRecordSum(start, end);
+    }
+
+    @Override
+    public Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end, String name){
+        return mDao.getRecordSum(start, end, name);
     }
 
     @Override

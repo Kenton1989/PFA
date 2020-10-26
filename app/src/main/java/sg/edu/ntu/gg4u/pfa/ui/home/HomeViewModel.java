@@ -37,6 +37,11 @@ public class HomeViewModel extends ViewModel {
         return mRecordDataSource.getRecordSum(start, end);
     }
 
+    public Flowable<Double> getRecordSumByCategory
+            (LocalDateTime start, LocalDateTime end, String name){
+        return mRecordDataSource.getRecordSum(start, end, name);
+    }
+
     public Completable addRecord(Record record) {
         return mRecordDataSource.addRecord(record);
     }

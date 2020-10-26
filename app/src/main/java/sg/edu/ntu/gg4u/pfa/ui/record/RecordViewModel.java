@@ -24,12 +24,17 @@ public class RecordViewModel extends ViewModel {
         return mDataSource.getRecord(start, end);
     }
 
-    public Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end, String name) {
+    public Flowable<List<Record>> getRecordByCategory(LocalDateTime start, LocalDateTime end, String name) {
         return mDataSource.getRecord(start, end, name);
     }
 
     public Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end) {
         return mDataSource.getRecordSum(start, end);
+    }
+
+    public Flowable<Double> getRecordSumByCategory
+            (LocalDateTime start, LocalDateTime end, String name){
+        return mDataSource.getRecordSum(start, end, name);
     }
 
     public Completable addRecord(Record record) {

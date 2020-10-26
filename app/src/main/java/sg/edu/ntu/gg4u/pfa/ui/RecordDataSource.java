@@ -15,6 +15,8 @@ public interface RecordDataSource {
                                      String name);
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end);
 
+    Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end, String name);
+
     Completable addRecord(Record record);
 
     Completable deleteRecord(Record record);
