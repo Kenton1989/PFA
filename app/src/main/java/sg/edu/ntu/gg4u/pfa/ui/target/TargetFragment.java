@@ -80,8 +80,6 @@ public class TargetFragment extends Fragment {
 
     };
 
-    private TargetViewModel targetViewModel;
-
     private TargetViewModel mViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -92,7 +90,7 @@ public class TargetFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(TargetViewModel.class);
 
-        //View root = inflater.inflate(R.layout.fragment_target, container, false);
+        //View root = inflater.inflate(R.layout.fragment_target, container, false);git
         //final TextView textView = root.findViewById(R.id.actualAmount);
         final View root = inflater.inflate(R.layout.fragment_target, container, false);
         CustomListTarget adapter = new
@@ -103,6 +101,8 @@ public class TargetFragment extends Fragment {
     }
 
     private void resetMonth(Calendar calendar) {
+
+
         // If the month is changed
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when month range need to change
