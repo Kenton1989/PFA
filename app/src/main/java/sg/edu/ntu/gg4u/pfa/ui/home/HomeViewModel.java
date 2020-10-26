@@ -33,10 +33,6 @@ public class HomeViewModel extends ViewModel {
         return mRecordDataSource.getRecord(start, end, name);
     }
 
-    public Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end) {
-        return mRecordDataSource.getRecordSum(start, end);
-    }
-
     public Completable addRecord(Record record) {
         return mRecordDataSource.addRecord(record);
     }
