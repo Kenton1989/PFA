@@ -52,7 +52,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         if (modelClass.isAssignableFrom(ReportViewModel.class)) {
             return (T) new ReportViewModel
-                    (mRecordDataSource, mTargetDataSource, mProfileDataSource);
+                    (mRecordDataSource, mTargetDataSource, mProfileDataSource, mCategoryDataSource);
         }
         if (modelClass.isAssignableFrom(HomeViewModel.class)) {
             return (T) new HomeViewModel
