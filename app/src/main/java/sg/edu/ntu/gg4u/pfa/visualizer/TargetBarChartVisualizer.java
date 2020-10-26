@@ -31,15 +31,29 @@ import java.util.Arrays;
 public class TargetBarChartVisualizer {
     public void plot(XYPlot plot, final String[] category, Number[] target, Number[] cost) {
 
-        final String[] categories = category;
-        Number[] currentList = cost;
-        Number[] predictedList = target;
-        Number[] excessList = currentList;
-        for (int i = 0; i < currentList.length; i++) {
-            if (currentList[i].doubleValue() > predictedList[i].doubleValue())
-                currentList[i] = 0;
-            else
-                excessList[i] = 0;
+        int n = target.length;
+
+        final String[] categories = new String[n+1];
+        Number[] currentList = new Number[n+1];
+        Number[] predictedList = new Number[n+1];
+        Number[] excessList = new Number[n+1];
+        currentList[0] = 0;
+        predictedList[0] = 0;
+        excessList[0] = 0;
+        categories[0] = "";
+
+        for (int i = 0; i < n; i++) {
+            if (cost[i].doubleValue() > target[i].doubleValue()) {
+                currentList[i + 1] = 0;
+                excessList[i + 1] = cost[i];
+            }
+            else {
+                currentList[i + 1] = cost[i];
+                excessList[i + 1] = 0;
+            }
+            predictedList[i+1] = target[i];
+            categories[i+1] = category[i];
+        }
 
         XYSeries current = new SimpleXYSeries(Arrays.asList(currentList), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "current");
         XYSeries excess = new SimpleXYSeries(Arrays.asList(excessList), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "excess");
@@ -47,13 +61,13 @@ public class TargetBarChartVisualizer {
 
         // obtaining max Y value for future calculations
         double maxY = 0;
-        for (int j = 0; i < current.size(); i++) {
-            if (maxY < current.getY(i).doubleValue())
-                maxY = current.getY(i).doubleValue();
-            if (maxY < excess.getY(i).doubleValue())
-                maxY = excess.getY(i).doubleValue();
-            if (maxY < predicted.getY(i).doubleValue())
-                maxY = predicted.getY(i).doubleValue();
+        for (int j = 0; j < current.size(); j++) {
+            if (maxY < current.getY(j).doubleValue())
+                maxY = current.getY(j).doubleValue();
+            if (maxY < excess.getY(j).doubleValue())
+                maxY = excess.getY(j).doubleValue();
+            if (maxY < predicted.getY(j).doubleValue())
+                maxY = predicted.getY(j).doubleValue();
         }
         // calculating padding on top of tallest bar
         int copy = (int) maxY;
@@ -144,6 +158,4 @@ public class TargetBarChartVisualizer {
         });
 
     }
-
-}
 }
