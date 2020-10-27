@@ -1,7 +1,5 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
-import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,25 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import sg.edu.ntu.gg4u.pfa.MainActivity;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -82,9 +69,9 @@ public class TargetFragment extends Fragment {
 
     };
 
-    private TargetViewModel targetViewModel;
-
     private TargetViewModel mViewModel;
+
+    private CompositeDisposable mDisposable;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private LocalDateTime cal2LocalDateTime(Calendar calendar) {
@@ -127,6 +114,8 @@ public class TargetFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void resetMonth(Calendar calendar) {
+
+
         // If the month is changed
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when month range need to change
@@ -151,12 +140,10 @@ public class TargetFragment extends Fragment {
         // One target maps to one monthly cost
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        // TODO: DB group: call this function when data changes
-        
+        // TODO: DB group: use this function when data changes
     }
 
-
-    private void insertOrUpdateTarget(Target record) {
+    private void insertOrUpdateTarget(Target target) {
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
 
