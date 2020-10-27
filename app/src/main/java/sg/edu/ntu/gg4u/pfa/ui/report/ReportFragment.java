@@ -60,17 +60,17 @@ public class ReportFragment extends Fragment {
     };
 
     String[] percent_in_list = {
-            " ",
-            " ",
-            " ",
-            " "
+            "50",
+            "50",
+            "50",
+            "50"
     };
 
     String[] sugg_in_list = {
-            " ",
-            " ",
-            " ",
-            " "
+            "10",
+            "10",
+            "10",
+            "10"
     };
 
     private ReportViewModel reportViewModel;
@@ -80,6 +80,8 @@ public class ReportFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_report, container, false);
+
+
 
 
         LineChart lineChart = (LineChart) root.findViewById(R.id.chart);

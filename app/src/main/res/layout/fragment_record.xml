@@ -56,7 +56,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_current_date"
         app:layout_constraintVertical_bias="1.0" />
-
+<!--
     <View
         android:id="@+id/record_end_view"
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-
+-->
     <TextView
         android:id="@+id/record_current_date"
         android:layout_width="wrap_content"
@@ -249,7 +249,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_list_upview">
+        app:layout_constraintTop_toBottomOf="@+id/record_list_upview"
+        android:paddingLeft="20dp">
 
 
     </ListView>
