@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.util.Log;
 import android.view.View.MeasureSpec;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -76,10 +78,11 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         listView.requestLayout();
     }
 
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        mEdit = findViewById(R.id.createCategory);
-        //        String categoryName = mEdit.getText().toString();
-//        Boolean isAvailable = false;
+    public void onDialogPositiveClick(CreateCategoryFragment dialog) {
+        mEdit = dialog.getMView().findViewById(R.id.createCategory);
+        String categoryName = mEdit.getText().toString();
+        Boolean isAvailable = false;
+        Log.d("help", categoryName);
         // categoryIDs = getAllCategoryID()
         // for (i = 0; i < categoryIDs.size(); i++) {
         //     if (getCategoryInfo(categoryIDs[i]).name == categoryName)
@@ -98,7 +101,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         setListViewHeightBasedOnChildren(list);
     }
 
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    public void onDialogNegativeClick(CreateCategoryFragment dialog) {
         dialog.getDialog().cancel();
     }
 
@@ -123,7 +126,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         cr8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment createFrag = new CreateCategoryFragment();
+                CreateCategoryFragment createFrag = new CreateCategoryFragment();
                 createFrag.show(getSupportFragmentManager(), "create");
             }
         });
