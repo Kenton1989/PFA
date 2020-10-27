@@ -21,10 +21,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import org.json.JSONException;
-
-import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -44,11 +43,21 @@ import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
+    private static final String SHARED_PREF_FILENAME = "sg.edu.ntu.gg4u.pfa.sharedPrefFile";
+    private static final String IS_FIRST_LAUNCH_KEY = "sg.edu.ntu.gg4u.pfa.IS_FIRST_LAUNCH";
+    private static final String GOV_DATABASE_LOADED_KEY = "sg.edu.ntu.gg4u.pfa.GOV_DATABASE_LOADED";
+    private static final String GOV_DATABASE_LOAD_TIME_KEY = "sg.edu.ntu.gg4u.pfa.GOV_DATABASE_LOAD_TIME";
+    private static final Duration GOV_DATABASE_UPDATE_PERIOD = Duration.ofDays(30);
 
     private InitViewModel mViewModel;
-
     private final CompositeDisposable mDisposable = new CompositeDisposable();
+    private SharedPreferences mPreferences;
+    private int attemptsToLoadGovDatabase = 0;
+    private boolean govDatabaseLoaded;
+    private boolean isLaunchForTheFirstTime;
+    private ZonedDateTime lastGovDbLoadedTime;
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
@@ -78,9 +87,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         loadPreferenceFile();
-        checkPreferenceFile();
-
-
+        checkPreferenceSetting();
     }
 
     @Override
@@ -123,24 +130,37 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private SharedPreferences mPreferences;
-    private final String sharedPrefFile = "sg.edu.ntu.gg4u.pfa.sharedPrefFile";
-    private final String IS_FIRST_LAUNCH_KEY = "sg.edu.ntu.gg4u.pfa.IS_FIRST_LAUNCH";
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void loadPreferenceFile() {
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        mPreferences = getSharedPreferences(SHARED_PREF_FILENAME, MODE_PRIVATE);
+        isLaunchForTheFirstTime = mPreferences.getBoolean(IS_FIRST_LAUNCH_KEY, true);
+        govDatabaseLoaded = mPreferences.getBoolean(GOV_DATABASE_LOADED_KEY, false);
+        String lastLoadTimeInStr = mPreferences.getString(GOV_DATABASE_LOAD_TIME_KEY, "1970-01-01T00:00+00:00");
+        lastGovDbLoadedTime = ZonedDateTime.parse(lastLoadTimeInStr);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private void checkPreferenceFile() {
-        if (mPreferences.getBoolean(IS_FIRST_LAUNCH_KEY, true)) {
+    private void checkPreferenceSetting() {
+        if (isLaunchForTheFirstTime) {
             whenFirstLaunch();
+        }
+
+        if (attemptsToLoadGovDatabase == 0 && !govDatabaseLoaded) {
+            updateGovLocalDatabase();
+        }
+
+        Duration timeSinceLastGovDbLoading =  Duration.between(lastGovDbLoadedTime, ZonedDateTime.now());
+        if (attemptsToLoadGovDatabase == 0 &&
+                timeSinceLastGovDbLoading.compareTo(GOV_DATABASE_UPDATE_PERIOD) <= 0) {
+            updateGovLocalDatabase();
         }
     }
 
     private void savePreferenceFile() {
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.putBoolean(IS_FIRST_LAUNCH_KEY, false);
+        preferencesEditor.putBoolean(GOV_DATABASE_LOADED_KEY, govDatabaseLoaded);
+        preferencesEditor.putString(GOV_DATABASE_LOAD_TIME_KEY, lastGovDbLoadedTime.toString());
         preferencesEditor.apply();
     }
 
@@ -161,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         insertRecord();
         insertTarget();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertTarget() {
         insertSingleTarget(new Target("Clothing", 150));
@@ -189,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
 //                    .subscribe());
 //        }
     }
+
     private void insertSingleCategory(Category category) {
         mDisposable.add(mViewModel.updateCategory(category)
                 .subscribeOn(Schedulers.io())
@@ -200,23 +222,23 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void insertRecord() {
         int month = LocalDateTime.now().getMonth().getValue();
-        insertSingleRecord(new Record(LocalDateTime.of(2020, month-1, 13, 13, 12),
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 13, 13, 12),
                 "Food", 5.30));
-        insertSingleRecord(new Record(LocalDateTime.of(2020,month - 1,28,18,50),
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 28, 18, 50),
                 "Food", 4.80));
-        insertSingleRecord(new Record(LocalDateTime.of(2020,month,1,12,9),
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month, 1, 12, 9),
                 "Food", 3.30));
-        insertSingleRecord(new Record(LocalDateTime.of(2020,month,3,9,45),
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month, 3, 9, 45),
                 "Food", 2.40));
-        insertSingleRecord(new Record(LocalDateTime.of(2020,month,24,9,10),
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month, 24, 9, 10),
                 "Transportation", 16.20));
         insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 4, 22, 10),
                 "Transportation", 2.70));
         insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 17, 15, 39),
                 "Transportation", 7.30));
-        insertSingleRecord(new Record(LocalDateTime.of(2020, month,16, 17, 30),
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month, 16, 17, 30),
                 "Clothing", 58.80));
-        insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1,24, 10, 1),
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 24, 10, 1),
                 "Entertainment", 16.80));
     }
 
@@ -237,19 +259,21 @@ public class MainActivity extends AppCompatActivity {
         userProfile.setIncome(500.00);
 
         mDisposable.add(mViewModel.updateUserProfile(userProfile)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(() -> Log.d("MainActivity", "Database Initialization Done...")));
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> Log.d("MainActivity", "Database Initialization Done...")));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void updateGovLocalDatabase() {
-        try {
-            Dataloader.loadAllData();
-        } catch (IOException e) {
-            printToast("Failed to load data from data.gov.sg");
-        } catch (JSONException e) {
-            printToast("Failed to parse data from data.gov.sg");
-        }
+        ++attemptsToLoadGovDatabase;
+        Dataloader loader = new Dataloader(this);
+        loader.startLoadingGovData(this::setGovDataLoad);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setGovDataLoad() {
+        govDatabaseLoaded = true;
+        lastGovDbLoadedTime = ZonedDateTime.now();
     }
 }
