@@ -39,7 +39,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new ProfileViewModel(mProfileDataSource);
         }
         if (modelClass.isAssignableFrom(TargetViewModel.class)) {
-            return (T) new TargetViewModel(mTargetDataSource, mRecordDataSource);
+            return (T) new TargetViewModel(mTargetDataSource);
         }
         if (modelClass.isAssignableFrom(RecordViewModel.class)) {
             return (T) new RecordViewModel(mRecordDataSource);
