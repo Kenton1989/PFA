@@ -49,7 +49,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
 
     EditText mEdit;
     ListView list;
-    ArrayList<String> catList = new ArrayList<>(Arrays.asList("Food", "Entertainment", "Leisure", "Transportation", "Others"));
+    ArrayList<String> catList = new ArrayList<>(Arrays.asList("Food", "Entertainment", "Leisure", "Transportation", "Others", "New"));
 
     private ViewModelFactory mViewModelFactory;
     private CategoryViewModel mViewModel;
