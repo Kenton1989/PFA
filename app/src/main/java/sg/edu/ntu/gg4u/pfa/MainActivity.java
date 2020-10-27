@@ -12,12 +12,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfileDao;
+import sg.edu.ntu.gg4u.pfa.ui.InitViewModel;
+import sg.edu.ntu.gg4u.pfa.ui.Injection;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobField;
 import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
@@ -25,9 +31,14 @@ import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private InitViewModel mViewModel;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         savePreferenceFile();
+
+        // Database stuff
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        mViewModel = new ViewModelProvider(this, mViewModelFactory)
+                .get(InitViewModel.class);
+
+        Log.d("MainActivity", JobField.OTHERS.toString());
     }
 
     @Override
@@ -87,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private SharedPreferences mPreferences;
     private final String sharedPrefFile = "sg.edu.ntu.gg4u.pfa.sharedPrefFile";
     private final String IS_FIRST_LAUNCH_KEY = "sg.edu.ntu.gg4u.pfa.IS_FIRST_LAUNCH";
@@ -111,6 +128,10 @@ public class MainActivity extends AppCompatActivity {
         open(GuideActivity.class);
         
         // Do manual insertion...
+        InitDataBase();
     }
 
+    private void InitDataBase() {
+
+    }
 }
