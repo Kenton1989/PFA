@@ -81,8 +81,8 @@ public class HomeFragment extends Fragment {
         super.onStart();
 
 
-        LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
-        LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1));
+        LocalDateTime todayBegin = LocalDate.now().atStartOfDay();
+        LocalDateTime todayEnd = todayBegin.plusDays(1).minusSeconds(1);
         mDisposable.add(mViewModel.getGroupedRecordSum(todayBegin, todayEnd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

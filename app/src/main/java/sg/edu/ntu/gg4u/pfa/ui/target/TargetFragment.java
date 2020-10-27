@@ -116,8 +116,9 @@ public class TargetFragment extends Fragment {
 
     public void whenDataChanged(List<Target> newTargetList, List<Double> newMonthlyCost) {
         // One target maps to one monthly cost
+        // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        // TODO: DB group: use this function when data changes
+        // TODO: DB group: call this function when data changes
     }
 
 
