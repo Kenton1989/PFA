@@ -130,8 +130,8 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         mDisposable.add(mViewModel.getAllCategory()
                 .subscribeOn(Schedulers.io())
@@ -139,10 +139,18 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
                 .subscribe(this::whenCategoryListChanged));
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mDisposable.clear();
+    }
+
+
     public void whenCategoryListChanged(List<Category> newList) {
         // This function will be called when the activity is created.
         // TODO: UI group: implement this function
-        // TODO: DB group: the function when data changes
+        // TODO: DB group: the function when data changes DONE
 
     }
 
