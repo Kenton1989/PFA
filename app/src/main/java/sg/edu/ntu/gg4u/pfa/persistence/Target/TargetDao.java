@@ -15,11 +15,10 @@ import io.reactivex.Flowable;
 @Dao
 public interface TargetDao {
 
-    class TargetByCategory {
-        String categoryName;
+    class TargetAndCost {
         Target target;
+        Double cost;
     }
-
 
     @Query("SELECT * FROM Target WHERE categoryName = :name AND" +
             " startDate >= :startDate AND startDate <= :endDate")
@@ -42,4 +41,18 @@ public interface TargetDao {
 
     @Query("DELETE FROM Target WHERE categoryName = :name AND startDate = :date")
     Completable deleteTarget(String name, LocalDate date);
+
+    @Query("With GroupedRecordSum as (" +
+            "    SELECT categoryName AS categoryName, SUM(amount) AS sum" +
+            "    FROM Category" +
+            "             left outer join Record on Record.categoryName = Category.name" +
+            "    WHERE timestamp > :startDate" +
+            "      AND timestamp < :endDate" +
+            "    GROUP BY categoryName" +
+            ")" +
+            "select Target.amount, Target.categoryName, GroupedRecordSum.sum " +
+            "from Target, GroupedRecordSum " +
+            "WHERE Target.categoryName = GroupedRecordSum.categoryName " +
+            "AND Target.startDate = :startDate")
+    Flowable<List<TargetAndCost>> getTargetAndCost(LocalDate startDate, LocalDate endDate);
 }

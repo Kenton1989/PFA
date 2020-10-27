@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void whenFirstLaunch() {
+        // Do manual insertion...
 
     }
 

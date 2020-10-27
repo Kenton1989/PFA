@@ -1,5 +1,8 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModel;
 
 import java.time.LocalDate;
@@ -10,6 +13,7 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
+import sg.edu.ntu.gg4u.pfa.persistence.Target.TargetDao;
 import sg.edu.ntu.gg4u.pfa.ui.RecordDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.TargetDataSource;
 
@@ -38,6 +42,11 @@ public class TargetViewModel extends ViewModel {
 
     public Flowable<List<Target>> getAllCurrentTarget(LocalDate date) {
         return mTargetDataSource.getAllCurrentTarget(date);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Flowable<List<TargetDao.TargetAndCost>> getTargetAndCost(LocalDate startDate) {
+        return mTargetDataSource.getTargetAndCost(startDate, startDate.plusMonths(1));
     }
 
     public Completable insertOrUpdateTarget(Target target) {
