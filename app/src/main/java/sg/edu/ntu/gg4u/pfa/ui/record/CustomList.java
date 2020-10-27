@@ -14,15 +14,15 @@ public class CustomList extends ArrayAdapter<String>{
     private final Activity context;
     private final String[] dates_in_list;
     private final String[] cat_in_list;
-    //private final String[] amount_in_list;
+    private final String[] amount_in_list;
 
     public CustomList(Activity context,
-                      String[] dates_in_list, String[] cat_in_list) {
+                      String[] dates_in_list, String[] cat_in_list , String[] amount_in_list) {
         super(context, R.layout.fragment_record_listview, dates_in_list);
         this.context = context;
         this.dates_in_list = dates_in_list;
         this.cat_in_list = cat_in_list;
-       // this.amount_in_list = amount_in_list;
+        this.amount_in_list = amount_in_list;
 
     }
     @Override

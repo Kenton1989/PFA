@@ -62,15 +62,15 @@ public class RecordFragment extends Fragment {
             "Vacation"
     };
 
-    //String[] amount_in_list= {
-    //        "10",
-    //        "14",
-    //        "50",
-    //        "144",
-    //        "77",
-    //        "88",
-    //        "900"
-    //};
+    String[] amount_in_list= {
+            "10",
+            "14",
+            "50",
+            "144",
+            "77",
+            "88",
+            "900"
+    };
 
 
     private RecordViewModel recordViewModel;
@@ -86,7 +86,7 @@ public class RecordFragment extends Fragment {
 
 
         CustomList adapter = new
-                CustomList(getActivity(), dates_in_list, cat_in_list);
+                CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
         list = root.findViewById(R.id.record_listView);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
