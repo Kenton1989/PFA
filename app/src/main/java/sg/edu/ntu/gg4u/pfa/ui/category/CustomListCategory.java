@@ -32,7 +32,7 @@ public class CustomListCategory extends ArrayAdapter<String>{
     CompositeDisposable mDisposable = new CompositeDisposable();
     // Database view model stuffs END
 
-    public CustomListCategory(Activity context,
+    public CustomListCategory(FragmentActivity context,
                               ArrayList<String> catList,
                               CategoryViewModel viewModel) {
         super(context, R.layout.activity_category_listview, catList);
@@ -56,7 +56,7 @@ public class CustomListCategory extends ArrayAdapter<String>{
                     //     if (getCategoryInfo(categoryIDs[i]).name == catList.get(position)))
                     //         removeCategory(categoryIDs[i])
                     ArrayList<String> catList2 = new ArrayList<>(Arrays.asList("Food", "short"));
-                    CustomListCategory adapter = new CustomListCategory(context, catList2);
+                    CustomListCategory adapter = new CustomListCategory(context, catList2, mViewModel);
                     ListView list = context.findViewById(R.id.listCategory);
                     list.setAdapter(adapter);
                     CategoryActivity.setListViewHeightBasedOnChildren(list);
