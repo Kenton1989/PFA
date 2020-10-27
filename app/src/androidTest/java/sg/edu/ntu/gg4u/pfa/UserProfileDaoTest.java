@@ -56,7 +56,7 @@ public class UserProfileDaoTest {
         userProfileDao.updateUserProfile(userProfile);
 
         System.out.println("Getting profile...");
-        List<UserProfile> returnFlowable = userProfileDao.getUserProfile();
+        List<UserProfile> returnFlowable = (List<UserProfile>) userProfileDao.getUserProfile();
 
         System.out.println("Loading profile...");
         UserProfile returnProfile = returnFlowable.get(0);

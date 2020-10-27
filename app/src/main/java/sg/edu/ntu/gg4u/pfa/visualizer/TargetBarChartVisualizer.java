@@ -22,6 +22,7 @@ import com.androidplot.xy.StepMode;
 import com.androidplot.xy.XYGraphWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.github.mikephil.charting.charts.BarChart;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
@@ -33,7 +34,7 @@ public class TargetBarChartVisualizer {
 
         int n = target.length;
 
-        final String[] categories = new String[n+1];
+        String[] categories = new String[n+1];
         Number[] currentList = new Number[n+1];
         Number[] predictedList = new Number[n+1];
         Number[] excessList = new Number[n+1];
@@ -54,6 +55,7 @@ public class TargetBarChartVisualizer {
             predictedList[i+1] = target[i];
             categories[i+1] = category[i];
         }
+        final String[] catList = categories;
 
         XYSeries current = new SimpleXYSeries(Arrays.asList(currentList), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "current");
         XYSeries excess = new SimpleXYSeries(Arrays.asList(excessList), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "excess");
@@ -139,14 +141,14 @@ public class TargetBarChartVisualizer {
             @NonNull
             @Override
             public StringBuffer format(double number, @NonNull StringBuffer toAppendTo, @NonNull FieldPosition pos) {
-                String labelString = categories[(int) number];
+                String labelString = catList[(int) number];
                 return new StringBuffer(labelString);
             }
 
             @NonNull
             @Override
             public StringBuffer format(long number, @NonNull StringBuffer toAppendTo, @NonNull FieldPosition pos) {
-                String labelString = categories[(int) number];
+                String labelString = catList[(int) number];
                 return new StringBuffer(labelString);
             }
 
