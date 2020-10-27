@@ -17,10 +17,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobField;
 import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
+import sg.edu.ntu.gg4u.pfa.ui.profile.LocalProfileDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
@@ -28,6 +30,8 @@ import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +114,10 @@ public class MainActivity extends AppCompatActivity {
     private void whenFirstLaunch() {
         open(GuideActivity.class);
         
+        LocalProfileDataSource profileDataSource;
+
         // Do manual insertion...
+//        mDisposable.add(profileDataSource.updateUserProfile())
     }
 
 }
