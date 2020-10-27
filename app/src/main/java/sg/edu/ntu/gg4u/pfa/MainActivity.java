@@ -1,6 +1,7 @@
 package sg.edu.ntu.gg4u.pfa;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -48,7 +49,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        Log.d("MainActivity", JobField.OTHERS.toString());
+        loadPreferenceFile();
+        checkPreferenceFile();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        savePreferenceFile();
     }
 
     @Override
@@ -74,14 +82,33 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     private void open(Class<?> toOpen) {
         Intent intent = new Intent(this, toOpen);
         startActivity(intent);
     }
 
-    private void whenFirstLaunch() {
 
+    private SharedPreferences mPreferences;
+    private final String sharedPrefFile = "sg.edu.ntu.gg4u.pfa.sharedPrefFile";
+    private final String IS_FIRST_LAUNCH_KEY = "sg.edu.ntu.gg4u.pfa.IS_FIRST_LAUNCH";
+    private void loadPreferenceFile() {
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+    }
+
+    private void checkPreferenceFile() {
+        if (mPreferences.getBoolean(IS_FIRST_LAUNCH_KEY, true)) {
+            whenFirstLaunch();
+        }
+    }
+
+    private void savePreferenceFile() {
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putBoolean(IS_FIRST_LAUNCH_KEY, false);
+        preferencesEditor.apply();
+    }
+
+    private void whenFirstLaunch() {
+        open(GuideActivity.class);
     }
 
 }

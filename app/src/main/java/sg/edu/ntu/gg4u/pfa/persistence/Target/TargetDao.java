@@ -15,12 +15,6 @@ import io.reactivex.Flowable;
 @Dao
 public interface TargetDao {
 
-    class TargetByCategory {
-        String categoryName;
-        Target target;
-    }
-
-
     @Query("SELECT * FROM Target WHERE categoryName = :name AND" +
             " startDate >= :startDate AND startDate <= :endDate")
     Flowable<List<Target>> getTarget(String name, LocalDate startDate,
@@ -33,9 +27,6 @@ public interface TargetDao {
             "(SELECT MAX(startDate) FROM Target WHERE categoryName = :name)" +
             "AND categoryName = :name LIMIT 1")
     Flowable<Target> getCurrentTarget(String name);
-
-    @Query("SELECT * FROM Target WHERE startDate = :date")
-    Flowable<List<Target>> getAllCurrentTarget(LocalDate date);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable setCurrentTarget(Target target);

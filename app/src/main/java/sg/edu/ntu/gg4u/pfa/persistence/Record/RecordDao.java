@@ -17,26 +17,25 @@ public interface RecordDao {
 
 
     @Query("SELECT * FROM Record WHERE timestamp > :start " +
-            "AND timestamp < :end ORDER BY timestamp DESC")
+            "AND timestamp < :end")
     Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT * FROM Record WHERE timestamp > :start " +
-            "AND timestamp < :end AND categoryName = :name ORDER BY timestamp DESC")
+            "AND timestamp < :end AND categoryName = :name")
     Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end,
                                           String name);
 
-    @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end " +
-            "ORDER BY timestamp DESC")
+    @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end")
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end " +
-            "AND categoryName = :name ORDER BY timestamp DESC")
+            "AND categoryName = :name")
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end, String name);
 
     @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
             "FROM Category left outer join Record on Record.categoryName = Category.name " +
             "WHERE timestamp > :start AND timestamp < :end " +
-            "GROUP BY categoryName ORDER BY timestamp DESC")
+            "GROUP BY categoryName")
     Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
