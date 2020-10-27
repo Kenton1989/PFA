@@ -16,7 +16,8 @@ import io.reactivex.Flowable;
 public interface TargetDao {
 
     class TargetAndCost {
-        Target target;
+        Double targetAmount;
+        String categoryName;
         Double cost;
     }
 
@@ -33,6 +34,9 @@ public interface TargetDao {
             "AND categoryName = :name LIMIT 1")
     Flowable<Target> getCurrentTarget(String name);
 
+    @Query("SELECT * FROM Target WHERE startDate = :date")
+    Flowable<List<Target>> getAllCurrentTarget(LocalDate date);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable setCurrentTarget(Target target);
 
@@ -47,7 +51,8 @@ public interface TargetDao {
             "      AND timestamp < :endDate" +
             "    GROUP BY categoryName" +
             ")" +
-            "select Target.amount, Target.categoryName, GroupedRecordSum.sum " +
+            "select Target.amount as targetAmount, Target.categoryName as categoryName," +
+            " GroupedRecordSum.sum as cost " +
             "from Target, GroupedRecordSum " +
             "WHERE Target.categoryName = GroupedRecordSum.categoryName " +
             "AND Target.startDate = :startDate")
