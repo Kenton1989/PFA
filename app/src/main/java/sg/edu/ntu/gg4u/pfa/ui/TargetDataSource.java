@@ -15,6 +15,8 @@ public interface TargetDataSource {
 
     Flowable<Target> getCurrentTarget(String name);
 
+    Flowable<List<Target>> getAllCurrentTarget(LocalDate date);
+
     Completable insertOrUpdateTarget(Target target);
 
     Completable deleteTarget(Target target);
