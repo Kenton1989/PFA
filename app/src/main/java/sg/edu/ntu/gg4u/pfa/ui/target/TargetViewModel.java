@@ -38,7 +38,7 @@ public class TargetViewModel extends ViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Flowable<List<TargetDao.TargetAndCost>> getTargetAndCost(LocalDate startDate) {
-        return mTargetDataSource.getTargetAndCost(startDate, startDate.plusMonths(1));
+        return mDataSource.getTargetAndCost(startDate, startDate.plusMonths(1));
     }
 
     public Completable insertOrUpdateTarget(Target target) {

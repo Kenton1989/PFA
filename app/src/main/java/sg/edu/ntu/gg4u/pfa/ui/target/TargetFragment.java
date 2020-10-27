@@ -25,6 +25,7 @@ import java.util.List;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.TargetDao;
+import sg.edu.ntu.gg4u.pfa.persistence.Target.TargetDao.TargetAndCost;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
@@ -71,7 +72,7 @@ public class TargetFragment extends Fragment {
 
     private TargetViewModel mViewModel;
 
-    private CompositeDisposable mDisposable;
+    private CompositeDisposable mDisposable = new CompositeDisposable();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private LocalDateTime cal2LocalDateTime(Calendar calendar) {
@@ -136,7 +137,7 @@ public class TargetFragment extends Fragment {
                 .subscribe(this::whenTargetAndCostChanged));
     }
 
-    public void whenTargetAndCostChanged(List<TargetDao.TargetAndCost> targetAndCosts) {
+    public void whenTargetAndCostChanged(List<TargetAndCost> targetAndCosts) {
         // One target maps to one monthly cost
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
