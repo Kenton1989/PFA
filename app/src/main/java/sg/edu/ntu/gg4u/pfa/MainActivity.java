@@ -109,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void whenFirstLaunch() {
         open(GuideActivity.class);
+        
+        // Do manual insertion...
     }
 
 }
