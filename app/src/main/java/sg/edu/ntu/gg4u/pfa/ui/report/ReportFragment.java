@@ -195,7 +195,6 @@ public class ReportFragment extends Fragment {
         //                 2. use this function when month range need to change
 
 
-
         // TODO: DB group: implement this function
         //                 re-select the data from the database
 
@@ -238,3 +237,4 @@ public class ReportFragment extends Fragment {
         // TODO: UI group: implement this function
         // TODO: DB group: call this function when data changes
     }
+}
