@@ -16,7 +16,8 @@ import io.reactivex.Flowable;
 public interface TargetDao {
 
     class TargetAndCost {
-        Target target;
+        Double targetAmount;
+        String categoryName;
         Double cost;
     }
 
@@ -50,7 +51,8 @@ public interface TargetDao {
             "      AND timestamp < :endDate" +
             "    GROUP BY categoryName" +
             ")" +
-            "select Target.amount, Target.categoryName, GroupedRecordSum.sum " +
+            "select Target.amount as targetAmount, Target.categoryName as categoryName," +
+            " GroupedRecordSum.sum as cost " +
             "from Target, GroupedRecordSum " +
             "WHERE Target.categoryName = GroupedRecordSum.categoryName " +
             "AND Target.startDate = :startDate")
