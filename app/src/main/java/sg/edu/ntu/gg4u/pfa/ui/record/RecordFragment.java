@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -72,6 +74,8 @@ public class RecordFragment extends Fragment {
             "900"
     };
 
+    private TextView totalIncome, totalExpense , amount, categoryName, timestamp;
+
 
     private RecordViewModel recordViewModel;
 
@@ -83,6 +87,13 @@ public class RecordFragment extends Fragment {
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
         final TextView todaydate = root.findViewById(R.id.record_current_date);
         todaydate.setText(date_n);
+
+        totalIncome = root.findViewById(R.id.record_mnthIncome);
+        totalExpense = root.findViewById(R.id.record_mnthExpense);
+        amount = root.findViewById(R.id.recordlist_amnt);
+        categoryName = root.findViewById(R.id.recordlist_category);
+        timestamp = root.findViewById(R.id.recordlist_date);
+
 
 
         CustomList adapter = new
@@ -144,14 +155,12 @@ public class RecordFragment extends Fragment {
         return root;
     }
 
+
     private void resetDataRange(LocalDate beginDate, LocalDate endDate, Category selectedCategory) {
         // When the selectedCategory is NULL, display all the record.
 
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when date range need to change
-
-
-
 
 
         // TODO: DB group: implement this function
@@ -163,6 +172,9 @@ public class RecordFragment extends Fragment {
     public void whenRecordListUpdated(List<Record> newRecords) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
+        
+
+
 
         // TODO: DB group: call this function when data changes
     }
@@ -174,6 +186,7 @@ public class RecordFragment extends Fragment {
 
     private void deleteRecord(Record record) {
         // TODO: UI group: use this function
+
         // TODO: DB group: implement this function
     }
 }
