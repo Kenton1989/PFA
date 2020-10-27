@@ -102,9 +102,9 @@ public class Predictor {
 
         for (String category : categorySet) {
             prediction.put(category,
-                    (jobFieldPrediction.get(category) * 0.24 +
+                    jobFieldPrediction.get(category) * 0.24 +
                             AQPrediction.get(category) * 0.36 +
-                            agePrediction.get(category) * 0.4) / 3);
+                            agePrediction.get(category) * 0.4);
         }
     }
 

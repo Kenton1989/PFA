@@ -59,7 +59,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     (mRecordDataSource, mTargetDataSource, mCategoryDataSource);
         }
         if (modelClass.isAssignableFrom(InitViewModel.class)) {
-            return (T) new InitViewModel(mProfileDataSource);
+            return (T) new InitViewModel(mProfileDataSource, mCategoryDataSource,
+                    mRecordDataSource, mTargetDataSource);
         }
         return null;
     }

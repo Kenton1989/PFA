@@ -2,14 +2,17 @@ package sg.edu.ntu.gg4u.pfa;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,9 +21,20 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
-import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfileDao;
+import sg.edu.ntu.gg4u.pfa.persistence.Dataloader;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.Gender;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.ui.InitViewModel;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
@@ -29,10 +43,6 @@ import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobField;
 import sg.edu.ntu.gg4u.pfa.ui.guide.GuideActivity;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
-import sg.edu.ntu.gg4u.pfa.ui.category.CategoryActivity;
-import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
-import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,9 +50,16 @@ public class MainActivity extends AppCompatActivity {
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Database stuff
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
+        mViewModel = new ViewModelProvider(this, mViewModelFactory)
+                .get(InitViewModel.class);
+
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
@@ -62,17 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
         loadPreferenceFile();
         checkPreferenceFile();
+
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         savePreferenceFile();
-
-        // Database stuff
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
-        mViewModel = new ViewModelProvider(this, mViewModelFactory)
-                .get(InitViewModel.class);
 
         Log.d("MainActivity", JobField.OTHERS.toString());
     }
@@ -100,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void printToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
+
     private void open(Class<?> toOpen) {
         Intent intent = new Intent(this, toOpen);
         startActivity(intent);
@@ -108,10 +126,12 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
     private final String sharedPrefFile = "sg.edu.ntu.gg4u.pfa.sharedPrefFile";
     private final String IS_FIRST_LAUNCH_KEY = "sg.edu.ntu.gg4u.pfa.IS_FIRST_LAUNCH";
+    @RequiresApi(api = Build.VERSION_CODES.R)
     private void loadPreferenceFile() {
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     private void checkPreferenceFile() {
         if (mPreferences.getBoolean(IS_FIRST_LAUNCH_KEY, true)) {
             whenFirstLaunch();
@@ -124,14 +144,112 @@ public class MainActivity extends AppCompatActivity {
         preferencesEditor.apply();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     private void whenFirstLaunch() {
-        open(GuideActivity.class);
-        
         // Do manual insertion...
-        InitDataBase();
+        Log.d("MainActivity", "Start init database");
+        initDataBase();
+
+        open(GuideActivity.class);
     }
 
-    private void InitDataBase() {
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void initDataBase() {
+        updateGovLocalDatabase();
+        insertUserProfile();
+        insertCategory();
+        insertRecord();
+        insertTarget();
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void insertTarget() {
+        insertSingleTarget(new Target("Clothing", 150));
+        insertSingleTarget(new Target("Food", 360));
+    }
 
+    private void insertSingleTarget(Target target) {
+        mDisposable.add(mViewModel.updateTarget(target)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void insertCategory() {
+        insertSingleCategory(new Category("Food"));
+        insertSingleCategory(new Category("Transportation"));
+        insertSingleCategory(new Category("Clothing"));
+        insertSingleCategory(new Category("Entertainment"));
+
+//        Category from government dataset
+//        for (String categoryName : Dataloader.categorySet) {
+//            mDisposable.add(mViewModel.updateCategory(new Category(categoryName))
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe());
+//        }
+    }
+    private void insertSingleCategory(Category category) {
+        mDisposable.add(mViewModel.updateCategory(category)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void insertRecord() {
+        int month = LocalDateTime.now().getMonth().getValue();
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month-1, 13, 13, 12),
+                "Food", 5.30));
+        insertSingleRecord(new Record(LocalDateTime.of(2020,month - 1,28,18,50),
+                "Food", 4.80));
+        insertSingleRecord(new Record(LocalDateTime.of(2020,month,1,12,9),
+                "Food", 3.30));
+        insertSingleRecord(new Record(LocalDateTime.of(2020,month,3,9,45),
+                "Food", 2.40));
+        insertSingleRecord(new Record(LocalDateTime.of(2020,month,24,9,10),
+                "Transportation", 16.20));
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 4, 22, 10),
+                "Transportation", 2.70));
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 17, 15, 39),
+                "Transportation", 7.30));
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month,16, 17, 30),
+                "Clothing", 58.80));
+        insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1,24, 10, 1),
+                "Entertainment", 16.80));
+    }
+
+    private void insertSingleRecord(Record record) {
+        mDisposable.add(mViewModel.updateRecord(record)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
+    }
+
+    private void insertUserProfile() {
+        UserProfile userProfile = new UserProfile();
+        userProfile.setName("Wen Zhengyu");
+        userProfile.setAge(19);
+        userProfile.setFamilySize(5);
+        userProfile.setGender(Gender.MALE);
+        userProfile.setJobField(JobField.NOT_WORKING);
+        userProfile.setIncome(500.00);
+
+        mDisposable.add(mViewModel.updateUserProfile(userProfile)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(() -> Log.d("MainActivity", "Database Initialization Done...")));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void updateGovLocalDatabase() {
+        try {
+            Dataloader.loadAllData();
+        } catch (IOException e) {
+            printToast("Failed to load data from data.gov.sg");
+        } catch (JSONException e) {
+            printToast("Failed to parse data from data.gov.sg");
+        }
     }
 }
