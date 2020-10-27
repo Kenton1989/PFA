@@ -3,6 +3,7 @@ package sg.edu.ntu.gg4u.pfa.visualizer;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -30,18 +31,23 @@ import java.text.ParsePosition;
 import java.util.Arrays;
 
 public class TargetBarChartVisualizer {
+
     public void plot(XYPlot plot, final String[] category, Number[] target, Number[] cost) {
 
         int n = target.length;
 
-        String[] categories = new String[n+1];
-        Number[] currentList = new Number[n+1];
-        Number[] predictedList = new Number[n+1];
-        Number[] excessList = new Number[n+1];
+        String[] categories = new String[n+2];
+        Number[] currentList = new Number[n+2];
+        Number[] predictedList = new Number[n+2];
+        Number[] excessList = new Number[n+2];
         currentList[0] = 0;
+        currentList[n+1] = 0;
         predictedList[0] = 0;
+        predictedList[n+1] = 0;
         excessList[0] = 0;
+        excessList[n+1] = 0;
         categories[0] = "";
+        categories[n+1] = "";
 
         for (int i = 0; i < n; i++) {
             if (cost[i].doubleValue() > target[i].doubleValue()) {
@@ -55,7 +61,6 @@ public class TargetBarChartVisualizer {
             predictedList[i+1] = target[i];
             categories[i+1] = category[i];
         }
-        final String[] catList = categories;
 
         XYSeries current = new SimpleXYSeries(Arrays.asList(currentList), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "current");
         XYSeries excess = new SimpleXYSeries(Arrays.asList(excessList), SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "excess");
@@ -141,23 +146,22 @@ public class TargetBarChartVisualizer {
             @NonNull
             @Override
             public StringBuffer format(double number, @NonNull StringBuffer toAppendTo, @NonNull FieldPosition pos) {
-                String labelString = catList[(int) number];
+                String labelString = categories[(int) number];
                 return new StringBuffer(labelString);
             }
 
             @NonNull
             @Override
             public StringBuffer format(long number, @NonNull StringBuffer toAppendTo, @NonNull FieldPosition pos) {
-                String labelString = catList[(int) number];
+                String labelString = categories[(int) number];
                 return new StringBuffer(labelString);
             }
 
             @Nullable
             @Override
             public Number parse(@NonNull String source, @NonNull ParsePosition parsePosition) {
-                return null;
+                return java.util.Arrays.asList(categories).indexOf(source);
             }
         });
-
     }
 }
