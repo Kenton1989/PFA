@@ -1,41 +1,54 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditTargetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EditTargetFragment extends DialogFragment {
 
-    public EditTargetFragment() {
-        // Required empty public constructor
-    }
+    private View mView;
+    EditText mEdit;
 
+    @NonNull
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_target, container, false);
-    }
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
 
+        mView = inflater.inflate(R.layout.fragment_edit_target,null);
+        builder.setView(mView)
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        mEdit = mView.findViewById(R.id.editTarget);
+                        double newValue = Double.parseDouble(mEdit.getText().toString());
+                        Log.d("target", String.valueOf(newValue));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        return builder.create();
+    }
 
     private void insertOrUpdateTarget(Target record) {
         // TODO: UI group: use this function

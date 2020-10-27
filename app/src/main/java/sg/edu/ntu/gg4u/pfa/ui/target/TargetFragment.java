@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,7 @@ import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
 public class TargetFragment extends Fragment {
 
+    Button dummy;
     List<Target> targetList = null;
     List<SumByCategory> monthlyCostList = null;
 
@@ -96,6 +98,17 @@ public class TargetFragment extends Fragment {
                 CustomListTarget(getActivity(),  targetCat_in_list , targetAmt_in_List, actualAmt_in_List);
         list=root.findViewById(R.id.listViewTarget);
         list.setAdapter(adapter);
+
+
+        dummy = root.findViewById(R.id.dummyTarget);
+        dummy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditTargetFragment editFrag = new EditTargetFragment();
+                editFrag.show(getActivity().getSupportFragmentManager(), "editTar");
+            }
+        });
+
         return root;
     }
 

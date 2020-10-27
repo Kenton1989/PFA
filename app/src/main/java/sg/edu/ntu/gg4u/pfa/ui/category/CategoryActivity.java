@@ -82,7 +82,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         mEdit = dialog.getMView().findViewById(R.id.createCategory);
         String categoryName = mEdit.getText().toString();
         Boolean isAvailable = false;
-        Log.d("help", categoryName);
+        Log.d("category", categoryName);
         // categoryIDs = getAllCategoryID()
         // for (i = 0; i < categoryIDs.size(); i++) {
         //     if (getCategoryInfo(categoryIDs[i]).name == categoryName)
