@@ -1,6 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.persistence;
 
 
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -16,10 +17,18 @@ import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobField;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 
 import static sg.edu.ntu.gg4u.pfa.persistence.Dataloader.govDataSetFileNames;
-import static sg.edu.ntu.gg4u.pfa.persistence.Dataloader.readFromSerial;
 
 
 public class Predictor {
+
+    private Context context;
+    private Dataloader loader;
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public Predictor(Context context) {
+        loader = new Dataloader(context);
+        this.context = context;
+    }
 
     public static String age2key(String age) {
         if (age.charAt(0) == 'T')
@@ -57,16 +66,16 @@ public class Predictor {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @NonNull
-    public static HashMap<String, Double> readSer(String key, String data) {
+    public HashMap<String, Double> readSer(String key, String data) {
         HashMap<String, HashMap<String, Double>> dataset =
-                Objects.requireNonNull(readFromSerial(govDataSetFileNames.get(key)));
+                Objects.requireNonNull(loader.readFromSerial(govDataSetFileNames.get(key)));
         return Objects.requireNonNull(dataset.get(key));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public static void generatePrediction(UserProfile userProfile,
-                                          HashMap<String, Double> prediction,
-                                          HashMap<String, Double> distribution) {
+    public void generatePrediction(UserProfile userProfile,
+                                   HashMap<String, Double> prediction,
+                                   HashMap<String, Double> distribution) {
 
         HashMap<String, Double> jobFieldPrediction, AQPrediction, agePrediction;
         Set<String> categorySet;
@@ -102,9 +111,9 @@ public class Predictor {
 
         for (String category : categorySet) {
             prediction.put(category,
-                    (jobFieldPrediction.get(category) * 0.24 +
+                    jobFieldPrediction.get(category) * 0.24 +
                             AQPrediction.get(category) * 0.36 +
-                            agePrediction.get(category) * 0.4) / 3);
+                            agePrediction.get(category) * 0.4);
         }
     }
 
@@ -113,7 +122,7 @@ public class Predictor {
         UserProfile userProfile = new UserProfile("Peter Wen", Gender.MALE, JobField.NOT_WORKING,
                 4, 500.0, 19, AcademicQualification.UNIVERSITY);
         HashMap<String, Double> prediction = new HashMap<>(), distribution = new HashMap<>();
-        generatePrediction(userProfile, prediction, distribution);
+//        generatePrediction(userProfile, prediction, distribution);
         System.out.println(prediction);
         System.out.println(distribution);
     }
