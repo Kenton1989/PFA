@@ -2,6 +2,7 @@ package sg.edu.ntu.gg4u.pfa.visualizer;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
@@ -32,7 +33,7 @@ import java.util.Arrays;
 
 public class TargetBarChartVisualizer {
 
-    public void plot(XYPlot plot, final String[] category, Number[] target, Number[] cost) {
+    public void plot(XYPlot plot, final String[] category, double[] target, double[] cost) {
 
         int n = target.length;
 
@@ -50,7 +51,7 @@ public class TargetBarChartVisualizer {
         categories[n+1] = "";
 
         for (int i = 0; i < n; i++) {
-            if (cost[i].doubleValue() > target[i].doubleValue()) {
+            if (cost[i] > target[i]) {
                 currentList[i + 1] = 0;
                 excessList[i + 1] = cost[i];
             }
@@ -93,7 +94,7 @@ public class TargetBarChartVisualizer {
         saveFormatter.setPointLabeler(new PointLabeler(){
             @Override
             public String getLabel(XYSeries series, int index) {
-                if ((int) series.getY(index) != 0)
+                if (series.getY(index).intValue() != 0)
                     return String.valueOf(series.getY(index));
                 else return "";
             }
@@ -105,7 +106,8 @@ public class TargetBarChartVisualizer {
         exFormatter.setPointLabeler(new PointLabeler() {
             @Override
             public String getLabel(XYSeries series, int index) {
-                if ((int)series.getY(index) != 0)
+
+                if (series.getY(index).intValue() != 0)
                     return String.valueOf(series.getY(index));
                 else return "";
             }
@@ -117,7 +119,7 @@ public class TargetBarChartVisualizer {
         predFormatter.setPointLabeler(new PointLabeler() {
             @Override
             public String getLabel(XYSeries series, int index) {
-                if ((int) series.getY(index) != 0)
+                if (series.getY(index).intValue() != 0)
                     return String.valueOf(series.getY(index));
                 else return "";
             }
