@@ -75,6 +75,8 @@ public class ReportFragment extends Fragment {
 
     private ReportViewModel reportViewModel;
 
+    LineChartVisualizer lcv;
+
     //LineChart lineChart;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,12 +86,12 @@ public class ReportFragment extends Fragment {
 
 
 
-        LineChart lineChart = (LineChart) root.findViewById(R.id.chart);
+        final LineChart lineChart = (LineChart) root.findViewById(R.id.chart);
 
 
-        LineChartVisualizer lcv = new LineChartVisualizer();
+        lcv = new LineChartVisualizer();
 
-        float[] tempData = new float[5];
+        final float[] tempData = new float[5];
 
         tempData[0] = 100;
         tempData[1] = 200;
@@ -97,15 +99,26 @@ public class ReportFragment extends Fragment {
         tempData[3] = 100;
         tempData[4] = 200;
 
+        final float[] tempData2 = new float[5];
+
+        tempData2[0] = 600;
+        tempData2[1] = 100;
+        tempData2[2] = 500;
+        tempData2[3] = 300;
+        tempData2[4] = 800;
+
 
         lcv.createLine(lineChart, tempData, "temp chart");
 
-        PieChart pieChart = (PieChart) root.findViewById(R.id.pieChart);
 
-        PieChartVisualizer pcv = new PieChartVisualizer();
+  
+       final PieChart pieChart = (PieChart) root.findViewById(R.id.pieChart);
 
-        String[] labels = new String[5];
-        float[] data = new float[5];
+
+        final PieChartVisualizer pcv = new PieChartVisualizer();
+
+        final String[] labels = new String[5];
+        final float[] data = new float[5];
 
         labels[0] = "January";
         labels[1] = "February";
@@ -119,7 +132,23 @@ public class ReportFragment extends Fragment {
         data[3] = 25f;
         data[4] = 23f;
 
+        final String[] labels2 = new String[5];
+        final float[] data2 = new float[5];
+
+        labels2[0] = "March";
+        labels2[1] = "January";
+        labels2[2] = "May";
+        labels2[3] = "December";
+        labels2[4] = "September";
+
+        data2[0] = 18f;
+        data2[1] = 85f;
+        data2[2] = 62f;
+        data2[3] = 35f;
+        data2[4] = 83f;
+
         pcv.drawPie(pieChart, labels, data);
+
 
         ImageButton dec, inc;
 
@@ -139,6 +168,9 @@ public class ReportFragment extends Fragment {
                 cal.add(Calendar.MONTH, -1);
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
+                //to re-insert then add the data into the charts again
+                lcv.createLine(lineChart, tempData, "temp chart");
+                pcv.drawPie(pieChart, labels, data);
             }
         });
         cal.getTime();
@@ -149,7 +181,9 @@ public class ReportFragment extends Fragment {
                 cal.add(Calendar.MONTH, 1);
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
-
+                //to re-insert then add the data into the charts again
+                lcv.createLine(lineChart, tempData2, "temp chart");
+                pcv.drawPie(pieChart, labels2, data2);
             }
         });
 

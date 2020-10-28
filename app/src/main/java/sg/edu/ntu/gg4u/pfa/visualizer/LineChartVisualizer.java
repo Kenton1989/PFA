@@ -53,8 +53,10 @@ public class LineChartVisualizer {
 
         lineChart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
 
-
         lineChart.setData(lineData);
+        // to refresh the chart
+        lineChart.notifyDataSetChanged();
+        lineChart.invalidate();
     }
  /*   public class FooFormatter extends ValueFormatter {
         private long referenceTimestamp; // minimum timestamp in your data set
