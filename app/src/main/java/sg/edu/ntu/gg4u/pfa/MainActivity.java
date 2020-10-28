@@ -266,6 +266,11 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void updateGovLocalDatabase() {
+        Log.d(MainActivity.class.getSimpleName(), "Don't load gov data base for a now.");
+        if (true) {
+            return;
+        }
+
         ++attemptsToLoadGovDatabase;
         Dataloader loader = new Dataloader(this);
         loader.startLoadingGovData(this::setGovDataLoad);
