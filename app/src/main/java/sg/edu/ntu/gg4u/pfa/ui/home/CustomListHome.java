@@ -15,10 +15,10 @@ public class CustomListHome extends ArrayAdapter<String> {
 
     private final Activity context;
     private  String[] cat_in_list;
-    private  final String [] amount_in_list;
+    private final double[] amount_in_list;
     //private final String[] amount_in_list;
 
-    public CustomListHome(Activity context, String[]cat_in_list, String[] amount_in_list) {
+    public CustomListHome(Activity context, String[]cat_in_list, double[] amount_in_list) {
         super(context, R.layout.fragment_home_listview, cat_in_list);
         this.context = context;
         this.cat_in_list = cat_in_list;
@@ -34,7 +34,7 @@ public class CustomListHome extends ArrayAdapter<String> {
         TextView amtTitle = (TextView) rowView.findViewById(R.id.homeAmount);
         //TextView amtTitle = (TextView) rowView.findViewById(R.id.amount);
         catTitle.setText(cat_in_list[position]);
-        amtTitle.setText(amount_in_list[position]);
+        amtTitle.setText(String.valueOf(amount_in_list[position]));
         //amtTitle.setText(amount_in_list[position]);
 
         return rowView;

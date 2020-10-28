@@ -13,12 +13,12 @@ public class CustomListTarget extends ArrayAdapter<String>{
 
     private final Activity context;
     private final String[] targetCat_in_list;
-    private final String[] targetAmt_in_List;
-    private final String[] actualAmt_in_List;
+    private final double[] targetAmt_in_List;
+    private final double[] actualAmt_in_List;
     //private final String[] amount_in_list;
 
     public CustomListTarget(Activity context,
-                            String[] targetCat_in_list, String[] targetAmt_in_List, String[] actualAmt_in_List) {
+                            String[] targetCat_in_list, double[] targetAmt_in_List, double[] actualAmt_in_List) {
         super(context, R.layout.fragment_target_listview, targetCat_in_list);
         this.context = context;
         this.targetCat_in_list = targetCat_in_list;
@@ -37,8 +37,8 @@ public class CustomListTarget extends ArrayAdapter<String>{
 
         //TextView amtTitle = (TextView) rowView.findViewById(R.id.amount);
         targetCat.setText(targetCat_in_list[position]);
-        targetAmt.setText(targetAmt_in_List[position]);
-        actualAmt.setText(actualAmt_in_List[position]);
+        targetAmt.setText(String.valueOf(targetAmt_in_List[position]));
+        actualAmt.setText(String.valueOf(actualAmt_in_List[position]));
 
         //amtTitle.setText(amount_in_list[position]);
 

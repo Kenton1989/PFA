@@ -105,7 +105,7 @@ public class TargetBarChartVisualizer {
         exFormatter.setPointLabeler(new PointLabeler() {
             @Override
             public String getLabel(XYSeries series, int index) {
-                if ((int) series.getY(index) != 0)
+                if ((int)series.getY(index) != 0)
                     return String.valueOf(series.getY(index));
                 else return "";
             }

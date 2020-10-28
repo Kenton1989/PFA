@@ -48,13 +48,20 @@ public class HomeFragment extends Fragment {
             "leisure",
             "Transportation",
             "Others"
-    };*/
+    };
 
     String [] amount_in_list = {
             "100",
             "200",
             "300",
             "400",
+    };*/
+
+    double [] amount_in_list = new double[]{
+            100,
+            300,
+            200,
+            400,
     };
 
     private HomeViewModel mViewModel;
@@ -93,9 +100,9 @@ public class HomeFragment extends Fragment {
         //set total expense
         //totalIncome = root.findViewById(R.id.totalIncome);
         totalExpense = root.findViewById(R.id.totalExpense_home);
-        int expense = 0;
+        double expense = 0;
         for(int i=0;i<amount_in_list.length;i++){
-           expense = expense +Integer.parseInt(amount_in_list[i]);
+           expense = expense +amount_in_list[i];
         }
         //Log.d("display" , String.valueOf(expense));
         totalExpense.setText(String.valueOf(expense));

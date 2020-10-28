@@ -3,6 +3,7 @@ package sg.edu.ntu.gg4u.pfa.ui.target;
 import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,32 +60,21 @@ public class TargetFragment extends Fragment {
             "Entertainment",
             "leisure",
             "Transportation",
-            "Others",
-            "Vacation",
-            "Transportation",
-            "Otvhers"
+            "Others"
+
     } ;
 
-    String[] targetAmt_in_List = {
-            "1000",
-            "2000",
-            "5000",
-            "6000",
-            "7000",
-            "8000",
-            "6000",
-            "7000"
+    double[] targetAmt_in_List = {
+            100,
+            200,
+            300,
+            400,
+            500
     } ;
 
-    String[] actualAmt_in_List= {
-            "100",
-            "200",
-            "500",
-            "600",
-            "700",
-            "800",
-            "600",
-            "700"
+    double[] actualAmt_in_List= {
+           200, 300, 11, 55, 200
+
 
 
     };
@@ -92,6 +82,7 @@ public class TargetFragment extends Fragment {
     private TargetViewModel targetViewModel;
 
     private TargetViewModel mViewModel;
+    private TextView actualAmt,targetAmt;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -108,7 +99,18 @@ public class TargetFragment extends Fragment {
         CustomListTarget adapter = new
                 CustomListTarget(getActivity(),  targetCat_in_list , targetAmt_in_List, actualAmt_in_List);
         list=root.findViewById(R.id.listViewTarget);
+        list.setClickable(true);
         list.setAdapter(adapter);
+        //list.setDescendantFocusability(FOCUS_BLOCK_DESCENDANTS);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getActivity(), "You Clicked at " , Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         ImageButton decT, incT;
         final TextView month = root.findViewById(R.id.target_month);
@@ -169,7 +171,43 @@ public class TargetFragment extends Fragment {
         cost[3] = 100;
         cost[4] = 55;
 
-        bar.plot(barChart, cat,target,cost);
+       /*       Number [] tempTarget = new Number[5];
+
+
+        for(int i=0;i<targetAmt_in_List.length;i++){
+            tempTarget[i] = (Number)targetAmt_in_List[i];
+        }
+
+        Number [] tempActual = new Number[5];
+        for(int i=0;i<actualAmt_in_List.length;i++){
+            tempActual[i] = (Number)actualAmt_in_List[i];
+        }*/
+
+        bar.plot(barChart, targetCat_in_list,target,cost);
+
+        actualAmt = root.findViewById(R.id.actualAmount);
+        targetAmt = root.findViewById(R.id.targetAmount);
+        double actualTemp = 0;
+        for(int i=0;i<actualAmt_in_List.length;i++){
+            actualTemp = actualTemp +actualAmt_in_List[i];
+        }
+        //Log.d("display" , String.valueOf(expense));
+        actualAmt.setText(String.valueOf(actualTemp));
+
+        double targetTemp = 0;
+        for(int i=0;i<targetAmt_in_List.length;i++){
+            targetTemp = targetTemp +targetAmt_in_List[i];
+        }
+        //Log.d("display" , String.valueOf(expense));
+        targetAmt.setText(String.valueOf(targetTemp));
+        actualAmt.setText(String.valueOf(actualTemp));;
+
+
+
+
+
+
+
 
 
 
