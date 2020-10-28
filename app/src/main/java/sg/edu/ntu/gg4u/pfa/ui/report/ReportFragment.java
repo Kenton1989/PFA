@@ -43,6 +43,7 @@ import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.ui.record.CustomList;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
@@ -193,6 +194,12 @@ public class ReportFragment extends Fragment {
     }
 
     void whenRecordListUpdated(List<Record> newRecord) {
+        // this function will be called when the fragment is created.
+        // TODO: UI group: implement this function
+        // TODO: DB group: call this function when data changes
+    }
+
+    void whenUserProfileChanged(UserProfile newProfile) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: call this function when data changes
