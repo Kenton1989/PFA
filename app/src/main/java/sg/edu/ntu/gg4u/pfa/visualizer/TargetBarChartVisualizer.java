@@ -126,7 +126,7 @@ public class TargetBarChartVisualizer {
 
         // graph modifications
         Paint bg = new Paint();
-        bg.setColor(Color.BLACK);
+        bg.setColor(Color.TRANSPARENT);
         plot.setTitle("");
         plot.setDomainLabel("Category");
         plot.setRangeLabel("Expense ($)");
@@ -139,6 +139,7 @@ public class TargetBarChartVisualizer {
         plot.setRangeUpperBoundary(maxY + padding, BoundaryMode.FIXED);
         plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.LEFT).setPaint(bg);
         plot.getRangeTitle().setOrientation(TextOrientation.HORIZONTAL);
+        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setRotation((float)-33.75);
         plot.getRangeTitle().getPositionMetrics().setXPositionMetric(new HorizontalPosition(PixelUtils.dpToPix(10), HorizontalPositioning.ABSOLUTE_FROM_LEFT));
         plot.getRangeTitle().getPositionMetrics().setYPositionMetric(new VerticalPosition(PixelUtils.dpToPix(20), VerticalPositioning.ABSOLUTE_FROM_TOP));
         plot.getDomainTitle().getPositionMetrics().setXPositionMetric(new HorizontalPosition(PixelUtils.dpToPix(60), HorizontalPositioning.ABSOLUTE_FROM_RIGHT));

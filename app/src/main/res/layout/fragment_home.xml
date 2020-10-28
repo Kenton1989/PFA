@@ -37,8 +37,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -47,72 +45,70 @@
                     android:textSize="20sp"
                     tools:ignore="MissingConstraints" />
                 <TextView
-                    android:id="@+id/totalExpense"
+                    android:id="@+id/totalExpense_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0dp"
-                    android:text="500"
                     android:textSize="20sp"
                     tools:ignore="MissingConstraints"
                     android:layout_marginStart="0dp" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="Total Income   :"
-                    android:textSize="20sp"
-                    android:layout_marginTop="20dp"
-                    tools:ignore="MissingConstraints"
-                    android:layout_marginStart="15dp" />
-                <TextView
-                    android:id="@+id/totalIncome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="500"
-                    android:textSize="20sp"
-                    android:layout_marginTop="20dp"
-                    tools:ignore="MissingConstraints" />
+            <!--  <LinearLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="15dp"
+                      android:text="Total Income   :"
+                      android:textSize="20sp"
+                      android:layout_marginTop="20dp"
+                      tools:ignore="MissingConstraints"
+                      android:layout_marginStart="15dp" />
+                  <TextView
+                      android:id="@+id/totalIncome"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:textSize="20sp"
+                      android:layout_marginTop="20dp"
+                      tools:ignore="MissingConstraints" />
 
-            </LinearLayout>
-
+              </LinearLayout>-->
 
 
-        </RelativeLayout>
 
-        <ScrollView
+          </RelativeLayout>
 
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+          <ScrollView
 
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ListView
-                    android:id="@+id/listHome"
-                    android:layout_width="match_parent"
-                    android:layout_height="590dp"
-                    android:divider="@null"
-                    android:dividerHeight="0dp"
-                    android:paddingLeft="10dp">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
 
-                </ListView>
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
 
-            </RelativeLayout>
+                  <ListView
+                      android:id="@+id/listHome"
+                      android:layout_width="match_parent"
+                      android:layout_height="590dp"
+                      android:divider="@null"
+                      android:dividerHeight="0dp"
+                      android:paddingLeft="10dp">
 
-        </ScrollView>
 
-    </LinearLayout>
+                  </ListView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+              </RelativeLayout>
+
+          </ScrollView>
+
+      </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

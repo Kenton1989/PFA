@@ -40,7 +40,8 @@ import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 public class HomeFragment extends Fragment {
     ListView list;
     CustomListHome adapter;
-    List<String> cat_in_list2 = new ArrayList<>();
+    List<String> cat_in_list = new ArrayList<>();
+    List<String> sum_in_cat =new ArrayList();
    /* String[] cat_in_list = {
             "Food",
             "Entertainment",
@@ -78,28 +79,26 @@ public class HomeFragment extends Fragment {
                 .subscribe(this::displayCat));
 
 
-       Log.d("display" , cat_in_list2.toString());
+       //Log.d("display" , cat_in_list2.toString());
 
-        cat_in_list2.add("test");
-        cat_in_list2.add("test2");
-        cat_in_list2.add("test3");
+        cat_in_list.add("test");
+        cat_in_list.add("test2");
+        cat_in_list.add("test3");
         /* adapter = new
                 CustomListHome(getActivity(),  cat_in_list2.toArray(new String[0]), amount_in_list);*/
         list = root.findViewById(R.id.listHome);
         //list.setAdapter(adapter);
 
 
-
-       totalIncome = root.findViewById(R.id.totalIncome);
-        totalExpense = root.findViewById(R.id.totalExpense);
-        //amount = root.findViewById(R.id.homeCat);
-        //categoryName = root.findViewById(R.id.homeAmount);
-       /* int expense = 0;
-
+        //set total expense
+        //totalIncome = root.findViewById(R.id.totalIncome);
+        totalExpense = root.findViewById(R.id.totalExpense_home);
+        int expense = 0;
         for(int i=0;i<amount_in_list.length;i++){
            expense = expense +Integer.parseInt(amount_in_list[i]);
         }
-        totalExpense.setText(expense);*/
+        //Log.d("display" , String.valueOf(expense));
+        totalExpense.setText(String.valueOf(expense));
 
 
 
@@ -143,20 +142,24 @@ public class HomeFragment extends Fragment {
     public void whenDataUpdated(List<SumByCategory> newDailyCost) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
+     //   for (SumByCategory catSum :newDailyCost){
+      //      sum_in_cat.add(catSum.());
+       // }
         // TODO: DB group: use this function when data changes
+
 
     }
     public void displayCat(List<Category> categoryList){
 
 
         for(Category category : categoryList){
-            cat_in_list2.add(category.getName());
+            cat_in_list.add(category.getName());
 
         }
-        cat_in_list2.add("Others");
+        cat_in_list.add("Others");
 
         adapter = new
-                CustomListHome(getActivity(),  cat_in_list2.toArray(new String[0]), amount_in_list);
+                CustomListHome(getActivity(),  cat_in_list.toArray(new String[0]), amount_in_list);
         list.setAdapter(adapter);
 
 
