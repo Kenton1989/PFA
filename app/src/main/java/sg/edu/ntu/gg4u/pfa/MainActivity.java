@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         Duration timeSinceLastGovDbLoading =  Duration.between(lastGovDbLoadedTime, ZonedDateTime.now());
         if (attemptsToLoadGovDatabase == 0 &&
-                timeSinceLastGovDbLoading.compareTo(GOV_DATABASE_UPDATE_PERIOD) <= 0) {
+                timeSinceLastGovDbLoading.compareTo(GOV_DATABASE_UPDATE_PERIOD) >= 0) {
             updateGovLocalDatabase();
         }
     }
