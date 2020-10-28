@@ -147,43 +147,7 @@ public class TargetFragment extends Fragment {
 
         XYPlot barChart = (XYPlot) root.findViewById(R.id.barChart);
         TargetBarChartVisualizer bar = new TargetBarChartVisualizer();
-
-        String[] cat = new String[5];
-
-        cat[0] = "Food";
-        cat[1] = "Transportation";
-        cat[2] = "Leisure";
-        cat[3] = "Travel";
-        cat[4] = "Others";
-
-        double[] target = new double[5];
-        target[0] = 500 ;
-        target[1] = 200;
-        target[2] = 400;
-        target[3] = 1000;
-        target[4] = 200;
-
-
-        double[] cost = new double[5];
-        cost[0] = 200 ;
-        cost[1] = 300;
-        cost[2] = 100;
-        cost[3] = 100;
-        cost[4] = 55;
-
-       /*       Number [] tempTarget = new Number[5];
-
-
-        for(int i=0;i<targetAmt_in_List.length;i++){
-            tempTarget[i] = (Number)targetAmt_in_List[i];
-        }
-
-        Number [] tempActual = new Number[5];
-        for(int i=0;i<actualAmt_in_List.length;i++){
-            tempActual[i] = (Number)actualAmt_in_List[i];
-        }*/
-
-        bar.plot(barChart, targetCat_in_list,target,cost);
+        bar.plot(barChart, targetCat_in_list,targetAmt_in_List,actualAmt_in_List);
 
         actualAmt = root.findViewById(R.id.actualAmount);
         targetAmt = root.findViewById(R.id.targetAmount);
