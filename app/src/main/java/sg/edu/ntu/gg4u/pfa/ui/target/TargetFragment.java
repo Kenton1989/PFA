@@ -154,7 +154,7 @@ public class TargetFragment extends Fragment {
         cat[3] = "Travel";
         cat[4] = "Others";
 
-        Number[] target = new Number[5];
+        double[] target = new double[5];
         target[0] = 500 ;
         target[1] = 200;
         target[2] = 400;
@@ -162,7 +162,7 @@ public class TargetFragment extends Fragment {
         target[4] = 200;
 
 
-        Number[] cost = new Number[5];
+        double[] cost = new double[5];
         cost[0] = 200 ;
         cost[1] = 300;
         cost[2] = 100;
