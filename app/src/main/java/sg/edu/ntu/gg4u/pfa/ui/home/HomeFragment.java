@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.content.Intent;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -23,7 +26,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -40,6 +45,7 @@ import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 import sg.edu.ntu.gg4u.pfa.ui.record.EditRecordFragment;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
     ListView list;
@@ -62,11 +68,11 @@ public class HomeFragment extends Fragment {
             400,
     };*/
 
+
+
     private HomeViewModel mViewModel;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
     private TextView totalIncome,totalExpense,amount,categoryName;
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -106,18 +112,17 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-
         LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
         LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1));
       /*  mDisposable.add(mViewModel.getRecord(todayBegin, todayEnd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenDataUpdated));*/
+
         mDisposable.add(mViewModel.getGroupedRecordSum(todayBegin, todayEnd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenDataUpdated));
-
 
     }
 
@@ -175,6 +180,7 @@ public class HomeFragment extends Fragment {
             expense = expense + sum_in_cat.get(i);
         }
         totalExpense.setText(String.valueOf(expense));
+
 
     }
 

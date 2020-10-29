@@ -34,11 +34,19 @@ public class Record {
     }
     @Ignore
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Record(String name, double value) {
-        timestamp = LocalDateTime.now();
+    public Record(@NonNull LocalDateTime localDateTime, String name, double value) {
+        timestamp = localDateTime;
         categoryName = name;
         amount = value;
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Record(String name, double value) {
+        this(LocalDateTime.now(), name, value);
+    }
+
+
     @NonNull
     public LocalDateTime getTimestamp() {
         return timestamp;

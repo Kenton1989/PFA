@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sg.edu.ntu.gg4u.pfa">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,8 +38,7 @@
         <activity
             android:name=".ui.guide.GuideActivity"
             android:label="@string/title_guide"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".MainActivity" />
 
         <uses-library android:name="android.test.runner" />
         <uses-library android:name="android.test.base" />

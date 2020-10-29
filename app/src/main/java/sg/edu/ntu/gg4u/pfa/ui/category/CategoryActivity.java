@@ -49,7 +49,11 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
 
     EditText mEdit;
     ListView list;
-    ArrayList<String> catList = new ArrayList<>(Arrays.asList("Food", "Entertainment", "Leisure", "Transportation", "Others"));
+    ArrayList<String> catList = new ArrayList<>(Arrays.asList("Food", "Entertainment", "Leisure", "Transportation", "Others", "New"));
+
+    private ViewModelFactory mViewModelFactory;
+    private CategoryViewModel mViewModel;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
@@ -89,7 +93,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
 //        /* in else block */ Toast.makeText(this, "Category already exists!", Toast.LENGTH_SHORT).show();
 //    }
         ArrayList<String> catList2 = new ArrayList<>(Arrays.asList("Food", "Tr", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
-        CustomListCategory adapter = new CustomListCategory(this, catList2);
+        CustomListCategory adapter = new CustomListCategory(this, catList2, mViewModel);
         list.setAdapter(adapter);
         setListViewHeightBasedOnChildren(list);
     }
@@ -100,17 +104,12 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
 
     private static final String TAG = "ui.CategoryActivity";
 
-    private ViewModelFactory mViewModelFactory;
-
-    private CategoryViewModel mViewModel;
-
-    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        CustomListCategory adapter = new CustomListCategory(this, catList );
+        CustomListCategory adapter = new CustomListCategory(this, catList, mViewModel);
         list = findViewById(R.id.listCategory);
         list.setAdapter(adapter);
         setListViewHeightBasedOnChildren(list);
@@ -131,8 +130,8 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         mDisposable.add(mViewModel.getAllCategory()
                 .subscribeOn(Schedulers.io())
@@ -140,10 +139,28 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
                 .subscribe(this::whenCategoryListChanged));
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mDisposable.clear();
+    }
+
+
     public void whenCategoryListChanged(List<Category> newList) {
         // This function will be called when the activity is created.
         // TODO: UI group: implement this function
-        // TODO: DB group: the function when data changes
+        // TODO: DB group: the function when data changes DONE
 
+    }
+
+    private void insertCategory(Category newCategory) {
+        // TODO: UI group: use this function
+        // TODO: DB group: implement this function
+
+        mDisposable.add(mViewModel.createNewCategory(newCategory)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
 }
