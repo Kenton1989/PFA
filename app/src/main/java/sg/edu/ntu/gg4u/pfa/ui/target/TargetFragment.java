@@ -170,22 +170,6 @@ public class TargetFragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return root;
     }
 

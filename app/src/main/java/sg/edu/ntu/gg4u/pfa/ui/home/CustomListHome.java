@@ -39,7 +39,7 @@ public class CustomListHome extends ArrayAdapter<String> {
 
         return rowView;
     }
-    public void updateData(String[] list){
+   /* public void updateData(String[] list){
         this.cat_in_list = list;
-    }
+    }*/
 }

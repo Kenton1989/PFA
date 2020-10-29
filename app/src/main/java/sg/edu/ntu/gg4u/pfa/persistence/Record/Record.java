@@ -39,7 +39,6 @@ public class Record {
         categoryName = name;
         amount = value;
     }
-
     @NonNull
     public LocalDateTime getTimestamp() {
         return timestamp;
