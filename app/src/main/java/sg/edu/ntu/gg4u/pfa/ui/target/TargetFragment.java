@@ -60,6 +60,7 @@ import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.TargetBarChartVisualizer;
 
 public class TargetFragment extends Fragment {
+    private static final String TAG = TargetFragment.class.getSimpleName();
 
    // List<Target> targetList = null;
    // List<SumByCategory> monthlyCostList = null;
@@ -253,6 +254,10 @@ public class TargetFragment extends Fragment {
         Log.d("display xx" , targetAndCosts.get(1).categoryName);
         Log.d("display xx" , Double.toString(targetAndCosts.get(1).cost));
         Log.d("display xx" , Double.toString(targetAndCosts.get(1).targetAmount));
+
+        cat_in_list.clear();
+        target_in_cat.clear();
+        amt_in_cat.clear();
         for (TargetAndCost targetObj :targetAndCosts){
             cat_in_list.add(targetObj.categoryName);
             target_in_cat.add(targetObj.targetAmount);
@@ -267,6 +272,7 @@ public class TargetFragment extends Fragment {
             target_in_cat_array[i] = target_in_cat.get(i);
         }
 
+        Log.d(TAG, "whenTargetAndCostChanged: Context = "+String.valueOf(getActivity()));
         CustomListTarget adapter = new
                 CustomListTarget(getActivity(),  cat_in_list.toArray(new String[0]) , target_in_cat_array, amt_in_cat_array);
         list.setAdapter(adapter);

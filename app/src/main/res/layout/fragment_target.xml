@@ -208,19 +208,4 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-
-
-
-
-
-            <Button
-                android:id="@+id/dummyTarget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

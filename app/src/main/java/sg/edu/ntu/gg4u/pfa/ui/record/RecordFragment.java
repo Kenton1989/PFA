@@ -24,6 +24,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -36,6 +38,7 @@ import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.ui.target.EditTargetFragment;
 
 public class RecordFragment extends Fragment {
 
@@ -66,15 +69,15 @@ public class RecordFragment extends Fragment {
             "Vacation"
     };
 
-    //String[] amount_in_list= {
-    //        "10",
-    //        "14",
-    //        "50",
-    //        "144",
-    //        "77",
-    //        "88",
-    //        "900"
-    //};
+    String[] amount_in_list= {
+            "10",
+            "14",
+            "50",
+            "144",
+            "77",
+            "88",
+            "900"
+    };
 
     private RecordViewModel recordViewModel;
 
@@ -97,7 +100,8 @@ public class RecordFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " + dates_in_list[+position], Toast.LENGTH_SHORT).show();
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list, position, amount_in_list[position]);
+                editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });
 
@@ -145,11 +149,11 @@ public class RecordFragment extends Fragment {
 
         });
 
-        Button dummy = root.findViewById(R.id.dummy);
+        FloatingActionButton dummy = root.findViewById(R.id.addRecord);
         dummy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditRecordFragment editFrag = new EditRecordFragment();
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list);
                 editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });

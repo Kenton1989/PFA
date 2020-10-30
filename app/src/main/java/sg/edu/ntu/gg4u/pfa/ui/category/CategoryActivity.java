@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
 import android.view.View.MeasureSpec;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -81,24 +82,11 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
     public void onDialogPositiveClick(CreateCategoryFragment dialog) {
         mEdit = dialog.getMView().findViewById(R.id.createCategory);
         String categoryName = mEdit.getText().toString();
-        Boolean isAvailable = false;
         Log.d("category", categoryName);
-        // categoryIDs = getAllCategoryID()
-        // for (i = 0; i < categoryIDs.size(); i++) {
-        //     if (getCategoryInfo(categoryIDs[i]).name == categoryName)
-        //         break;
-        //     else isAvailable = true;
-        // if (isAvailable) {
-        //     createNewCategory(categoryName);
-//        /* in if block */ Toast.makeText(this, "Category created!", Toast.LENGTH_SHORT).show();
-//        // }
-//        // else
-//        /* in else block */ Toast.makeText(this, "Category already exists!", Toast.LENGTH_SHORT).show();
-//    }
-        ArrayList<String> catList2 = new ArrayList<>(Arrays.asList("Food", "Tr", "", "", "", "", "", "", "", "", "", "", "", "", "", ""));
-        CustomListCategory adapter = new CustomListCategory(this, catList2, mViewModel);
-        list.setAdapter(adapter);
-        setListViewHeightBasedOnChildren(list);
+        if (categoryName.equals("Food") || categoryName.equals("Transportation") || categoryName.equals("Clothing") || categoryName.equals("Entertainment")) {}
+        else {
+            insertCategory(new Category(categoryName));
+        }
     }
 
     public void onDialogNegativeClick(CreateCategoryFragment dialog) {
@@ -112,9 +100,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        CustomListCategory adapter = new CustomListCategory(this, catList, mViewModel);
         list = findViewById(R.id.listCategory);
-        list.setAdapter(adapter);
         setListViewHeightBasedOnChildren(list);
 
         mViewModelFactory = Injection.provideViewModelFactory(this);
@@ -154,7 +140,9 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         // This function will be called when the activity is created.
         // TODO: UI group: implement this function
         // TODO: DB group: the function when data changes DONE
-
+        CustomListCategory adapter = new CustomListCategory(this, newList, mViewModel);
+        list.setAdapter(adapter);
+        CategoryActivity.setListViewHeightBasedOnChildren(list);
     }
 
     private void insertCategory(Category newCategory) {

@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -33,16 +34,12 @@ public class EditTargetFragment extends DialogFragment {
     private CompositeDisposable mDisposable = new CompositeDisposable();
     
     private View mView;
-    EditText mEdit;
-    String catName;
+    private EditText mEdit;
+    private TextView mText;
+    private String catName;
 
     public EditTargetFragment(String catName) {
         this.catName = catName;
-    }
-
-
-    public EditTargetFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -63,12 +60,14 @@ public class EditTargetFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
         mView = inflater.inflate(R.layout.fragment_edit_target, null);
+        mEdit = mView.findViewById(R.id.editTarget);
+        mText = mView.findViewById(R.id.editTargetCat);
+        mText.setText("Please enter a target for " + catName + ":");
         builder.setView(mView)
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        mEdit = mView.findViewById(R.id.editTarget);
                         double newValue = Double.parseDouble(mEdit.getText().toString());
                         Log.d("target", String.valueOf(newValue));
                         insertOrUpdateTarget(new Target(catName, newValue));
