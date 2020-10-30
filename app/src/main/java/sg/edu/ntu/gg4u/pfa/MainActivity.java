@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         savePreferenceFile();
-
-        Log.d("MainActivity", JobField.OTHERS.toString());
     }
 
     @Override
@@ -151,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
         Duration timeSinceLastGovDbLoading =  Duration.between(lastGovDbLoadedTime, ZonedDateTime.now());
         if (attemptsToLoadGovDatabase == 0 &&
-                timeSinceLastGovDbLoading.compareTo(GOV_DATABASE_UPDATE_PERIOD) <= 0) {
+                timeSinceLastGovDbLoading.compareTo(GOV_DATABASE_UPDATE_PERIOD) >= 0) {
             updateGovLocalDatabase();
         }
     }
@@ -266,11 +264,6 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void updateGovLocalDatabase() {
-        Log.d(MainActivity.class.getSimpleName(), "Don't load gov data base for a now.");
-        if (true) {
-            return;
-        }
-
         ++attemptsToLoadGovDatabase;
         Dataloader loader = new Dataloader(this);
         loader.startLoadingGovData(this::setGovDataLoad);

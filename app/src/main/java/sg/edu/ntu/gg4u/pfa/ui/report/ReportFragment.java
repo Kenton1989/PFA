@@ -2,6 +2,7 @@ package sg.edu.ntu.gg4u.pfa.ui.report;
 
 import android.graphics.Color;
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +17,10 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -34,6 +37,8 @@ import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -41,13 +46,19 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.*;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.LocalDateTimeConverter;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.ui.Injection;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 import sg.edu.ntu.gg4u.pfa.ui.record.CustomList;
+import sg.edu.ntu.gg4u.pfa.ui.record.RecordViewModel;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 
@@ -83,9 +94,9 @@ public class ReportFragment extends Fragment {
             "10"
     };
 
- */
+    private ReportViewModel mViewModel;
 
-    private ReportViewModel reportViewModel;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     LineChartVisualizer lcv;
 
@@ -216,9 +227,26 @@ public class ReportFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        ViewModelFactory factory = Injection.provideViewModelFactory(this.getActivity());
+        mViewModel = new ViewModelProvider(this, factory)
+                .get(ReportViewModel.class);
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onStart() {
+        super.onStart();
 
+        // TODO: UI group: put default calendar here
+        Calendar calendar = Calendar.getInstance();
+        resetMonth(calendar);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     void resetMonth(Calendar calendar) {
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when month range need to change
@@ -227,6 +255,26 @@ public class ReportFragment extends Fragment {
         // TODO: DB group: implement this function
         //                 re-select the data from the database
 
+        mDisposable.clear();
+
+        LocalDateTime localDateTime =
+                LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId());
+        localDateTime = localDateTime.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+
+        mDisposable.add(mViewModel.getAllCurrentTarget(localDateTime.toLocalDate())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenTargetOfThisMonthUpdated));
+
+        mDisposable.add(mViewModel.getRecord(localDateTime, localDateTime.plusMonths(1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenRecordListUpdated));
+
+        mDisposable.add(mViewModel.getGroupedRecordSum(localDateTime, localDateTime.plusMonths(1))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenMonthlyCostSumUpdated));
     }
 
     void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
