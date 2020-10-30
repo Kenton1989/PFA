@@ -45,6 +45,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -61,17 +62,22 @@ import sg.edu.ntu.gg4u.pfa.ui.record.CustomList;
 import sg.edu.ntu.gg4u.pfa.ui.record.RecordViewModel;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
+import sg.edu.ntu.gg4u.pfa.persistence.Predictor;
 
 public class ReportFragment extends Fragment {
 
 
     ListView list;
-    CustomListReport adapter;
 
+    List<Record> r;
     List<String> cat_in_list = new ArrayList<>();
+    List<String> dates_in_list = new ArrayList<>();
+    List<String> amount_in_list = new ArrayList<>();
+
     List<String> percent_in_list = new ArrayList<>();
     List<String> sugg_in_list = new ArrayList<>();
     List<Double> sum_in_cat =new ArrayList<>();
+
 /*
     String[] cat_in_list = {
             "Food",
@@ -96,9 +102,12 @@ public class ReportFragment extends Fragment {
 */
     private ReportViewModel mViewModel;
 
-    private final CompositeDisposable mDisposable = new CompositeDisposable();
+    PieChart pieChart;
+    PieChartVisualizer pcv;
 
+    LineChart lineChart;
     LineChartVisualizer lcv;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     //LineChart lineChart;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -107,69 +116,9 @@ public class ReportFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_report, container, false);
 
 
+        lineChart = (LineChart) root.findViewById(R.id.chart);
 
-
-        final LineChart lineChart = (LineChart) root.findViewById(R.id.chart);
-
-
-        lcv = new LineChartVisualizer();
-
-        final float[] tempData = new float[5];
-
-        tempData[0] = 100;
-        tempData[1] = 200;
-        tempData[2] = 400;
-        tempData[3] = 100;
-        tempData[4] = 200;
-
-        final float[] tempData2 = new float[5];
-
-        tempData2[0] = 600;
-        tempData2[1] = 100;
-        tempData2[2] = 500;
-        tempData2[3] = 300;
-        tempData2[4] = 800;
-
-
-        lcv.createLine(lineChart, tempData, "temp chart");
-
-  
-       final PieChart pieChart = (PieChart) root.findViewById(R.id.pieChart);
-
-
-        final PieChartVisualizer pcv = new PieChartVisualizer();
-
-        final String[] labels = new String[5];
-        final float[] data = new float[5];
-
-        labels[0] = "January";
-        labels[1] = "February";
-        labels[2] = "March";
-        labels[3] = "April";
-        labels[4] = "May";
-
-        data[0] = 8f;
-        data[1] = 15f;
-        data[2] = 12f;
-        data[3] = 25f;
-        data[4] = 23f;
-
-        final String[] labels2 = new String[5];
-        final float[] data2 = new float[5];
-
-        labels2[0] = "March";
-        labels2[1] = "January";
-        labels2[2] = "May";
-        labels2[3] = "December";
-        labels2[4] = "September";
-
-        data2[0] = 18f;
-        data2[1] = 85f;
-        data2[2] = 62f;
-        data2[3] = 35f;
-        data2[4] = 83f;
-
-        pcv.drawPie(pieChart, labels, data);
+        pieChart = (PieChart) root.findViewById(R.id.pieChart);
 
 
         ImageButton dec, inc;
@@ -191,8 +140,8 @@ public class ReportFragment extends Fragment {
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
                 //to re-insert then add the data into the charts again
-                lcv.createLine(lineChart, tempData, "temp chart");
-                pcv.drawPie(pieChart, labels, data);
+                //lcv.createLine(lineChart, tempData, "temp chart");
+                //pcv.drawPie(pieChart, labels, data);
             }
         });
         cal.getTime();
@@ -204,16 +153,16 @@ public class ReportFragment extends Fragment {
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
                 //to re-insert then add the data into the charts again
-                lcv.createLine(lineChart, tempData2, "temp chart");
-                pcv.drawPie(pieChart, labels2, data2);
+                //lcv.createLine(lineChart, tempData2, "temp chart");
+                //pcv.drawPie(pieChart, labels2, data2);
             }
         });
 
 
-        CustomListReport adapter = new
-                CustomListReport(getActivity(), cat_in_list, percent_in_list, sugg_in_list);
+       // CustomListReport adapter = new
+       //         CustomListReport(getActivity(), cat_in_list, percent_in_list, sugg_in_list);
         list = root.findViewById(R.id.report_listView);
-        list.setAdapter(adapter);
+        //list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -288,27 +237,89 @@ public class ReportFragment extends Fragment {
     void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        
 
-            // TODO: DB group: call this function when data changes
-    }
+        for (SumByCategory catSum : newMonthlyCost) {
+            sum_in_cat.add(catSum.sum);
+            cat_in_list.add(catSum.categoryName);
+        }
 
-    void whenRecordListUpdated(List<Record> newRecords) {
-        // this function will be called when the fragment is created.
-        // TODO: UI group: implement this function
+        double [] sum_in_cat_array = new double[sum_in_cat.size()];
+        for (int i = 0; i < sum_in_cat.size(); i++) {
+            sum_in_cat_array[i] = sum_in_cat.get(i);
+        }
+
+        float[] sum_in_cat_float = new float[sum_in_cat_array.length];
+        int j = 0;
+        for (double value:  sum_in_cat_array){
+            sum_in_cat_float[j++] = Float.valueOf((float) value);
+        }
+
+        String [] cat_and_total = new String[sum_in_cat_array.length];
+        for (int k = 0 ; k < sum_in_cat_array.length ; k++ )
+        {
+            cat_and_total[k] = cat_in_list.get(k) + "   " + "$" + sum_in_cat_float[k] + "  ";
+        }
+
+
+       /*
+        String cat_and_total = cat_in_list.toString() + sum_in_cat_float.toString();
+
+        String [] cat_and_total_str = new String[cat_and_total.length()];
+        int j = 0;
+        for ( String value:  cat_and_total){
+            cat_and_total_str[j++] = value;
+        }
+
+        */
+
+        PieChartVisualizer pcv = new PieChartVisualizer();
+        pieChart.clear();
+         pcv.drawPie(pieChart,cat_and_total,sum_in_cat_float);
 
 
         // TODO: DB group: call this function when data changes
     }
 
+    void whenRecordListUpdated(List<Record> newRecords) {
+        // this function will be called when the fragment is created.
+        // TODO: UI group: implement this function
+        r = newRecords;
+
+        for (Record recordObj : newRecords) {
+            String str_date = (String.valueOf(recordObj.timestamp).substring(0, 10));
+            dates_in_list.add(str_date);
+            cat_in_list.add(recordObj.categoryName);
+            amount_in_list.add(String.valueOf(recordObj.amount));
+        }
+
+        float[] amount_in_list_float = new float[amount_in_list.size()];
+        int i = 0;
+        for (String value:  amount_in_list){
+            amount_in_list_float[i++] = Float.valueOf(value);
+        }
+
+
+        LineChartVisualizer lcv = new LineChartVisualizer();
+        lineChart.clear();
+        lcv.createLine(lineChart, amount_in_list_float, "temp chart");
+
+/*
+        CustomList adapter = new
+                CustomList(getActivity(), cat_in_list, percent_in_list, sugg_in_list);;
+        list.setAdapter(adapter);
+*/
+        // TODO: DB group: call this function when data changes
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
     void whenUserProfileChanged(UserProfile newProfile) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        newProfile.getName();
-        newProfile.getGender();
-        newProfile.getJobField();
-        newProfile.getIncome();
-        newProfile.getFamilySize();
+        Predictor p = new Predictor(getContext());
+        Predictor.age2key(newProfile.getAge().toString());
+        Predictor.income2key(newProfile.getIncome().toString());
+
+
 
         // TODO: DB group: call this function when data changes
     }

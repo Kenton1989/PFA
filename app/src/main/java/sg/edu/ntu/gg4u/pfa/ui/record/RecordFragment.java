@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.text.DecimalFormat;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -51,6 +52,7 @@ public class RecordFragment extends Fragment {
 
     EditText dateTXT_to;
     ImageView cal_to;
+    private static DecimalFormat df = new DecimalFormat("0.00");
 
 
     List<Record> r;
@@ -117,26 +119,13 @@ public class RecordFragment extends Fragment {
         tv_userIncome.setText(String.valueOf(getUserProfile().getIncome()));
 
         tv_totalExpense = root.findViewById(R.id.record_mnthExpense);
-        /*double[]amount_doubleList= new double[amount_in_list.size()];
-        double sum=0;
-        int sizes=amount_in_list.size();
-        for(int i=0;i<sizes;++i){
-            amount_doubleList[i]=Double.parseDouble(amount_in_list.get(i));
-            sum+=amount_doubleList[i];
-
-        }
-        String amount_stringdouble=Double.toString(Math.round(sum));
-        tv_totalExpense.setText(amount_stringdouble);
-
-
-
-         */
 
         tv_amount = root.findViewById(R.id.recordlist_amnt);
         tv_categoryName = root.findViewById(R.id.recordlist_category);
         tv_timestamp = root.findViewById(R.id.recordlist_date);
 
         list = root.findViewById(R.id.record_listView);
+        list.setClickable(true);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -184,6 +173,7 @@ public class RecordFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
                         dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
+
                     }
                 }, mYear, mMonth, mDate);
                 //datePickerDialog.getDatePicker().setMinDate(Cal1.getTimeInMillis());
@@ -220,6 +210,8 @@ public class RecordFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenRecordListUpdated));
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -261,41 +253,31 @@ public class RecordFragment extends Fragment {
     public void whenRecordListUpdated(List<Record> newRecords) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        //Record r=newRecord(Stimestamp,ScategoryName,Samount);
-
 
         r = newRecords;
-
-        Record r1 = (new Record(LocalDateTime.now(),"Food",10.0));
-        Record r2=new Record(LocalDateTime.now(),"Food",20.0);
-        Record r3=new Record(LocalDateTime.now(),"Transport",30.0);
-        newRecords.add(r1);
-        newRecords.add(r2);
-        newRecords.add(r3);
-
-        // Log.d("display xx" , String.valueOf(newRecords.get(1).timestamp));
-        // Log.d("display xx" , newRecords.get(1).categoryName);
-        //  Log.d("display xx" , Double.toString(newRecords.get(1).amount));
-
         for (Record recordObj : newRecords) {
-            dates_in_list.add(String.valueOf(recordObj.timestamp));
+            String str_date = (String.valueOf(recordObj.timestamp).substring(0,10));
+            dates_in_list.add(str_date);
             cat_in_list.add(recordObj.categoryName);
             amount_in_list.add(String.valueOf(recordObj.amount));
 
+        }
+
+        double[] amount_doubleList=new double[amount_in_list.size()];
+        double sum=0;
+        int sizes=amount_in_list.size();
+        for(int i=0;i<sizes;++i){
+            amount_doubleList[i]=Double.parseDouble(amount_in_list.get(i));
+            sum+=amount_doubleList[i];
 
         }
-        /*
-        double [] amt_in_cat_array = new double[amount_in_list.size()];
-        for (int i = 0; i < amount_in_list.size(); i++) {
-            amt_in_cat_array[i] = amount_in_list.get(i);
-        }
-        */
-        
+
+        String amount_stringdouble = ((df.format(sum)));
+        tv_totalExpense.setText("$" + amount_stringdouble);
 
         CustomList adapter = new
                 CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
         list.setAdapter(adapter);
-
 
 
     }
