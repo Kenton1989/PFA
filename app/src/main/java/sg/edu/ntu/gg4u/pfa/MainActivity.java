@@ -45,6 +45,7 @@ import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SHARED_PREF_FILENAME = "sg.edu.ntu.gg4u.pfa.sharedPrefFile";
     private static final String IS_FIRST_LAUNCH_KEY = "sg.edu.ntu.gg4u.pfa.IS_FIRST_LAUNCH";
     private static final String GOV_DATABASE_LOADED_KEY = "sg.edu.ntu.gg4u.pfa.GOV_DATABASE_LOADED";
@@ -175,11 +176,11 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void initDataBase() {
-        updateGovLocalDatabase();
-        insertUserProfile();
-        insertCategory();
-        insertRecord();
-        insertTarget();
+            updateGovLocalDatabase();
+            insertUserProfile();
+            insertCategory();
+            insertRecord();
+            insertTarget();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         mDisposable.add(mViewModel.updateCategory(category)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
+                .subscribe(()-> Log.d(TAG, "insertSingleCategory: inserted: "+category.getName())));
     }
 
 

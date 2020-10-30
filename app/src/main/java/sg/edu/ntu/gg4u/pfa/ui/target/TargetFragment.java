@@ -63,7 +63,7 @@ public class TargetFragment extends Fragment {
 
    // List<Target> targetList = null;
    // List<SumByCategory> monthlyCostList = null;
-    List<TargetAndCost> ls;
+  //  List<TargetAndCost> ls;
     List<String> cat_in_list =new ArrayList<>();
     List<Double> target_in_cat =new ArrayList<>();
     List<Double> amt_in_cat =new ArrayList<>();
@@ -149,22 +149,27 @@ public class TargetFragment extends Fragment {
         incT = root.findViewById(R.id.right_arrow_target);
 
         decT.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 calT.add(Calendar.MONTH, -1);
                 String selectedMonth = month_date.format(calT.getTime());
                 month.setText(selectedMonth);
+               // Log.d("display xx" , calT.toString());
+                resetMonth(calT);
             }
         });
         calT.getTime();
 
         incT.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 calT.add(Calendar.MONTH, 1);
                 String selectedMonth = month_date.format(calT.getTime());
                 month.setText(selectedMonth);
-
+               // Log.d("display xx" , calT.toString());
+                resetMonth(calT);
             }
         });
 
@@ -230,6 +235,10 @@ public class TargetFragment extends Fragment {
         LocalDateTime localDateTime = cal2LocalDateTime(calendar);
 
         mDisposable.clear();
+       // barChart.clear();
+        cat_in_list =new ArrayList<>();
+        target_in_cat =new ArrayList<>();
+        amt_in_cat =new ArrayList<>();
 
         mDisposable.add(mViewModel.getTargetAndCost(localDateTime.toLocalDate())
                 .subscribeOn(Schedulers.io())
@@ -242,20 +251,11 @@ public class TargetFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
-        ls = targetAndCosts;
-        TargetAndCost r1 = new TargetAndCost("food",100.0,70.0);
-        TargetAndCost r2 = new TargetAndCost("transport",200.0,20.0);
-        TargetAndCost r3 = new TargetAndCost("others",300.0,10.00);
-        targetAndCosts.add(r1);
-        targetAndCosts.add(r2);
-        targetAndCosts.add(r3);
-        Log.d("display xx" , targetAndCosts.get(1).categoryName);
-        Log.d("display xx" , Double.toString(targetAndCosts.get(1).cost));
-        Log.d("display xx" , Double.toString(targetAndCosts.get(1).targetAmount));
+
         for (TargetAndCost targetObj :targetAndCosts){
             cat_in_list.add(targetObj.categoryName);
-            target_in_cat.add(targetObj.targetAmount);
-            amt_in_cat.add(targetObj.cost);
+            target_in_cat.add(Math.round(targetObj.targetAmount*10)/10.0);
+            amt_in_cat.add(Math.round(targetObj.cost*10)/10.0);
         }
         double [] amt_in_cat_array = new double[amt_in_cat.size()];
         for (int i = 0; i < amt_in_cat.size(); i++) {
@@ -284,8 +284,8 @@ public class TargetFragment extends Fragment {
             targetTemp = targetTemp +target_in_cat_array[i];
         }
 
-        targetAmt.setText(String.valueOf(targetTemp));
-        actualAmt.setText(String.valueOf(actualTemp));;
+        targetAmt.setText(String.valueOf(Math.round(targetTemp*10)/10.0));
+        actualAmt.setText(String.valueOf(Math.round(actualTemp*10)/10.0));;
 //        XYPlot barChart = (XYPlot) help.findViewById(R.id.barChart);
         TargetBarChartVisualizer bar = new TargetBarChartVisualizer();
         barChart.clear();

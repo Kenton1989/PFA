@@ -32,10 +32,15 @@ public interface RecordDao {
             "AND categoryName = :name")
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end, String name);
 
-    @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
-            "FROM Category left outer join Record on Record.categoryName = Category.name " +
-            "WHERE timestamp > :start AND timestamp < :end " +
-            "GROUP BY categoryName")
+//    @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
+//            "FROM Category LEFT JOIN Record on Record.categoryName == Category.name " +
+//            "WHERE timestamp > :start AND timestamp < :end " +
+//            "GROUP BY categoryName")
+@Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
+        "FROM Category JOIN Record " +
+        "ON Category.name = Record.categoryName " +
+        "WHERE timestamp > :start AND timestamp < :end " +
+        "GROUP BY categoryName")
     Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

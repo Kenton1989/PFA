@@ -1,4 +1,6 @@
 package sg.edu.ntu.gg4u.pfa.ui.home;
+import java.text.DecimalFormat;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -44,14 +46,17 @@ import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
+import sg.edu.ntu.gg4u.pfa.ui.guide.LocalGuideInfoDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.record.EditRecordFragment;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
+  //  private final static String TAG = HomeFragment.class.getSimpleName();
     ListView list;
     CustomListHome adapter;
     List<String> cat_in_list = new ArrayList<>();
     List<Double> sum_in_cat =new ArrayList<>();
+    private static DecimalFormat df = new DecimalFormat("0.00");
    /*
 
     String [] amount_in_list = {
@@ -112,8 +117,8 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
-        LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1));
+        LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0)).minusMonths(10);
+        LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1000));
       /*  mDisposable.add(mViewModel.getRecord(todayBegin, todayEnd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -138,9 +143,7 @@ public class HomeFragment extends Fragment {
     }*/
 
     private void openRecordEditor() {
-
-        Intent i= new Intent(HomeFragment.this.getActivity(), EditRecordFragment.class);
-        startActivity(i);
+        // TODO link to the Edit Record Fragment
     }
 
 
@@ -150,38 +153,47 @@ public class HomeFragment extends Fragment {
        // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
 
-        SumByCategory r1 = new SumByCategory("food",10.0);
-        SumByCategory r2 = new SumByCategory("food",10.0);
-        SumByCategory r3 = new SumByCategory("others",10.0);
-        newDailyCost.add(r1);
-        newDailyCost.add(r2);
-        newDailyCost.add(r3);
-        for (SumByCategory catSum :newDailyCost){
-               sum_in_cat.add(catSum.sum);
-               cat_in_list.add(catSum.categoryName);
+     /*   Log.d(TAG, "whenDataUpdated: "+newDailyCost.size());
+        for (SumByCategory sum: newDailyCost) {
+            Log.d(TAG, "whenDataUpdated: "+sum.categoryName+" "+sum.sum);
+        }*/
+//
+//        SumByCategory r1 = new SumByCategory("food",10.0);
+//        SumByCategory r2 = new SumByCategory("food",10.0);
+//        SumByCategory r3 = new SumByCategory("others",10.0);
+//        newDailyCost.add(r1);
+//        newDailyCost.add(r2);
+//        newDailyCost.add(r3);
+
+        if (newDailyCost.size() == 0){
+            //display category name .
+        }
+        else {
+            for (SumByCategory catSum : newDailyCost) {
+
+                sum_in_cat.add(Math.round(catSum.sum * 10) / 10.0);
+                cat_in_list.add(catSum.categoryName);
+
+            }
+
+            double[] sum_in_cat_array = new double[sum_in_cat.size()];
+            for (int i = 0; i < sum_in_cat.size(); i++) {
+                sum_in_cat_array[i] = sum_in_cat.get(i);
+            }
+
+
+            adapter = new
+                    CustomListHome(getActivity(), cat_in_list.toArray(new String[0]), sum_in_cat_array);
+            list.setAdapter(adapter);
+
+
+            double expense = 0;
+            for (int i = 0; i < sum_in_cat.size(); i++) {
+                expense = expense + sum_in_cat.get(i);
+            }
+            totalExpense.setText(String.valueOf(Math.round(expense * 10) / 10.0));
 
         }
-
-        double [] sum_in_cat_array = new double[sum_in_cat.size()];
-        for (int i = 0; i < sum_in_cat.size(); i++) {
-            sum_in_cat_array[i] = sum_in_cat.get(i);
-        }
-        Log.d("display xx" , Double.toString(sum_in_cat_array[1]));
-
-
-
-        adapter = new
-                CustomListHome(getActivity(),  cat_in_list.toArray(new String[0]), sum_in_cat_array);
-        list.setAdapter(adapter);
-
-
-        double expense = 0;
-        for(int i=0;i<sum_in_cat.size();i++){
-            expense = expense + sum_in_cat.get(i);
-        }
-        totalExpense.setText(String.valueOf(expense));
-
-
     }
 
     /*@RequiresApi(api = Build.VERSION_CODES.O)
