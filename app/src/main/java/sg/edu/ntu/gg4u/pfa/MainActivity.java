@@ -22,6 +22,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -95,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         savePreferenceFile();
-
-        Log.d("MainActivity", JobField.OTHERS.toString());
     }
 
     @Override
@@ -152,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
         Duration timeSinceLastGovDbLoading =  Duration.between(lastGovDbLoadedTime, ZonedDateTime.now());
         if (attemptsToLoadGovDatabase == 0 &&
-                timeSinceLastGovDbLoading.compareTo(GOV_DATABASE_UPDATE_PERIOD) <= 0) {
+                timeSinceLastGovDbLoading.compareTo(GOV_DATABASE_UPDATE_PERIOD) >= 0) {
             updateGovLocalDatabase();
         }
     }
@@ -187,6 +186,11 @@ public class MainActivity extends AppCompatActivity {
     private void insertTarget() {
         insertSingleTarget(new Target("Clothing", 150));
         insertSingleTarget(new Target("Food", 360));
+
+        insertSingleTarget(new Target("Transportation", 50, LocalDate.of(LocalDate.now().getYear(),
+                LocalDate.now().getMonth().minus(1), 1)));
+        insertSingleTarget(new Target("Food", 300, LocalDate.of(LocalDate.now().getYear(),
+                LocalDate.now().getMonth().minus(1), 1)));
     }
 
     private void insertSingleTarget(Target target) {
@@ -267,11 +271,6 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void updateGovLocalDatabase() {
-        Log.d(MainActivity.class.getSimpleName(), "Don't load gov data base for a now.");
-        if (true) {
-            return;
-        }
-
         ++attemptsToLoadGovDatabase;
         Dataloader loader = new Dataloader(this);
         loader.startLoadingGovData(this::setGovDataLoad);

@@ -1,6 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.ui.record;
 
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,22 +17,31 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.ui.Injection;
+import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
+import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class RecordFragment extends Fragment {
 
@@ -73,7 +83,9 @@ public class RecordFragment extends Fragment {
     //};
 
 
-    private RecordViewModel recordViewModel;
+    private RecordViewModel mViewModel;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -144,6 +156,27 @@ public class RecordFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        ViewModelFactory factory = Injection.provideViewModelFactory(this.getActivity());
+        mViewModel = new ViewModelProvider(this, factory)
+                        .get(RecordViewModel.class);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // TODO: UI group : set default time interval here
+        LocalDate beginDate = LocalDate.now().minusMonths(1),
+                endDate = LocalDate.now();
+        resetDataRange(beginDate, endDate, null);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void resetDataRange(LocalDate beginDate, LocalDate endDate, Category selectedCategory) {
         // When the selectedCategory is NULL, display all the record.
 
@@ -155,22 +188,46 @@ public class RecordFragment extends Fragment {
         // TODO: DB group: implement this function
         //                 re-select the data from the database
 
+        mDisposable.clear();
 
+        if (selectedCategory == null) {
+            mDisposable.add(mViewModel.getRecord(beginDate.atStartOfDay(), endDate.atStartOfDay())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::whenRecordListUpdated));
+        }
+        else {
+            mDisposable.add(mViewModel.getRecordByCategory
+                    (beginDate.atStartOfDay(), endDate.atStartOfDay(), selectedCategory.getName())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::whenRecordListUpdated));
+        }
     }
 
     public void whenRecordListUpdated(List<Record> newRecords) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: call this function when data changes
+
     }
 
     private void insertOrUpdateRecord(Record record) {
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
+
+        mDisposable.add(mViewModel.addRecord(record)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
 
     private void deleteRecord(Record record) {
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
+        mDisposable.add(mViewModel.deleteRecord(record)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe());
     }
 }

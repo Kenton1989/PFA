@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -115,6 +116,48 @@ public class Predictor {
                             AQPrediction.get(category) * 0.36 +
                             agePrediction.get(category) * 0.4);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public HashMap<String, Double> predictDistributionByCategory(UserProfile userProfile) {
+
+        HashMap<String, Double> jobFieldPrediction, AQPrediction, agePrediction;
+
+
+        String jobField, AQ, age;
+        AQ = userProfile.getQualification() == null ?
+                "Total" : userProfile.getQualification().toString();
+        jobField = userProfile.getJobField() == null ?
+                "Total" : userProfile.getJobField().toString();
+        age = userProfile.getAge() == null ?
+                "Total" : userProfile.getAge().toString();
+
+        jobFieldPrediction = readSer("JobField", jobField);
+        AQPrediction = readSer("Academic Qualification", AQ);
+        agePrediction = readSer("Age", age);
+
+        Set<String> categorySet;
+        categorySet = jobFieldPrediction.keySet();
+
+        HashMap<String, Double> prediction = new HashMap<>();
+        for (String category : categorySet) {
+            prediction.put(category,
+                    jobFieldPrediction.get(category) * 0.24 +
+                            AQPrediction.get(category) * 0.36 +
+                            agePrediction.get(category) * 0.4);
+        }
+
+        return prediction;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    public HashMap<String, Double> predictDistributeionByIncomeGroup(UserProfile userProfile) {
+        String income = userProfile.getIncome() == null ?
+                "Total" : userProfile.getIncome().toString();
+
+        income = income2key(income);
+
+        return new HashMap<>(Objects.requireNonNull(readSer("Income Group", income)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)

@@ -36,11 +36,12 @@ public class LocalTargetDataSource implements TargetDataSource {
     public Flowable<List<Target>> getAllCurrentTarget(LocalDate date) {
         return mTargetDao.getAllCurrentTarget(date);
     }
+	
     @Override
     public Flowable<List<TargetDao.TargetAndCost>> getTargetAndCost(LocalDate startDate, LocalDate endDate) {
         return mTargetDao.getTargetAndCost(startDate, endDate);
     }
-
+	
     @Override
     public Completable insertOrUpdateTarget(Target target) {
         return mTargetDao.setCurrentTarget(target);
