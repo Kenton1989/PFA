@@ -216,7 +216,7 @@ public class TargetFragment extends Fragment {
         Calendar defaultCal = Calendar.getInstance();
         LocalDateTime localDateTime = cal2LocalDateTime(defaultCal);
 
-        mDisposable.add(mViewModel.getTargetAndCost(localDateTime.toLocalDate().minusMonths(1))
+        mDisposable.add(mViewModel.getTargetAndCost(localDateTime.toLocalDate())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenTargetAndCostChanged));
@@ -254,9 +254,9 @@ public class TargetFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
-        for (TargetAndCost sum: targetAndCosts) {
-            Log.d("display",sum.categoryName);
-        }
+     //   for (TargetAndCost sum: targetAndCosts) {
+     //       Log.d("display",sum.categoryName);
+     //   }
 
 
         for (TargetAndCost targetObj :targetAndCosts){
@@ -280,8 +280,6 @@ public class TargetFragment extends Fragment {
         //Log.d("display xx" , String.valueOf(target_in_cat_array));
 
 
-
-      // Log.d("display xx" , Double.toString(target_in_cat_array[1]));
         double actualTemp = 0;
         for(int i=0;i<amt_in_cat_array.length;i++) {
             actualTemp = actualTemp + amt_in_cat_array[i];

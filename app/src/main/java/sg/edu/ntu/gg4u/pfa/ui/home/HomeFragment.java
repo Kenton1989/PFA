@@ -57,22 +57,6 @@ public class HomeFragment extends Fragment {
     List<String> cat_in_list = new ArrayList<>();
     List<Double> sum_in_cat =new ArrayList<>();
     private static DecimalFormat df = new DecimalFormat("0.00");
-   /*
-
-    String [] amount_in_list = {
-            "100",
-            "200",
-            "300",
-            "400",
-    };*/
-
-  /*  double [] amount_in_list = new double[]{
-            100,
-            300,
-            200,
-            400,
-    };*/
-
 
 
     private HomeViewModel mViewModel;
@@ -153,17 +137,6 @@ public class HomeFragment extends Fragment {
        // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
 
-     /*   Log.d(TAG, "whenDataUpdated: "+newDailyCost.size());
-        for (SumByCategory sum: newDailyCost) {
-            Log.d(TAG, "whenDataUpdated: "+sum.categoryName+" "+sum.sum);
-        }*/
-//
-//        SumByCategory r1 = new SumByCategory("food",10.0);
-//        SumByCategory r2 = new SumByCategory("food",10.0);
-//        SumByCategory r3 = new SumByCategory("others",10.0);
-//        newDailyCost.add(r1);
-//        newDailyCost.add(r2);
-//        newDailyCost.add(r3);
 
         if (newDailyCost.size() == 0){
             //display category name .
@@ -225,23 +198,5 @@ public class HomeFragment extends Fragment {
 
     }*/
 
- /*   public void displayCat(List<Category> categoryList){
 
-
-        for(Category category : categoryList){
-            cat_in_list.add(category.getName());
-
-        }
-        cat_in_list.add("test");
-        cat_in_list.add("test2");
-        cat_in_list.add("test3");
-        cat_in_list.add("Others");
-
-        adapter = new
-                CustomListHome(getActivity(),  cat_in_list.toArray(new String[0]), amount_in_list);
-        list.setAdapter(adapter);
-
-
-
-    }*/
 }
