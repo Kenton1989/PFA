@@ -43,4 +43,5 @@ public interface RecordDao {
 
     @Query("DELETE FROM Record WHERE timestamp = :timestamp")
     Completable deleteRecord(LocalDateTime timestamp);
+
 }

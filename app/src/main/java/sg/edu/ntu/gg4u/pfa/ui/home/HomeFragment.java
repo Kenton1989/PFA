@@ -166,8 +166,8 @@ public class HomeFragment extends Fragment {
         for (int i = 0; i < sum_in_cat.size(); i++) {
             sum_in_cat_array[i] = sum_in_cat.get(i);
         }
+        Log.d("display xx" , Double.toString(sum_in_cat_array[1]));
 
-        Log.d("display xx" , String.valueOf(cat_in_list));
 
 
         adapter = new
