@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         savePreferenceFile();
-
-        Log.d("MainActivity", JobField.OTHERS.toString());
     }
 
     @Override
