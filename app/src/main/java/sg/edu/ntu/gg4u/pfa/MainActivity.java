@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 LocalDate.now().getMonth().minus(1), 1)));
         insertSingleTarget(new Target("Food", 300, LocalDate.of(LocalDate.now().getYear(),
                 LocalDate.now().getMonth().minus(1), 1)));
+
     }
 
     private void insertSingleTarget(Target target) {

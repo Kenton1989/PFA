@@ -193,31 +193,6 @@ public class TargetFragment extends Fragment {
         targetAmt = root.findViewById(R.id.targetAmount);
 
 
-        //XYPlot barChart = (XYPlot) root.findViewById(R.id.barChart);
-      //  TargetBarChartVisualizer bar = new TargetBarChartVisualizer();
-       // bar.plot(barChart, targetCat_in_list, targetAmt_in_List, actualAmt_in_List);
-
-//        actualAmt = root.findViewById(R.id.actualAmount);
-//        targetAmt = root.findViewById(R.id.targetAmount);
-//        double actualTemp = 0;
-//        for(int i=0;i<actualAmt_in_List.length;i++){
-//            actualTemp = actualTemp +actualAmt_in_List[i];
-//        }
-//        //Log.d("display" , String.valueOf(expense));
-//        actualAmt.setText(String.valueOf(actualTemp));
-//
-//        double targetTemp = 0;
-//        for(int i=0;i<targetAmt_in_List.length;i++){
-//            targetTemp = targetTemp +targetAmt_in_List[i];
-//        }
-//        //Log.d("display" , String.valueOf(expense));
-//        targetAmt.setText(String.valueOf(targetTemp));
-//        actualAmt.setText(String.valueOf(actualTemp));;
-
-
-
-
-
 
         return root;
     }
@@ -225,7 +200,6 @@ public class TargetFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         // database stuff
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity());
@@ -242,10 +216,11 @@ public class TargetFragment extends Fragment {
         Calendar defaultCal = Calendar.getInstance();
         LocalDateTime localDateTime = cal2LocalDateTime(defaultCal);
 
-        mDisposable.add(mViewModel.getTargetAndCost(localDateTime.toLocalDate())
+        mDisposable.add(mViewModel.getTargetAndCost(localDateTime.toLocalDate().minusMonths(1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenTargetAndCostChanged));
+        //Log.d("display xx" , String.valueOf(localDateTime.toLocalDate().minusMonths(1)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -262,7 +237,7 @@ public class TargetFragment extends Fragment {
         LocalDateTime localDateTime = cal2LocalDateTime(calendar);
 
         mDisposable.clear();
-       // barChart.clear();
+        barChart.clear();
         cat_in_list =new ArrayList<>();
         target_in_cat =new ArrayList<>();
         amt_in_cat =new ArrayList<>();
@@ -271,6 +246,7 @@ public class TargetFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenTargetAndCostChanged));
+
     }
 
     public void whenTargetAndCostChanged(List<TargetAndCost> targetAndCosts) {
@@ -278,12 +254,17 @@ public class TargetFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
+        for (TargetAndCost sum: targetAndCosts) {
+            Log.d("display",sum.categoryName);
+        }
+
 
         for (TargetAndCost targetObj :targetAndCosts){
             cat_in_list.add(targetObj.categoryName);
             target_in_cat.add(Math.round(targetObj.targetAmount*10)/10.0);
             amt_in_cat.add(Math.round(targetObj.cost*10)/10.0);
         }
+       // Log.d("display" , String.valueOf(cat_in_list));
         double [] amt_in_cat_array = new double[amt_in_cat.size()];
         for (int i = 0; i < amt_in_cat.size(); i++) {
             amt_in_cat_array[i] = amt_in_cat.get(i);
@@ -300,7 +281,7 @@ public class TargetFragment extends Fragment {
 
 
 
-      //  Log.d("display xx" , Double.toString(target_in_cat_array[1]));
+      // Log.d("display xx" , Double.toString(target_in_cat_array[1]));
         double actualTemp = 0;
         for(int i=0;i<amt_in_cat_array.length;i++) {
             actualTemp = actualTemp + amt_in_cat_array[i];
