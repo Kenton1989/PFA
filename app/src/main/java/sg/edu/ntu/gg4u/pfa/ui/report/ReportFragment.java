@@ -3,6 +3,7 @@ package sg.edu.ntu.gg4u.pfa.ui.report;
 import android.graphics.Color;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,10 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.*;
 
 import sg.edu.ntu.gg4u.pfa.R;
+import sg.edu.ntu.gg4u.pfa.persistence.Record.LocalDateTimeConverter;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
@@ -52,7 +55,13 @@ public class ReportFragment extends Fragment {
 
 
     ListView list;
+    CustomListReport adapter;
 
+    List<String> cat_in_list = new ArrayList<>();
+    List<String> percent_in_list = new ArrayList<>();
+    List<String> sugg_in_list = new ArrayList<>();
+    List<Double> sum_in_cat =new ArrayList<>();
+/*
     String[] cat_in_list = {
             "Food",
             "Transportation",
@@ -73,6 +82,8 @@ public class ReportFragment extends Fragment {
             "10",
             "10"
     };
+
+ */
 
     private ReportViewModel reportViewModel;
 
@@ -110,7 +121,6 @@ public class ReportFragment extends Fragment {
 
 
         lcv.createLine(lineChart, tempData, "temp chart");
-
 
   
        final PieChart pieChart = (PieChart) root.findViewById(R.id.pieChart);
@@ -198,13 +208,15 @@ public class ReportFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " + cat_in_list[+position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You Clicked at " + cat_in_list.get(+position), Toast.LENGTH_SHORT).show();
             }
         });
 
 
         return root;
     }
+
+
 
 
     void resetMonth(Calendar calendar) {
@@ -220,24 +232,36 @@ public class ReportFragment extends Fragment {
     void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
+
+
         // TODO: DB group: call this function when data changes
     }
 
     void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        // TODO: DB group: call this function when data changes
+        
+
+            // TODO: DB group: call this function when data changes
     }
 
-    void whenRecordListUpdated(List<Record> newRecord) {
+    void whenRecordListUpdated(List<Record> newRecords) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
+
+
         // TODO: DB group: call this function when data changes
     }
 
     void whenUserProfileChanged(UserProfile newProfile) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
+        newProfile.getName();
+        newProfile.getGender();
+        newProfile.getJobField();
+        newProfile.getIncome();
+        newProfile.getFamilySize();
+
         // TODO: DB group: call this function when data changes
     }
 }

@@ -18,12 +18,13 @@ import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 @TypeConverters({LocalDateTimeConverter.class})
 public class Record {
 
+    public Double sum;
     @NonNull
     @PrimaryKey
-    private LocalDateTime timestamp;
+    public LocalDateTime timestamp;
 
-    private String categoryName;
-    private double amount;
+    public String categoryName;
+    public double amount;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
 

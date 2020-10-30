@@ -1,40 +1,37 @@
 package sg.edu.ntu.gg4u.pfa.ui.record;
 
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class RecordFragment extends Fragment {
 
     EditText dateTXT_from;
@@ -43,39 +40,51 @@ public class RecordFragment extends Fragment {
     EditText dateTXT_to;
     ImageView cal_to;
 
+    CustomList adapter;
+    List<Record> r;
+    List<String> cat_in_list = new ArrayList<>();
+    List<LocalDateTime> dates_in_list = new ArrayList<LocalDateTime>();
+    List<Double> amount_in_list = new ArrayList<>();
+    List<Double> sum_in_cat =new ArrayList<>();
+
     ListView list;
-    String[] dates_in_list = {
-            "20-10-2020",
-            "10-01-2020",
-            "20-03-2020",
-            "30-10-2020",
-            "22-02-2020",
-            "31-02-2021",
-            "01-20-2021"
-    };
 
-    String[] cat_in_list = {
-            "Food",
-            "Transportation",
-            "Leisure",
-            "Entertainment",
-            "Restaurant",
-            "Birthday",
-            "Vacation"
-    };
+    //String[] dates_in_list = {
+    //        "20-10-2020",
+    //        "10-01-2020",
+    //        "20-03-2020",
+    //        "30-10-2020",
+    //        "22-02-2020",
+    //        "31-02-2021",
+    //        "01-20-2021"
+    //};
 
-    String[] amount_in_list= {
-            "10",
-            "14",
-            "50",
-            "144",
-            "77",
-            "88",
-            "900"
-    };
+    //String[] cat_in_list = {
+    //        "Food",
+    //        "Transportation",
+    //        "Leisure",
+    //        "Entertainment",
+    //        "Restaurant",
+    //        "Birthday",
+    //        "Vacation"
+    //};
 
-    private TextView totalIncome, totalExpense , amount, categoryName, timestamp;
+    //String[] amount_in_list= {
+    //        "10",
+    //        "14",
+    //        "50",
+    //        "144",
+    //        "77",
+    //        "88",
+    //        "900"
+   // };
 
+
+    private TextView tv_totalExpense,  tv_userIncome , tv_amount, tv_categoryName, tv_timestamp;
+    UserProfile userProfile = new UserProfile();
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
 
     private RecordViewModel recordViewModel;
 
@@ -88,16 +97,32 @@ public class RecordFragment extends Fragment {
         final TextView todaydate = root.findViewById(R.id.record_current_date);
         todaydate.setText(date_n);
 
-        totalIncome = root.findViewById(R.id.record_mnthIncome);
-        totalExpense = root.findViewById(R.id.record_mnthExpense);
-        amount = root.findViewById(R.id.recordlist_amnt);
-        categoryName = root.findViewById(R.id.recordlist_category);
-        timestamp = root.findViewById(R.id.recordlist_date);
+
+        tv_userIncome = root.findViewById(R.id.record_mnthIncome);
+        tv_userIncome.setText(String.valueOf(getUserProfile().getIncome()));
+
+        tv_totalExpense = root.findViewById(R.id.record_mnthExpense);
+        /*double[]amount_doubleList= new double[amount_in_list.size()];
+        double sum=0;
+        int sizes=amount_in_list.size();
+        for(int i=0;i<sizes;++i){
+            amount_doubleList[i]=Double.parseDouble(amount_in_list.get(i));
+            sum+=amount_doubleList[i];
+
+        }
+        String amount_stringdouble=Double.toString(Math.round(sum));
+        tv_totalExpense.setText(amount_stringdouble);
 
 
 
+         */
+
+        tv_amount = root.findViewById(R.id.recordlist_amnt);
+        tv_categoryName = root.findViewById(R.id.recordlist_category);
+        tv_timestamp = root.findViewById(R.id.recordlist_date);
+/*
         CustomList adapter = new
-                CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
+                CustomList(getActivity(), dates_in_list.toArray(), cat_in_list, amount_in_list);
         list = root.findViewById(R.id.record_listView);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,10 +130,12 @@ public class RecordFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " + dates_in_list[+position], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You Clicked at " + dates_in_list.get(+position), Toast.LENGTH_SHORT).show();
             }
         });
 
+
+ */
 
         dateTXT_from = root.findViewById(R.id.record_date_from);
         cal_from = root.findViewById(R.id.record_calpicker_from);
@@ -154,13 +181,32 @@ public class RecordFragment extends Fragment {
         });
         return root;
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+
+    }
+
+
 
 
     private void resetDataRange(LocalDate beginDate, LocalDate endDate, Category selectedCategory) {
         // When the selectedCategory is NULL, display all the record.
-
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when date range need to change
+
+        List<LocalDate> dates = new ArrayList<LocalDate>(25);
+
+        LocalDate current = beginDate;
+        //current = current.plusDays(1); // If you don't want to include the start date
+        //toDate = toDate.plusDays(1); // If you want to include the end date
+        while (current.isBefore(endDate)) {
+            dates.add(current);
+            current = current.plusDays(1);
+        }
 
 
         // TODO: DB group: implement this function
@@ -172,7 +218,37 @@ public class RecordFragment extends Fragment {
     public void whenRecordListUpdated(List<Record> newRecords) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        
+        //Record r=newRecord(Stimestamp,ScategoryName,Samount);
+       /*
+        r = newRecords;
+        Record r1 = (new Record(LocalDateTime.now(),"Food",10.0));
+        Record r2=new Record(LocalDateTime.now(),"Food",20.0);
+        Record r3=new Record(LocalDateTime.now(),"Transport",30.0);
+        newRecords.add(r1);
+        newRecords.add(r2);
+        newRecords.add(r3);
+*/
+       // Log.d("display xx" , String.valueOf(newRecords.get(1).timestamp));
+       // Log.d("display xx" , newRecords.get(1).categoryName);
+      //  Log.d("display xx" , Double.toString(newRecords.get(1).amount));
+
+        for ( Record recordObj : newRecords){
+            dates_in_list.add(recordObj.timestamp);
+            cat_in_list.add(recordObj.categoryName);
+            amount_in_list.add(recordObj.amount);
+
+        }
+        double [] amt_in_cat_array = new double[amount_in_list.size()];
+        for (int i = 0; i < amount_in_list.size(); i++) {
+            amt_in_cat_array[i] = amount_in_list.get(i);
+        }
+
+        CustomList adapter = new
+                CustomList(getActivity(),  dates_in_list.toArray(new String[0]), cat_in_list.toArray(new String[0]) , amt_in_cat_array);
+        list.setAdapter(adapter);
+        Log.d("display xx" , dates_in_list.toArray(new String[0])[0]);
+
+
 
 
 
@@ -186,7 +262,6 @@ public class RecordFragment extends Fragment {
 
     private void deleteRecord(Record record) {
         // TODO: UI group: use this function
-
         // TODO: DB group: implement this function
     }
 }
