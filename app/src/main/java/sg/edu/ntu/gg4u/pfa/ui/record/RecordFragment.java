@@ -7,25 +7,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,15 +34,14 @@ import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
-import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class RecordFragment extends Fragment {
@@ -53,12 +52,12 @@ public class RecordFragment extends Fragment {
     EditText dateTXT_to;
     ImageView cal_to;
 
-    CustomList adapter;
+
     List<Record> r;
     List<String> cat_in_list = new ArrayList<>();
-    List<LocalDateTime> dates_in_list = new ArrayList<LocalDateTime>();
-    List<Double> amount_in_list = new ArrayList<>();
-    List<Double> sum_in_cat =new ArrayList<>();
+    List<String> dates_in_list = new ArrayList<>();
+    List<String> amount_in_list = new ArrayList<>();
+
 
     ListView list;
 
@@ -90,11 +89,12 @@ public class RecordFragment extends Fragment {
     //        "77",
     //        "88",
     //        "900"
-   // };
+    // };
 
 
-    private TextView tv_totalExpense,  tv_userIncome , tv_amount, tv_categoryName, tv_timestamp;
+    private TextView tv_totalExpense, tv_userIncome, tv_amount, tv_categoryName, tv_timestamp;
     UserProfile userProfile = new UserProfile();
+
     public UserProfile getUserProfile() {
         return userProfile;
     }
@@ -135,11 +135,8 @@ public class RecordFragment extends Fragment {
         tv_amount = root.findViewById(R.id.recordlist_amnt);
         tv_categoryName = root.findViewById(R.id.recordlist_category);
         tv_timestamp = root.findViewById(R.id.recordlist_date);
-/*
-        CustomList adapter = new
-                CustomList(getActivity(), dates_in_list.toArray(), cat_in_list, amount_in_list);
+
         list = root.findViewById(R.id.record_listView);
-        list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -150,7 +147,7 @@ public class RecordFragment extends Fragment {
         });
 
 
- */
+
 
         dateTXT_from = root.findViewById(R.id.record_date_from);
         cal_from = root.findViewById(R.id.record_calpicker_from);
@@ -196,16 +193,6 @@ public class RecordFragment extends Fragment {
         });
         return root;
     }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-
-    }
-
-
 
 
     @Override
@@ -214,7 +201,7 @@ public class RecordFragment extends Fragment {
 
         ViewModelFactory factory = Injection.provideViewModelFactory(this.getActivity());
         mViewModel = new ViewModelProvider(this, factory)
-                        .get(RecordViewModel.class);
+                .get(RecordViewModel.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -226,6 +213,13 @@ public class RecordFragment extends Fragment {
         LocalDate beginDate = LocalDate.now().minusMonths(1),
                 endDate = LocalDate.now();
         resetDataRange(beginDate, endDate, null);
+
+        LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
+        LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1));
+        mDisposable.add(mViewModel.getRecord(todayBegin,todayEnd)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenRecordListUpdated));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -255,8 +249,7 @@ public class RecordFragment extends Fragment {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::whenRecordListUpdated));
-        }
-        else {
+        } else {
             mDisposable.add(mViewModel.getRecordByCategory
                     (beginDate.atStartOfDay(), endDate.atStartOfDay(), selectedCategory.getName())
                     .subscribeOn(Schedulers.io())
@@ -269,42 +262,48 @@ public class RecordFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         //Record r=newRecord(Stimestamp,ScategoryName,Samount);
-       /*
+
+
         r = newRecords;
+
         Record r1 = (new Record(LocalDateTime.now(),"Food",10.0));
         Record r2=new Record(LocalDateTime.now(),"Food",20.0);
         Record r3=new Record(LocalDateTime.now(),"Transport",30.0);
         newRecords.add(r1);
         newRecords.add(r2);
         newRecords.add(r3);
-*/
-       // Log.d("display xx" , String.valueOf(newRecords.get(1).timestamp));
-       // Log.d("display xx" , newRecords.get(1).categoryName);
-      //  Log.d("display xx" , Double.toString(newRecords.get(1).amount));
 
-        for ( Record recordObj : newRecords){
-            dates_in_list.add(recordObj.timestamp);
+        // Log.d("display xx" , String.valueOf(newRecords.get(1).timestamp));
+        // Log.d("display xx" , newRecords.get(1).categoryName);
+        //  Log.d("display xx" , Double.toString(newRecords.get(1).amount));
+
+        for (Record recordObj : newRecords) {
+            dates_in_list.add(String.valueOf(recordObj.timestamp));
             cat_in_list.add(recordObj.categoryName);
-            amount_in_list.add(recordObj.amount);
+            amount_in_list.add(String.valueOf(recordObj.amount));
+
 
         }
+        /*
         double [] amt_in_cat_array = new double[amount_in_list.size()];
         for (int i = 0; i < amount_in_list.size(); i++) {
             amt_in_cat_array[i] = amount_in_list.get(i);
         }
+        */
+        
 
         CustomList adapter = new
-                CustomList(getActivity(),  dates_in_list.toArray(new String[0]), cat_in_list.toArray(new String[0]) , amt_in_cat_array);
+                CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
         list.setAdapter(adapter);
-        Log.d("display xx" , dates_in_list.toArray(new String[0])[0]);
 
 
-
-
-
-        // TODO: DB group: call this function when data changes
 
     }
+
+
+    // TODO: DB group: call this function when data changes
+
+
 
     private void insertOrUpdateRecord(Record record) {
         // TODO: UI group: use this function

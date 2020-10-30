@@ -93,7 +93,7 @@ public class ReportFragment extends Fragment {
             "10",
             "10"
     };
-
+*/
     private ReportViewModel mViewModel;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();

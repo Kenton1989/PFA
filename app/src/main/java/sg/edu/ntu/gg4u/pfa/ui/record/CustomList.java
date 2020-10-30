@@ -17,12 +17,12 @@ import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 public class CustomList extends ArrayAdapter<String>{
 
     private final Activity context;
-    private String[] dates_in_list;
-    private String[] cat_in_list;
-    private double[] amount_in_list;
+    private List<String> dates_in_list;
+    private List<String>  cat_in_list;
+    private List<String>  amount_in_list;
 
     public CustomList(Activity context,
-                      String[] dates_in_list, String[] cat_in_list , double[] amount_in_list) {
+                      List<String>  dates_in_list, List<String>  cat_in_list , List<String>  amount_in_list) {
         super(context, R.layout.fragment_record_listview, dates_in_list);
         this.context = context;
         this.dates_in_list = dates_in_list;
@@ -37,9 +37,9 @@ public class CustomList extends ArrayAdapter<String>{
         TextView txtTitle = (TextView) rowView.findViewById(R.id.recordlist_date);
         TextView catTitle = (TextView) rowView.findViewById(R.id.recordlist_category);
         TextView amtTitle = (TextView) rowView.findViewById(R.id.recordlist_amnt);
-        txtTitle.setText(dates_in_list[position]);
-        catTitle.setText(cat_in_list[position]);
-        amtTitle.setText(String.valueOf(amount_in_list[position]));
+        txtTitle.setText(dates_in_list.get(position));
+        catTitle.setText(cat_in_list.get(position));
+        amtTitle.setText(amount_in_list.get(position));
 
         return rowView;
     }
