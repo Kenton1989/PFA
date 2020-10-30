@@ -2,7 +2,9 @@ package sg.edu.ntu.gg4u.pfa.visualizer;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -22,6 +24,7 @@ import com.androidplot.xy.StepMode;
 import com.androidplot.xy.XYGraphWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.github.mikephil.charting.charts.BarChart;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
@@ -29,21 +32,26 @@ import java.text.ParsePosition;
 import java.util.Arrays;
 
 public class TargetBarChartVisualizer {
-    public void plot(XYPlot plot, final String[] category, Number[] target, Number[] cost) {
+
+    public void plot(XYPlot plot, final String[] category, double[] target, double[] cost) {
 
         int n = target.length;
 
-        final String[] categories = new String[n+1];
-        Number[] currentList = new Number[n+1];
-        Number[] predictedList = new Number[n+1];
-        Number[] excessList = new Number[n+1];
+        String[] categories = new String[n+2];
+        Number[] currentList = new Number[n+2];
+        Number[] predictedList = new Number[n+2];
+        Number[] excessList = new Number[n+2];
         currentList[0] = 0;
+        currentList[n+1] = 0;
         predictedList[0] = 0;
+        predictedList[n+1] = 0;
         excessList[0] = 0;
+        excessList[n+1] = 0;
         categories[0] = "";
+        categories[n+1] = "";
 
         for (int i = 0; i < n; i++) {
-            if (cost[i].doubleValue() > target[i].doubleValue()) {
+            if (cost[i] > target[i]) {
                 currentList[i + 1] = 0;
                 excessList[i + 1] = cost[i];
             }
@@ -86,7 +94,7 @@ public class TargetBarChartVisualizer {
         saveFormatter.setPointLabeler(new PointLabeler(){
             @Override
             public String getLabel(XYSeries series, int index) {
-                if ((int) series.getY(index) != 0)
+                if (series.getY(index).intValue() != 0)
                     return String.valueOf(series.getY(index));
                 else return "";
             }
@@ -98,7 +106,8 @@ public class TargetBarChartVisualizer {
         exFormatter.setPointLabeler(new PointLabeler() {
             @Override
             public String getLabel(XYSeries series, int index) {
-                if ((int) series.getY(index) != 0)
+
+                if (series.getY(index).intValue() != 0)
                     return String.valueOf(series.getY(index));
                 else return "";
             }
@@ -110,7 +119,7 @@ public class TargetBarChartVisualizer {
         predFormatter.setPointLabeler(new PointLabeler() {
             @Override
             public String getLabel(XYSeries series, int index) {
-                if ((int) series.getY(index) != 0)
+                if (series.getY(index).intValue() != 0)
                     return String.valueOf(series.getY(index));
                 else return "";
             }
@@ -119,7 +128,7 @@ public class TargetBarChartVisualizer {
 
         // graph modifications
         Paint bg = new Paint();
-        bg.setColor(Color.BLACK);
+        bg.setColor(Color.TRANSPARENT);
         plot.setTitle("");
         plot.setDomainLabel("Category");
         plot.setRangeLabel("Expense ($)");
@@ -132,6 +141,7 @@ public class TargetBarChartVisualizer {
         plot.setRangeUpperBoundary(maxY + padding, BoundaryMode.FIXED);
         plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.LEFT).setPaint(bg);
         plot.getRangeTitle().setOrientation(TextOrientation.HORIZONTAL);
+        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setRotation((float)-33.75);
         plot.getRangeTitle().getPositionMetrics().setXPositionMetric(new HorizontalPosition(PixelUtils.dpToPix(10), HorizontalPositioning.ABSOLUTE_FROM_LEFT));
         plot.getRangeTitle().getPositionMetrics().setYPositionMetric(new VerticalPosition(PixelUtils.dpToPix(20), VerticalPositioning.ABSOLUTE_FROM_TOP));
         plot.getDomainTitle().getPositionMetrics().setXPositionMetric(new HorizontalPosition(PixelUtils.dpToPix(60), HorizontalPositioning.ABSOLUTE_FROM_RIGHT));
@@ -153,9 +163,8 @@ public class TargetBarChartVisualizer {
             @Nullable
             @Override
             public Number parse(@NonNull String source, @NonNull ParsePosition parsePosition) {
-                return null;
+                return java.util.Arrays.asList(categories).indexOf(source);
             }
         });
-
     }
 }

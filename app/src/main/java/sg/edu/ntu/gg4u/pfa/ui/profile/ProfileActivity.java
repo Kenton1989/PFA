@@ -23,7 +23,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "This is a tag";
 
-    private TextView userName,userGender,userJobfield,userIncome,userFamilySize;
+    private TextView userName,userGender,userJobfield,userIncome,userFamilySize,userAge,userAcedemicQuali;
 
     private ProfileViewModel mViewModel;
 
@@ -40,12 +40,17 @@ public class ProfileActivity extends AppCompatActivity {
         userJobfield = findViewById(R.id.profile_job);
         userIncome=findViewById(R.id.profile_incomeGrp);
         userFamilySize=findViewById(R.id.profile_familySize);
+        userAge=findViewById(R.id.profile_age);
+        userAcedemicQuali=findViewById(R.id.profile_academicQualification);
+
+
         userName.setText("Nameless");
         userGender.setText("Unknown");
         userJobfield.setText("Secret");
         userIncome.setText("Unknown");
         userFamilySize.setText("at least 1");
-
+        userAge.setText("Unknown");
+        userAcedemicQuali.setText("Unknown");
         FloatingActionButton fab =(FloatingActionButton)findViewById(R.id.btnProfile);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +90,8 @@ public class ProfileActivity extends AppCompatActivity {
         userIncome.setText(String.valueOf(newProfile.getIncome()));
         userFamilySize.setText(String.valueOf(newProfile.getFamilySize()));
         // TODO two more text view required to display information
+        userAcedemicQuali.setText(newProfile.getQualification().toString());
+        userAge.setText(String.valueOf(newProfile.getAge()));
 //        String.valueOf(newProfile.getFamilySize());
 //        newProfile.getQualification().toString()
     }

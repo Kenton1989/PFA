@@ -47,6 +47,8 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private EditText textEditIncome;
     private EditText textEditFamSize;
     private EditText textEditName;
+    private Spinner spinAcademicQualification;
+    private EditText textEditAge;
     // TODO store widget for age and academic qualification
 
     @Override
@@ -62,12 +64,15 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         confirmButton = (Button) findViewById(R.id.profileConfirm);
         spinGender = (Spinner) findViewById(R.id.gender_spinner);
         spinJob = (Spinner) findViewById(R.id.job_spinner);
+        spinAcademicQualification =(Spinner) findViewById(R.id.academicQualification_spinner);
         textEditIncome = (EditText) findViewById(R.id.income_edittext);
         textEditFamSize = (EditText) findViewById(R.id.family_size_edittext);
         textEditName = (EditText) findViewById(R.id.nameEdit);
+        textEditAge= (EditText) findViewById(R.id.age_editText);
 
         spinGender.setOnItemSelectedListener(this);
         spinJob.setOnItemSelectedListener(this);
+        spinAcademicQualification.setOnItemSelectedListener(this);
 //        spinIncome.setOnItemSelectedListener(this);
 //        spinFamSize.setOnItemSelectedListener(this);
 
@@ -82,6 +87,11 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         spinJob.setAdapter(jArray);
 
         // TODO set up array adapter for academic qualification
+        ArrayAdapter<String> aArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, academicQualifications);
+        jArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spinAcademicQualification.setAdapter(aArray);
+
 
         confirmButton.setOnClickListener(this::onConfirmClicked);
 
@@ -160,15 +170,15 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         }
 
         // TODO read age string from UI
-        String ageStr = "";
+        String ageStr = textEditAge.getText().toString();
         if (ageStr.length() != 0) {
             age = Integer.valueOf(ageStr);
         }
 
         // TODO read academic qualification index from UI
-        int acaQauliIndex = 0;
+        int acaQualiIndex = spinAcademicQualification.getSelectedItemPosition();
         academicQualification = AcademicQualification.toAcademicQualification(
-                academicQualifications[acaQauliIndex]);
+                academicQualifications[acaQualiIndex]);
 
         UserProfile newProfile = new UserProfile(name, gender, job, famSize, income, age, academicQualification);
 

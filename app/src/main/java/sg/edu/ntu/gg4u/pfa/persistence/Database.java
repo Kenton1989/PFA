@@ -66,4 +66,5 @@ public abstract class Database extends RoomDatabase {
                 new GuideInfo(6, R.drawable.guide_img_6, R.string.guide_intro_6)
         };
     }
+
 }

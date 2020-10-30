@@ -7,17 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 import sg.edu.ntu.gg4u.pfa.R;
 
 public class CustomListHome extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final String[] cat_in_list;
-    private final String[] amount_in_list;
+    private  String[] cat_in_list;
+    private final double[] amount_in_list;
     //private final String[] amount_in_list;
 
-    public CustomListHome(Activity context,
-                          String[] cat_in_list, String[] amount_in_list) {
+    public CustomListHome(Activity context, String[]cat_in_list, double[] amount_in_list) {
         super(context, R.layout.fragment_home_listview, cat_in_list);
         this.context = context;
         this.cat_in_list = cat_in_list;
@@ -33,9 +34,12 @@ public class CustomListHome extends ArrayAdapter<String> {
         TextView amtTitle = (TextView) rowView.findViewById(R.id.homeAmount);
         //TextView amtTitle = (TextView) rowView.findViewById(R.id.amount);
         catTitle.setText(cat_in_list[position]);
-        amtTitle.setText(amount_in_list[position]);
+        amtTitle.setText(String.valueOf(amount_in_list[position]));
         //amtTitle.setText(amount_in_list[position]);
 
         return rowView;
     }
+   /* public void updateData(String[] list){
+        this.cat_in_list = list;
+    }*/
 }

@@ -16,9 +16,23 @@ import io.reactivex.Flowable;
 public interface TargetDao {
 
     class TargetAndCost {
-        Double targetAmount;
+       /* Double targetAmount;
         String categoryName;
-        Double cost;
+        Double cost;*/
+       public String categoryName;
+       public double targetAmount;
+       public double cost;
+
+        public TargetAndCost(String name, double amount , double cat_cost) {
+            categoryName = name;
+            targetAmount = amount;
+            cost =cat_cost;
+        }
+        public TargetAndCost() {
+            categoryName = "dummy";
+            targetAmount = 10.0;
+            cost =20.0;
+        }
     }
 
     @Query("SELECT * FROM Target WHERE categoryName = :name AND" +
