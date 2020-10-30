@@ -132,7 +132,8 @@ public class TargetFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " , Toast.LENGTH_LONG).show();
+                EditTargetFragment editFrag = new EditTargetFragment(cat_in_list.get(position));
+                editFrag.show(getActivity().getSupportFragmentManager(), "editTar");
             }
         });
 
