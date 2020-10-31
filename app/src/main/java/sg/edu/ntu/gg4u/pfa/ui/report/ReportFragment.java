@@ -73,33 +73,41 @@ public class ReportFragment extends Fragment {
     List<String> cat_in_list = new ArrayList<>();
     List<String> dates_in_list = new ArrayList<>();
     List<String> amount_in_list = new ArrayList<>();
-
+    List<String> t_start_date_list = new ArrayList<>();
+    List<String> t_cat_in_list = new ArrayList<>();
+    List<String> t_amount_in_list = new ArrayList<>();
     List<String> percent_in_list = new ArrayList<>();
     List<String> sugg_in_list = new ArrayList<>();
     List<Double> sum_in_cat =new ArrayList<>();
 
+   // List<String> scat_in_list = Arrays.asList("Food" , "Transportation" , "Leisure" , "Entertainment");
+   // List<String> spercent_in_list = Arrays.asList("10" , "20" , "20" , "10");
+   // List<String> ssugg_in_list = Arrays.asList("-10" , "-10" , "-10" , "-12");
+
 /*
-    String[] cat_in_list = {
+    String[] scat_in_list = {
             "Food",
             "Transportation",
             "Leisure",
             "Entertainment"
     };
 
-    String[] percent_in_list = {
+    String[] spercent_in_list = {
             "50",
             "50",
             "50",
             "50"
     };
 
-    String[] sugg_in_list = {
+    String[] ssugg_in_list = {
             "10",
             "10",
             "10",
             "10"
     };
-*/
+
+ */
+
     private ReportViewModel mViewModel;
 
     PieChart pieChart;
@@ -134,11 +142,14 @@ public class ReportFragment extends Fragment {
         inc = root.findViewById(R.id.right_arrow);
 
         dec.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 cal.add(Calendar.MONTH, -1);
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
+               resetMonth(cal);
+
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData, "temp chart");
                 //pcv.drawPie(pieChart, labels, data);
@@ -147,11 +158,13 @@ public class ReportFragment extends Fragment {
         cal.getTime();
 
         inc.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 cal.add(Calendar.MONTH, 1);
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
+                resetMonth(cal);
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData2, "temp chart");
                 //pcv.drawPie(pieChart, labels2, data2);
@@ -193,6 +206,11 @@ public class ReportFragment extends Fragment {
         // TODO: UI group: put default calendar here
         Calendar calendar = Calendar.getInstance();
         resetMonth(calendar);
+
+        mDisposable.add(mViewModel.getUserProfile()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenUserProfileChanged));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -200,6 +218,17 @@ public class ReportFragment extends Fragment {
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when month range need to change
 
+
+        lineChart.clear();
+        pieChart.clear();
+        lineChart.refreshDrawableState();
+        pieChart.refreshDrawableState();
+        cat_in_list =new ArrayList<>();
+        dates_in_list = new ArrayList<>();
+        amount_in_list = new ArrayList<>();
+        percent_in_list = new ArrayList<>();
+        sugg_in_list = new ArrayList<>();
+        sum_in_cat =new ArrayList<>();
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database
@@ -224,12 +253,19 @@ public class ReportFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenMonthlyCostSumUpdated));
+
+
     }
 
     void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-
+        for(Target newT:newTargets){
+            t_cat_in_list.add(newT.getCategoryName());
+            String str_date_1=(String.valueOf(newT.getStartDate()));
+            t_start_date_list.add(str_date_1);
+            t_amount_in_list.add(String.valueOf(newT.getAmount()));
+        }
 
         // TODO: DB group: call this function when data changes
     }
@@ -251,7 +287,7 @@ public class ReportFragment extends Fragment {
         float[] sum_in_cat_float = new float[sum_in_cat_array.length];
         int j = 0;
         for (double value:  sum_in_cat_array){
-            sum_in_cat_float[j++] = Float.valueOf((float) value);
+            sum_in_cat_float[j++] = (float) value;
         }
 
         String [] cat_and_total = new String[sum_in_cat_array.length];
@@ -261,20 +297,9 @@ public class ReportFragment extends Fragment {
         }
 
 
-       /*
-        String cat_and_total = cat_in_list.toString() + sum_in_cat_float.toString();
-
-        String [] cat_and_total_str = new String[cat_and_total.length()];
-        int j = 0;
-        for ( String value:  cat_and_total){
-            cat_and_total_str[j++] = value;
-        }
-
-        */
-
         PieChartVisualizer pcv = new PieChartVisualizer();
         pieChart.clear();
-         pcv.drawPie(pieChart,cat_and_total,sum_in_cat_float);
+        pcv.drawPie(pieChart,cat_and_total,sum_in_cat_float);
 
 
         // TODO: DB group: call this function when data changes
@@ -316,9 +341,16 @@ public class ReportFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         Predictor p = new Predictor(getContext());
+        UserProfile up = newProfile;
         Predictor.age2key(newProfile.getAge().toString());
         Predictor.income2key(newProfile.getIncome().toString());
+        //p.generatePrediction(newProfile , HashMap<> , HashMap<>);
 
+        /*
+        CustomListReport adapter = new
+                CustomListReport(getActivity(), scat_in_list, spercent_in_list, ssugg_in_list);;
+        list.setAdapter(adapter);
+*/
 
 
         // TODO: DB group: call this function when data changes

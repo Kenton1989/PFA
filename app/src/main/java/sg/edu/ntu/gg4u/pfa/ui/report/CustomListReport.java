@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+
 import java.util.List;
 
 import sg.edu.ntu.gg4u.pfa.R;
@@ -20,7 +22,6 @@ public class CustomListReport extends ArrayAdapter<String> {
     private final List<String> percent_in_list;
     private final List<String> sugg_in_list;
 
-
     public CustomListReport(Activity context,
                             List<String> cat_in_list, List<String> percent_in_list, List<String> sugg_in_list){
         super(context, R.layout.fragment_report_listview, cat_in_list);
@@ -30,6 +31,7 @@ public class CustomListReport extends ArrayAdapter<String> {
         this.sugg_in_list = sugg_in_list;
 
     }
+
 
 
     @Override
