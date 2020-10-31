@@ -22,6 +22,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -184,6 +185,11 @@ public class MainActivity extends AppCompatActivity {
     private void insertTarget() {
         insertSingleTarget(new Target("Clothing", 150));
         insertSingleTarget(new Target("Food", 360));
+
+        insertSingleTarget(new Target("Transportation", 50, LocalDate.of(LocalDate.now().getYear(),
+                LocalDate.now().getMonth().minus(1), 1)));
+        insertSingleTarget(new Target("Food", 300, LocalDate.of(LocalDate.now().getYear(),
+                LocalDate.now().getMonth().minus(1), 1)));
     }
 
     private void insertSingleTarget(Target target) {
