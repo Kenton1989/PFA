@@ -85,26 +85,6 @@ public class ReportFragment extends Fragment {
    // List<String> ssugg_in_list = Arrays.asList("-10" , "-10" , "-10" , "-12");
 
 /*
-    String[] scat_in_list = {
-            "Food",
-            "Transportation",
-            "Leisure",
-            "Entertainment"
-    };
-
-    String[] spercent_in_list = {
-            "50",
-            "50",
-            "50",
-            "50"
-    };
-
-    String[] ssugg_in_list = {
-            "10",
-            "10",
-            "10",
-            "10"
-    };
 
  */
 
