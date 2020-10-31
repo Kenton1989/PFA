@@ -342,8 +342,16 @@ public class ReportFragment extends Fragment {
         // TODO: UI group: implement this function
         Predictor p = new Predictor(getContext());
         UserProfile up = newProfile;
-        Predictor.age2key(newProfile.getAge().toString());
-        Predictor.income2key(newProfile.getIncome().toString());
+
+
+        // Get Prediction Result
+        HashMap<String, Double> categoryPrediction = p.predictDistributionByCategory(up);
+        HashMap<String, Double> expenditurePrediction = p.predictDistributionByIncomeGroup(up);
+
+
+
+//        Predictor.age2key(newProfile.getAge().toString());
+//        Predictor.income2key(newProfile.getIncome().toString());
         //p.generatePrediction(newProfile , HashMap<> , HashMap<>);
 
         /*
