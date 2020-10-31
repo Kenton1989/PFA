@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -104,6 +105,14 @@ public class RecordFragment extends Fragment {
 
     private TextView tv_totalExpense, tv_userIncome, tv_amount, tv_categoryName, tv_timestamp;
     UserProfile userProfile = new UserProfile();
+    Category category = new Category();
+
+    public Category getCategory() {
+        return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
@@ -111,7 +120,7 @@ public class RecordFragment extends Fragment {
         return userProfile;
     }
 
-    Category category = new Category();
+   // Category category = new Category();
 
     private RecordViewModel mViewModel;
 
@@ -232,10 +241,10 @@ public class RecordFragment extends Fragment {
         record_go_btn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            resetDataRange(localDate_from, localDate_to, null);
+            Log.d("display xx", getCategory().toString());
 
-            resetDataRange(localDate_from,localDate_to,category);
-            Log.d("display xx" , category.toString());
-             }
+        }
         });
 
 
@@ -282,8 +291,6 @@ public class RecordFragment extends Fragment {
         // When the selectedCategory is NULL, display all the record.
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when date range need to change
-
-
 
 /*
         Record[] rec = new Record[0];

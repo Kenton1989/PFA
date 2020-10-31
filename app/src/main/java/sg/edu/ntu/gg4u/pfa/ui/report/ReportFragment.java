@@ -77,6 +77,7 @@ public class ReportFragment extends Fragment {
     List<String> t_start_date_list = new ArrayList<>();
     List<String> t_cat_in_list = new ArrayList<>();
     List<String> t_amount_in_list = new ArrayList<>();
+    List<String> t_target_in_cat = new ArrayList<>();
     List<String> percent_in_list = new ArrayList<>();
     List<String> sugg_in_list = new ArrayList<>();
     List<Double> sum_in_cat =new ArrayList<>();
@@ -245,10 +246,12 @@ public class ReportFragment extends Fragment {
         // TODO: UI group: implement this function
         for(Target newT:newTargets){
             t_cat_in_list.add(newT.getCategoryName());
-            String str_date_1=(String.valueOf(newT.getStartDate()));
-            t_start_date_list.add(str_date_1);
             t_amount_in_list.add(String.valueOf(newT.getAmount()));
         }
+
+        CustomListReport adapter = new
+                CustomListReport(getActivity(), t_cat_in_list, t_amount_in_list);
+        list.setAdapter(adapter);
 
         // TODO: DB group: call this function when data changes
     }
