@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,12 +28,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.text.DecimalFormat;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -53,6 +58,7 @@ public class RecordFragment extends Fragment {
 
     EditText dateTXT_to;
     ImageView cal_to;
+    Button record_go_btn;
     private static DecimalFormat df = new DecimalFormat("0.00");
 
     List<Record> r;
@@ -99,8 +105,7 @@ public class RecordFragment extends Fragment {
     private TextView tv_totalExpense, tv_userIncome, tv_amount, tv_categoryName, tv_timestamp;
     UserProfile userProfile = new UserProfile();
 
-    DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
-
+    DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
 
     public UserProfile getUserProfile() {
         return userProfile;
@@ -122,7 +127,7 @@ public class RecordFragment extends Fragment {
         final TextView todaydate = root.findViewById(R.id.record_current_date);
         todaydate.setText(date_n);
 
-
+        record_go_btn = root.findViewById(R.id.record_go_btn) ;
         tv_userIncome = root.findViewById(R.id.record_mnthIncome);
         tv_userIncome.setText(String.valueOf(getUserProfile().getIncome()));
 
@@ -130,6 +135,7 @@ public class RecordFragment extends Fragment {
         tv_amount = root.findViewById(R.id.recordlist_amnt);
         tv_categoryName = root.findViewById(R.id.recordlist_category);
         tv_timestamp = root.findViewById(R.id.recordlist_date);
+
 
         list = root.findViewById(R.id.record_listView);
         list.setClickable(true);
@@ -144,12 +150,8 @@ public class RecordFragment extends Fragment {
 
 
 
-
         dateTXT_from = root.findViewById(R.id.record_date_from);
         cal_from = root.findViewById(R.id.record_calpicker_from);
-
-        //localDate_from = LocalDate.parse((String.valueOf(dateTXT_from)), formatter);
-        //localDate_to = LocalDate.parse((String.valueOf(dateTXT_to)) , formatter);
 
         cal_from.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,8 +163,22 @@ public class RecordFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
+                        int month1= month+1;
+                        String fm=""+month1;
+                        String fd=""+date;
+                        if(month1<10){
+                            fm ="0"+month;
+                        }
+                        if (date<10){
+                            fd="0"+date;
+                        }
+                        String datez= ""+year+"-"+fm+"-"+fd;
+
+                        dateTXT_from.setText(datez);
                         //dateTXT_from.setText(date + "-" + (month + 1) + "-" + year);
-                        dateTXT_from.setText(year + "-" + (month + 1) + "-" + date);
+                       // String fulldate1 = (year + "-" + (month + 1) + "-" + date);
+                        //dateTXT_from.setText(fulldate1);
+                       localDate_from = LocalDate.parse((datez), formatter);
 
 
                     }
@@ -186,21 +202,41 @@ public class RecordFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
+                        int month1= month+1;
+                        String fm=""+month1;
+                        String fd=""+date;
+                        if(month1<10){
+                            fm ="0"+month;
+                        }
+                        if (date<10){
+                            fd="0"+date;
+                        }
+                        String datez= ""+year+"-"+fm+"-"+fd;
+                        dateTXT_to.setText(datez);
                         //dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
-                        dateTXT_to.setText(year + "-" + (month + 1) + "-" + date);
+                        //String fulldate2 = (year + "-" + (month + 1) + "-" + date);
+                        //dateTXT_to.setText(fulldate2);
+                        localDate_to = LocalDate.parse(datez , formatter);
+
 
 
                     }
                 }, mYear, mMonth, mDate);
-
-                //resetDataRange(localDate_to,localDate_from, null);
-
                 datePickerDialog.show();
+
             }
 
 
         });
 
+        record_go_btn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            resetDataRange(localDate_from,localDate_to,category);
+            Log.d("display xx" , category.toString());
+             }
+        });
 
 
         return root;
@@ -246,6 +282,28 @@ public class RecordFragment extends Fragment {
         // When the selectedCategory is NULL, display all the record.
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when date range need to change
+
+
+
+/*
+        Record[] rec = new Record[0];
+        for (Record recordObj : rec) {
+            long numOfDays = ChronoUnit.DAYS.between(beginDate, endDate);
+            List<LocalDate> listOfDates1 = Stream.iterate(beginDate, date -> date.plusDays(1))
+                    .limit(numOfDays)
+                    .collect(Collectors.toList());
+            dates_in_list.add(listOfDates1.toString());
+            cat_in_list.add(selectedCategory.getName());
+            amount_in_list.add(String.valueOf(recordObj.amount));
+        }
+
+        CustomList adapter = new
+                CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
+        list.setAdapter(adapter);
+
+ */
+
+
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database

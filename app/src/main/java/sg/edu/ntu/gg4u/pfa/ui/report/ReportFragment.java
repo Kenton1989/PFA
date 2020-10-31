@@ -63,6 +63,7 @@ import sg.edu.ntu.gg4u.pfa.ui.record.RecordViewModel;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.persistence.Predictor;
+import sg.edu.ntu.gg4u.pfa.persistence.Dataloader;
 
 public class ReportFragment extends Fragment {
 
@@ -191,6 +192,8 @@ public class ReportFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenUserProfileChanged));
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -328,11 +331,6 @@ public class ReportFragment extends Fragment {
         HashMap<String, Double> categoryPrediction = p.predictDistributionByCategory(up);
         HashMap<String, Double> expenditurePrediction = p.predictDistributionByIncomeGroup(up);
 
-
-
-//        Predictor.age2key(newProfile.getAge().toString());
-//        Predictor.income2key(newProfile.getIncome().toString());
-        //p.generatePrediction(newProfile , HashMap<> , HashMap<>);
 
         /*
         CustomListReport adapter = new
