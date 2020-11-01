@@ -147,6 +147,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         CategoryActivity.setListViewHeightBasedOnChildren(list);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertCategory(Category newCategory) {
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
@@ -154,6 +155,6 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         mDisposable.add(mViewModel.createNewCategory(newCategory)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
+                .subscribe(()-> Log.d(TAG, "insertCategory: "+newCategory+" inserted.")));
     }
 }

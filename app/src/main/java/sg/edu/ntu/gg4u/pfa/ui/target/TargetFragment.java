@@ -197,8 +197,6 @@ public class TargetFragment extends Fragment {
         actualAmt = root.findViewById(R.id.actualAmount);
         targetAmt = root.findViewById(R.id.targetAmount);
 
-
-
         return root;
     }
 
@@ -263,6 +261,8 @@ public class TargetFragment extends Fragment {
         cat_in_list.clear();
         target_in_cat.clear();
         amt_in_cat.clear();
+
+        Log.d(TAG, "whenTargetAndCostChanged: targets number: "+targetAndCosts.size());
 
         for (TargetAndCost targetObj :targetAndCosts){
             cat_in_list.add(targetObj.categoryName);

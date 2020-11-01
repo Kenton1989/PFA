@@ -67,8 +67,9 @@ public interface TargetDao {
             ")" +
             "select Target.amount as targetAmount, Target.categoryName as categoryName," +
             " GroupedRecordSum.sum as cost " +
-            "from Target, GroupedRecordSum " +
-            "WHERE Target.categoryName = GroupedRecordSum.categoryName " +
-            "AND Target.startDate = :startDate")
+            "from Target left join GroupedRecordSum " +
+            "on Target.categoryName = GroupedRecordSum.categoryName " +
+            "AND Target.startDate = :startDate " +
+            "order by targetAmount desc ")
     Flowable<List<TargetAndCost>> getTargetAndCost(LocalDate startDate, LocalDate endDate);
 }
