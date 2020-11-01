@@ -1,43 +1,31 @@
 package sg.edu.ntu.gg4u.pfa.ui.category;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModel;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
-import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.ui.CategoryDataSource;
-import sg.edu.ntu.gg4u.pfa.ui.TargetDataSource;
 
 public class CategoryViewModel extends ViewModel {
 
-    private final CategoryDataSource mCategoryDataSource;
-    private final TargetDataSource mTargetDataSource;
+    private final CategoryDataSource mDataSource;
 
-    public CategoryViewModel(CategoryDataSource categoryDataSource,
-                             TargetDataSource targetDataSource) {
-        mCategoryDataSource = categoryDataSource;
-        mTargetDataSource = targetDataSource;
+    public CategoryViewModel(CategoryDataSource categoryDataSource) {
+        mDataSource = categoryDataSource;
     }
 
     public Flowable<List<Category>> getAllCategory() {
-        return mCategoryDataSource.getAllCategory();
+        return mDataSource.getAllCategory();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public Completable createNewCategory(Category category) {
-        return mCategoryDataSource.createNewCategory(category)
-                .concatWith(mTargetDataSource.insertOrUpdateTarget(
-                        new Target(category.getName(), 0)));
+        return mDataSource.createNewCategory(category);
     }
 
     public Completable deleteCategory(Category category) {
-        return mCategoryDataSource.deleteCategory(category);
+        return mDataSource.deleteCategory(category);
     }
 }
