@@ -8,15 +8,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
 
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.AcademicQualification;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.Gender;
@@ -83,7 +78,7 @@ public class Predictor {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-   /* public void generatePrediction(UserProfile userProfile,
+    public void generatePrediction(UserProfile userProfile,
                                    HashMap<String, Double> prediction,
                                    HashMap<String, Double> distribution) {
 
@@ -110,23 +105,7 @@ public class Predictor {
         distribution.putAll(Objects.requireNonNull(readSer("Income Group", income)));
         categorySet = jobFieldPrediction.keySet();
 
-        Double obj = distribution.remove("Below 1,000");
-        distribution.put("0 - 1,000", obj);
 
-        // add columns if it's null in the dataset
-        if(!distribution.containsKey("10,000 - 11,999"))
-            distribution.put("10,000 - 11,999", 0.0);
-
-        if(!distribution.containsKey("12,000 - 14,999"))
-            distribution.put("12,000 - 14,999", 0.0);
-
-        if(distribution.containsKey("15,000 & Over"))
-        {
-            Double obj2 = distribution.remove("15,000 & Over");
-            distribution.put(">=15,000", obj2);
-        }
-        else
-            distribution.put(">=15,000", 0.0);
 //        System.out.println(distribution);
 //
 //        System.out.println(categorySet);
@@ -141,14 +120,9 @@ public class Predictor {
                             AQPrediction.get(category) * 0.36 +
                             agePrediction.get(category) * 0.4);
         }
+    }
 
-        //remove useless column
-        distribution.remove("Number of Resident Households");
-        distribution.remove("Average Monthly Household Expenditure ($)");
-        distribution.remove("Total");
-    }*/
-
-
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public HashMap<String, Double> predictDistributionByCategory(UserProfile userProfile) {
 
         HashMap<String, Double> jobFieldPrediction, AQPrediction, agePrediction;
@@ -172,75 +146,33 @@ public class Predictor {
         categorySet = jobFieldPrediction.keySet();
 
         HashMap<String, Double> prediction = new HashMap<>();
-
-        DecimalFormat df = new DecimalFormat("0.00");
-
-        BigDecimal bd;
-        double cat;
-
         for (String category : categorySet) {
-           bd =  new BigDecimal(jobFieldPrediction.get(category) * 0.24 +
-                   AQPrediction.get(category) * 0.36 +
-                   agePrediction.get(category) * 0.4).setScale(3, RoundingMode.HALF_UP);
-
-           cat = bd.doubleValue();
-
             prediction.put(category,
-                    cat);
+                    jobFieldPrediction.get(category) * 0.24 +
+                            AQPrediction.get(category) * 0.36 +
+                            agePrediction.get(category) * 0.4);
         }
-        prediction.remove("TOTAL");
+
         return prediction;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public HashMap<String, Double> predictDistributionByIncomeGroup(UserProfile userProfile) {
-        HashMap<String, Double> distribution = new HashMap<String, Double>();
         String income = userProfile.getIncome() == null ?
                 "Total" : userProfile.getIncome().toString();
 
         income = income2key(income);
-        distribution.putAll(Objects.requireNonNull(readSer("Income Group", income)));
 
-        Double obj = distribution.remove("Below 1,000");
-        distribution.put("0 - 1,000", obj);
-
-        // add columns if it's null in the dataset
-        if(!distribution.containsKey("10,000 - 11,999"))
-            distribution.put("10,000 - 11,999", 0.0);
-
-        if(!distribution.containsKey("12,000 - 14,999"))
-            distribution.put("12,000 - 14,999", 0.0);
-
-        if(distribution.containsKey("15,000 & Over"))
-        {
-            Double obj2 = distribution.remove("15,000 & Over");
-            distribution.put(">=15,000", obj2);
-        }
-        else
-            distribution.put(">=15,000", 0.0);
-
-        distribution.remove("Number of Resident Households");
-        distribution.remove("Average Monthly Household Expenditure ($)");
-        distribution.remove("Total");
-
-        return distribution;
+        return new HashMap<>(Objects.requireNonNull(readSer("Income Group", income)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public static void main(String[] args) {
-      /*  UserProfile userProfile = new UserProfile("Peter Wen", Gender.MALE, JobField.NOT_WORKING,
+        UserProfile userProfile = new UserProfile("Peter Wen", Gender.MALE, JobField.NOT_WORKING,
                 4, 500.0, 19, AcademicQualification.UNIVERSITY);
-        HashMap<String, Double> prediction = new HashMap<>(), distribution = new HashMap<>();*/
-        //generatePrediction(userProfile, prediction, distribution);
-       // System.out.println(prediction);
-      //  System.out.println(distribution);
-    }
-    public ArrayList<Double> getValue(TreeMap<String, Double> map)
-    {
-        ArrayList<Double> temp = new ArrayList<Double>();
-        for (Map.Entry<String, Double> entry : map.entrySet()) {
-            temp.add(entry.getValue());
-        }
-        return temp;
+        HashMap<String, Double> prediction = new HashMap<>(), distribution = new HashMap<>();
+//        generatePrediction(userProfile, prediction, distribution);
+        System.out.println(prediction);
+        System.out.println(distribution);
     }
 }
