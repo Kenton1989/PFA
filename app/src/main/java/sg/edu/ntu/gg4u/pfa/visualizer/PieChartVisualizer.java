@@ -22,19 +22,22 @@ public class PieChartVisualizer {
         for(int i =0; i < data.length;i++)
             yvalues.add(new PieEntry(data[i], label[i], i));
 
-        PieDataSet dataSet = new PieDataSet(yvalues, "Pie Chart");
+
+        PieDataSet dataSet = new PieDataSet(yvalues, "Target");
         PieData pieData = new PieData(dataSet);
 
         pieData.setValueFormatter(new PercentFormatter());
         pieChart.setData(pieData);
         //Description description = new Description();
         pieChart.getDescription().setEnabled(false);
-        pieChart.setTransparentCircleRadius(58f);
-        pieChart.setHoleRadius(58f);
+        pieChart.setTransparentCircleRadius(45f);
+        pieChart.setHoleRadius(45f);
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        pieData.setValueTextSize(8f);
+        //pieData.setValueTextSize(8f);
+        pieData.setDrawValues(false);
 
         pieData.setValueTextColor(Color.BLACK);
+        pieChart.setEntryLabelColor(Color.BLACK);
         // to refresh the chart
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
