@@ -11,7 +11,6 @@ import java.util.List;
 import io.reactivex.Flowable;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
-import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.ui.CategoryDataSource;
@@ -43,11 +42,6 @@ public class ReportViewModel extends ViewModel {
         return mRecordDataSource.getRecord(start, end, name);
     }
 
-    public Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end) {
-        return mRecordDataSource.getGroupedRecordSum(start, end);
-    }
-
-
     public Flowable<List<Target>> getTarget(String name, LocalDate startDate,
                                      LocalDate endDate) {
         return mTargetDataSource.getTarget(name, startDate, endDate);
@@ -55,10 +49,6 @@ public class ReportViewModel extends ViewModel {
 
     public Flowable<Target> getCurrentTarget(String name) {
         return mTargetDataSource.getCurrentTarget(name);
-    }
-
-    public Flowable<List<Target>> getAllCurrentTarget(LocalDate date) {
-        return mTargetDataSource.getAllCurrentTarget(date);
     }
 
     public Flowable<UserProfile> getUserProfile() {

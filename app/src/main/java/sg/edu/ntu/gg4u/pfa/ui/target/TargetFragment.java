@@ -1,7 +1,5 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
-import android.graphics.Color;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -50,21 +47,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.List;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import sg.edu.ntu.gg4u.pfa.MainActivity;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.TargetDao;
@@ -82,7 +64,7 @@ public class TargetFragment extends Fragment {
 
    // List<Target> targetList = null;
    // List<SumByCategory> monthlyCostList = null;
-  //  List<TargetAndCost> ls;
+    List<TargetAndCost> ls;
     List<String> cat_in_list =new ArrayList<>();
     List<Double> target_in_cat =new ArrayList<>();
     List<Double> amt_in_cat =new ArrayList<>();
@@ -132,6 +114,10 @@ public class TargetFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        // database stuff
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity());
+        mViewModel = new ViewModelProvider(this, mViewModelFactory)
+                .get(TargetViewModel.class);
 
         //View root = inflater.inflate(R.layout.fragment_target, container, false);
         //final TextView textView = root.findViewById(R.id.actualAmount);
@@ -165,27 +151,22 @@ public class TargetFragment extends Fragment {
         incT = root.findViewById(R.id.right_arrow_target);
 
         decT.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 calT.add(Calendar.MONTH, -1);
                 String selectedMonth = month_date.format(calT.getTime());
                 month.setText(selectedMonth);
-               // Log.d("display xx" , calT.toString());
-                resetMonth(calT);
             }
         });
         calT.getTime();
 
         incT.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 calT.add(Calendar.MONTH, 1);
                 String selectedMonth = month_date.format(calT.getTime());
                 month.setText(selectedMonth);
-               // Log.d("display xx" , calT.toString());
-                resetMonth(calT);
+
             }
         });
 
@@ -195,19 +176,33 @@ public class TargetFragment extends Fragment {
         targetAmt = root.findViewById(R.id.targetAmount);
 
 
+        //XYPlot barChart = (XYPlot) root.findViewById(R.id.barChart);
+      //  TargetBarChartVisualizer bar = new TargetBarChartVisualizer();
+       // bar.plot(barChart, targetCat_in_list, targetAmt_in_List, actualAmt_in_List);
+
+//        actualAmt = root.findViewById(R.id.actualAmount);
+//        targetAmt = root.findViewById(R.id.targetAmount);
+//        double actualTemp = 0;
+//        for(int i=0;i<actualAmt_in_List.length;i++){
+//            actualTemp = actualTemp +actualAmt_in_List[i];
+//        }
+//        //Log.d("display" , String.valueOf(expense));
+//        actualAmt.setText(String.valueOf(actualTemp));
+//
+//        double targetTemp = 0;
+//        for(int i=0;i<targetAmt_in_List.length;i++){
+//            targetTemp = targetTemp +targetAmt_in_List[i];
+//        }
+//        //Log.d("display" , String.valueOf(expense));
+//        targetAmt.setText(String.valueOf(targetTemp));
+//        actualAmt.setText(String.valueOf(actualTemp));;
+
+
+
+
+
 
         return root;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // database stuff
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity());
-        mViewModel = new ViewModelProvider(this, mViewModelFactory)
-                .get(TargetViewModel.class);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -222,7 +217,6 @@ public class TargetFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenTargetAndCostChanged));
-        //Log.d("display xx" , String.valueOf(localDateTime.toLocalDate().minusMonths(1)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -235,20 +229,14 @@ public class TargetFragment extends Fragment {
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database
-
         LocalDateTime localDateTime = cal2LocalDateTime(calendar);
 
         mDisposable.clear();
-        barChart.clear();
-        cat_in_list =new ArrayList<>();
-        target_in_cat =new ArrayList<>();
-        amt_in_cat =new ArrayList<>();
 
         mDisposable.add(mViewModel.getTargetAndCost(localDateTime.toLocalDate())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenTargetAndCostChanged));
-
     }
 
     public void whenTargetAndCostChanged(List<TargetAndCost> targetAndCosts) {
@@ -270,17 +258,11 @@ public class TargetFragment extends Fragment {
         cat_in_list.clear();
         target_in_cat.clear();
         amt_in_cat.clear();
-     //   for (TargetAndCost sum: targetAndCosts) {
-     //       Log.d("display",sum.categoryName);
-     //   }
-
-
         for (TargetAndCost targetObj :targetAndCosts){
             cat_in_list.add(targetObj.categoryName);
-            target_in_cat.add(Math.round(targetObj.targetAmount*10)/10.0);
-            amt_in_cat.add(Math.round(targetObj.cost*10)/10.0);
+            target_in_cat.add(targetObj.targetAmount);
+            amt_in_cat.add(targetObj.cost);
         }
-       // Log.d("display" , String.valueOf(cat_in_list));
         double [] amt_in_cat_array = new double[amt_in_cat.size()];
         for (int i = 0; i < amt_in_cat.size(); i++) {
             amt_in_cat_array[i] = amt_in_cat.get(i);
@@ -297,6 +279,8 @@ public class TargetFragment extends Fragment {
         //Log.d("display xx" , String.valueOf(target_in_cat_array));
 
 
+
+      //  Log.d("display xx" , Double.toString(target_in_cat_array[1]));
         double actualTemp = 0;
         for(int i=0;i<amt_in_cat_array.length;i++) {
             actualTemp = actualTemp + amt_in_cat_array[i];
@@ -307,8 +291,8 @@ public class TargetFragment extends Fragment {
             targetTemp = targetTemp +target_in_cat_array[i];
         }
 
-        targetAmt.setText(String.valueOf(Math.round(targetTemp*10)/10.0));
-        actualAmt.setText(String.valueOf(Math.round(actualTemp*10)/10.0));;
+        targetAmt.setText(String.valueOf(targetTemp));
+        actualAmt.setText(String.valueOf(actualTemp));;
 //        XYPlot barChart = (XYPlot) help.findViewById(R.id.barChart);
         TargetBarChartVisualizer bar = new TargetBarChartVisualizer();
         barChart.clear();

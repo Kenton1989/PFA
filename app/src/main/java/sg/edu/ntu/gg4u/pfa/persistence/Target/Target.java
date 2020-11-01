@@ -40,12 +40,6 @@ public class Target {
         amount = value;
     }
 
-    public Target(@NonNull String name, double value, @NonNull LocalDate localDate) {
-        categoryName = name;
-        startDate = localDate;
-        amount = value;
-    }
-
     @NonNull
     public String getCategoryName() {
         return categoryName;
