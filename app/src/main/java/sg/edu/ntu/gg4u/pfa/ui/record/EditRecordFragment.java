@@ -29,6 +29,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
@@ -41,22 +42,25 @@ public class EditRecordFragment extends DialogFragment {
     private View mView;
     EditText mEdit;
     Spinner mSpin;
-    int position;
+
     List<String> catList;
-    String amount;
+    Record oldRecord;
+    int spinnerPosition;
 
     private RecordViewModel mViewModel;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
-    public EditRecordFragment(List<String> catList, int position, String amount) {
-        this.amount = amount;
-        this.position = position;
+    public EditRecordFragment(List<String> catList, Record oldRecord) {
         this.catList = catList;
+        this.oldRecord = oldRecord;
+        this.spinnerPosition = catList.indexOf(oldRecord.getCategoryName());
     }
 
     public EditRecordFragment(List<String> catList) {
         this.catList = catList;
+        this.oldRecord = null;
+        this.spinnerPosition = 0;
     }
 
     @NonNull
