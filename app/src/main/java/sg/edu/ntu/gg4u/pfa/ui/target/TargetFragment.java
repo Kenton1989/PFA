@@ -256,24 +256,9 @@ public class TargetFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
-        ls = targetAndCosts;
-        TargetAndCost r1 = new TargetAndCost("food",100.0,70.0);
-        TargetAndCost r2 = new TargetAndCost("transport",200.0,20.0);
-        TargetAndCost r3 = new TargetAndCost("others",300.0,10.00);
-        targetAndCosts.add(r1);
-        targetAndCosts.add(r2);
-        targetAndCosts.add(r3);
-        Log.d("display xx" , targetAndCosts.get(1).categoryName);
-        Log.d("display xx" , Double.toString(targetAndCosts.get(1).cost));
-        Log.d("display xx" , Double.toString(targetAndCosts.get(1).targetAmount));
-
         cat_in_list.clear();
         target_in_cat.clear();
         amt_in_cat.clear();
-     //   for (TargetAndCost sum: targetAndCosts) {
-     //       Log.d("display",sum.categoryName);
-     //   }
-
 
         for (TargetAndCost targetObj :targetAndCosts){
             cat_in_list.add(targetObj.categoryName);
@@ -314,7 +299,6 @@ public class TargetFragment extends Fragment {
         barChart.clear();
         bar.plot(barChart,  cat_in_list.toArray(new String[0]), target_in_cat_array, amt_in_cat_array);
         barChart.redraw();
-
 
     }
 
