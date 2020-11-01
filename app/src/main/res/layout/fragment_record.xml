@@ -263,6 +263,7 @@
         android:id="@+id/record_go_btn"
         android:layout_width="417dp"
         android:layout_height="39dp"
+        android:enabled="false"
         android:background="#7644CF"
         android:text="Apply"
         android:textColor="#F6F5F5"

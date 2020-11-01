@@ -49,7 +49,7 @@ public class CustomListReport extends ArrayAdapter<String> {
         View rowView = inflater.inflate(R.layout.fragment_report_listview, null, true);
         TextView catTitle = (TextView) rowView.findViewById(R.id.reportlist_category);
         catTitle.setText(cat_in_list.get(position));
-  //      TextView percentTitle = (TextView) rowView.findViewById(R.id.reportlist_percentile);
+//        TextView percentTitle = (TextView) rowView.findViewById(R.id.reportlist_percentile);
 //        percentTitle.setText(String.valueOf(percent_in_list.get(position)));
         TextView suggList = (TextView) rowView.findViewById(R.id.reportlist_suggestion);
         suggList.setText(String.valueOf(sugg_in_list.get(position)));

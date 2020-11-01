@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -250,7 +253,7 @@ public class ReportFragment extends Fragment {
         }
 
         CustomListReport adapter = new
-                CustomListReport(getActivity(), t_cat_in_list, t_amount_in_list);
+                CustomListReport(getActivity(), t_cat_in_list , t_amount_in_list);
         list.setAdapter(adapter);
 
         // TODO: DB group: call this function when data changes
@@ -335,11 +338,6 @@ public class ReportFragment extends Fragment {
         HashMap<String, Double> expenditurePrediction = p.predictDistributionByIncomeGroup(up);
 
 
-        /*
-        CustomListReport adapter = new
-                CustomListReport(getActivity(), scat_in_list, spercent_in_list, ssugg_in_list);;
-        list.setAdapter(adapter);
-*/
 
 
         // TODO: DB group: call this function when data changes

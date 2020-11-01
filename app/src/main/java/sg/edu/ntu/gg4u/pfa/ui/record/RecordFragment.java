@@ -172,6 +172,7 @@ public class RecordFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
+                        //to add in the '0' in front of single digit date, datepicker does not provide the 0
                         int month1= month+1;
                         String fm=""+month1;
                         String fd=""+date;
@@ -227,6 +228,12 @@ public class RecordFragment extends Fragment {
                         //dateTXT_to.setText(fulldate2);
                         localDate_to = LocalDate.parse(datez , formatter);
 
+                        if (datez.isEmpty()){
+                            record_go_btn.setEnabled(false);
+                        }else{
+                            record_go_btn.setEnabled(true);
+                        }
+
 
 
                     }
@@ -262,6 +269,7 @@ public class RecordFragment extends Fragment {
         ViewModelFactory factory = Injection.provideViewModelFactory(this.getActivity());
         mViewModel = new ViewModelProvider(this, factory)
                 .get(RecordViewModel.class);
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -270,7 +278,7 @@ public class RecordFragment extends Fragment {
         super.onStart();
 
         // TODO: UI group : set default time interval here
-        LocalDate beginDate = LocalDate.now().minusMonths(1),
+        LocalDate beginDate = LocalDate.now().minusMonths(0),
                 endDate = LocalDate.now();
         resetDataRange(beginDate, endDate, null);
 
@@ -282,8 +290,6 @@ public class RecordFragment extends Fragment {
                 .subscribe(this::whenRecordListUpdated));
 
 
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -291,25 +297,6 @@ public class RecordFragment extends Fragment {
         // When the selectedCategory is NULL, display all the record.
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when date range need to change
-
-/*
-        Record[] rec = new Record[0];
-        for (Record recordObj : rec) {
-            long numOfDays = ChronoUnit.DAYS.between(beginDate, endDate);
-            List<LocalDate> listOfDates1 = Stream.iterate(beginDate, date -> date.plusDays(1))
-                    .limit(numOfDays)
-                    .collect(Collectors.toList());
-            dates_in_list.add(listOfDates1.toString());
-            cat_in_list.add(selectedCategory.getName());
-            amount_in_list.add(String.valueOf(recordObj.amount));
-        }
-
-        CustomList adapter = new
-                CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
-        list.setAdapter(adapter);
-
- */
-
 
 
         // TODO: DB group: implement this function
@@ -319,6 +306,7 @@ public class RecordFragment extends Fragment {
         cat_in_list = new ArrayList<>();
         dates_in_list = new ArrayList<>();
         amount_in_list = new ArrayList<>();
+
 
         if (selectedCategory == null) {
             mDisposable.add(mViewModel.getRecord(beginDate.atStartOfDay(), endDate.atStartOfDay())
