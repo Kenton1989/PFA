@@ -48,7 +48,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new GuideInfoViewModel(mGuideInfoDataSource);
         }
         if (modelClass.isAssignableFrom(CategoryViewModel.class)) {
-            return (T) new CategoryViewModel(mCategoryDataSource);
+            return (T) new CategoryViewModel(mCategoryDataSource, mTargetDataSource);
         }
         if (modelClass.isAssignableFrom(ReportViewModel.class)) {
             return (T) new ReportViewModel
