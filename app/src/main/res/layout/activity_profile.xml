@@ -263,7 +263,7 @@
         android:layout_marginEnd="31dp"
         android:layout_marginRight="31dp"
         android:layout_marginBottom="79dp"
-        android:src="@drawable/ic_launcher_pen"
+        android:src="@drawable/ic_edit"
         app:backgroundTint="@color/colorPrimary" />
 
 </RelativeLayout>
