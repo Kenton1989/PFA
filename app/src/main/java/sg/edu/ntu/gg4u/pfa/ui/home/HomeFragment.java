@@ -128,7 +128,7 @@ public class HomeFragment extends Fragment {
     public void whenDataUpdated(List<SumByCategory> newDailyCost) {
        // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
-        newDailyCost =new ArrayList<>();
+        //newDailyCost =new ArrayList<>();
 
         if (newDailyCost.size() == 0){
             //display category name .
