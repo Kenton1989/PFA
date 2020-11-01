@@ -32,7 +32,11 @@ public class PieChartVisualizer {
         pieChart.setTransparentCircleRadius(58f);
         pieChart.setHoleRadius(58f);
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        pieData.setValueTextSize(10f);
-        pieData.setValueTextColor(Color.DKGRAY);
+        pieData.setValueTextSize(8f);
+
+        pieData.setValueTextColor(Color.BLACK);
+        // to refresh the chart
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
     }
 }
