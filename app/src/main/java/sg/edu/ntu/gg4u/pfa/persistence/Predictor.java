@@ -151,7 +151,7 @@ public class Predictor {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public HashMap<String, Double> predictDistributeionByIncomeGroup(UserProfile userProfile) {
+    public HashMap<String, Double> predictDistributionByIncomeGroup(UserProfile userProfile) {
         String income = userProfile.getIncome() == null ?
                 "Total" : userProfile.getIncome().toString();
 
