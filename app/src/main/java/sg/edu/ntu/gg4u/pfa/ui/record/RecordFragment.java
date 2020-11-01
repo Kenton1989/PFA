@@ -1,5 +1,6 @@
 package sg.edu.ntu.gg4u.pfa.ui.record;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -116,6 +117,7 @@ public class RecordFragment extends Fragment {
     private TextView tv_totalExpense, tv_userIncome, tv_amount, tv_categoryName, tv_timestamp;
     UserProfile userProfile = new UserProfile();
     Category category = new Category();
+    Activity activity;
 
     public Category getCategory() {
         return category;
@@ -285,9 +287,12 @@ public class RecordFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ViewModelFactory factory = Injection.provideViewModelFactory(this.getActivity());
+        activity = getActivity();
+
+        ViewModelFactory factory = Injection.provideViewModelFactory(activity);
         mViewModel = new ViewModelProvider(this, factory)
                 .get(RecordViewModel.class);
+
 
     }
 
@@ -367,7 +372,7 @@ public class RecordFragment extends Fragment {
         tv_totalExpense.setText("$" + amount_stringdouble);
 
         CustomList adapter = new
-                CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
+                CustomList(activity, dates_in_list, cat_in_list, amount_in_list);
         list.setAdapter(adapter);
 
 
