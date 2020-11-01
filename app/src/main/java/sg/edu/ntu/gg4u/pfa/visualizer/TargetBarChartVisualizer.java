@@ -51,7 +51,7 @@ public class TargetBarChartVisualizer {
         categories[n+1] = "";
 
         for (int i = 0; i < n; i++) {
-            if (cost[i] > target[i]) {
+            if (cost[i] > target[i] && target[i] != 0) {
                 currentList[i + 1] = 0;
                 excessList[i + 1] = cost[i];
             }
@@ -80,13 +80,14 @@ public class TargetBarChartVisualizer {
         // calculating padding on top of tallest bar
         int copy = (int) maxY;
         int count = 0;
-        int padding = 1;
-        while (copy > 0) {
-            copy /= 10;
-            count++;
-        }
-        for (; count > 2; count--)
-            padding *= 10;
+        int padding = (int) (copy * 0.2);
+//        while (copy > 10) {
+//            copy /= 10;
+//            count++;
+//        }
+//        int padding = copy;
+//        for (; count > 1; count--)
+//            padding *= 10;
 
         // adding bars into the XYplot
         BarFormatter saveFormatter = new BarFormatter(Color.GREEN, Color.BLACK);

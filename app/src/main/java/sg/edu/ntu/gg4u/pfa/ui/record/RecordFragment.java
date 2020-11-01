@@ -136,7 +136,6 @@ public class RecordFragment extends Fragment {
     // Category category = new Category();
 
     private RecordViewModel mViewModel;
-    private List<Record> recordList;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -167,7 +166,7 @@ public class RecordFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list, position, amount_in_list.get(position), recordList.get(position));
+                EditRecordFragment editFrag = new EditRecordFragment(r.get(position));
                 editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });
@@ -261,7 +260,7 @@ public class RecordFragment extends Fragment {
         dummy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list);
+                EditRecordFragment editFrag = new EditRecordFragment();
                 editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });
@@ -361,7 +360,7 @@ public class RecordFragment extends Fragment {
         double[] amount_doubleList = new double[amount_in_list.size()];
         double sum = 0;
         int sizes = amount_in_list.size();
-        for (int i = 0; i < sizes; ++i) {
+        for (int i = 0; i < sizes; i++) {
             amount_doubleList[i] = Double.parseDouble(amount_in_list.get(i));
             sum += amount_doubleList[i];
 

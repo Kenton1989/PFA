@@ -23,7 +23,7 @@ public class CustomList extends ArrayAdapter<String> {
     private List<String> amount_in_list;
 
     public CustomList(Activity context,
-                      List<String> dates_in_list, List<String> cat_in_list, List<String> amount_in_list, List<Record> recordList) {
+                      List<String> dates_in_list, List<String> cat_in_list, List<String> amount_in_list) {
         super(context, R.layout.fragment_record_listview, dates_in_list);
         this.context = context;
         this.dates_in_list = dates_in_list;
