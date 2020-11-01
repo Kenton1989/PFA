@@ -120,6 +120,7 @@ public class RecordFragment extends Fragment {
     public Category getCategory() {
         return category;
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -130,9 +131,10 @@ public class RecordFragment extends Fragment {
         return userProfile;
     }
 
-   // Category category = new Category();
+    // Category category = new Category();
 
     private RecordViewModel mViewModel;
+    private List<Record> recordList;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -146,7 +148,7 @@ public class RecordFragment extends Fragment {
         final TextView todaydate = root.findViewById(R.id.record_current_date);
         todaydate.setText(date_n);
 
-        record_go_btn = root.findViewById(R.id.record_go_btn) ;
+        record_go_btn = root.findViewById(R.id.record_go_btn);
         tv_userIncome = root.findViewById(R.id.record_mnthIncome);
         tv_userIncome.setText(String.valueOf(getUserProfile().getIncome()));
 
@@ -163,11 +165,10 @@ public class RecordFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list, position, amount_in_list.get(position));
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list, position, amount_in_list.get(position), recordList.get(position));
                 editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });
-
 
 
         dateTXT_from = root.findViewById(R.id.record_date_from);
@@ -184,22 +185,22 @@ public class RecordFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
                         //to add in the '0' in front of single digit date, datepicker does not provide the 0
-                        int month1= month+1;
-                        String fm=""+month1;
-                        String fd=""+date;
-                        if(month1<10){
-                            fm ="0"+month;
+                        int month1 = month + 1;
+                        String fm = "" + month1;
+                        String fd = "" + date;
+                        if (month1 < 10) {
+                            fm = "0" + month;
                         }
-                        if (date<10){
-                            fd="0"+date;
+                        if (date < 10) {
+                            fd = "0" + date;
                         }
-                        String datez= ""+year+"-"+fm+"-"+fd;
+                        String datez = "" + year + "-" + fm + "-" + fd;
 
                         dateTXT_from.setText(datez);
                         //dateTXT_from.setText(date + "-" + (month + 1) + "-" + year);
-                       // String fulldate1 = (year + "-" + (month + 1) + "-" + date);
+                        // String fulldate1 = (year + "-" + (month + 1) + "-" + date);
                         //dateTXT_from.setText(fulldate1);
-                       localDate_from = LocalDate.parse((datez), formatter);
+                        localDate_from = LocalDate.parse((datez), formatter);
 
 
                     }
@@ -207,7 +208,6 @@ public class RecordFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-
 
 
         dateTXT_to = root.findViewById(R.id.record_date_to);
@@ -223,28 +223,27 @@ public class RecordFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
-                        int month1= month+1;
-                        String fm=""+month1;
-                        String fd=""+date;
-                        if(month1<10){
-                            fm ="0"+month;
+                        int month1 = month + 1;
+                        String fm = "" + month1;
+                        String fd = "" + date;
+                        if (month1 < 10) {
+                            fm = "0" + month;
                         }
-                        if (date<10){
-                            fd="0"+date;
+                        if (date < 10) {
+                            fd = "0" + date;
                         }
-                        String datez= ""+year+"-"+fm+"-"+fd;
+                        String datez = "" + year + "-" + fm + "-" + fd;
                         dateTXT_to.setText(datez);
                         //dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
                         //String fulldate2 = (year + "-" + (month + 1) + "-" + date);
                         //dateTXT_to.setText(fulldate2);
-                        localDate_to = LocalDate.parse(datez , formatter);
+                        localDate_to = LocalDate.parse(datez, formatter);
 
-                        if (datez.isEmpty()){
+                        if (datez.isEmpty()) {
                             record_go_btn.setEnabled(false);
-                        }else{
+                        } else {
                             record_go_btn.setEnabled(true);
                         }
-
 
 
                     }
@@ -265,20 +264,17 @@ public class RecordFragment extends Fragment {
             }
         });
         record_go_btn.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            resetDataRange(localDate_from, localDate_to, null);
-            Log.d("display xx", getCategory().toString());
+            @Override
+            public void onClick(View v) {
+                resetDataRange(localDate_from, localDate_to, null);
+                Log.d("display xx", getCategory().toString());
 
-        }
+            }
         });
 
 
         return root;
     }
-
-
-
 
 
     @Override
@@ -303,7 +299,7 @@ public class RecordFragment extends Fragment {
 
         LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
         LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1));
-        mDisposable.add(mViewModel.getRecord(todayBegin,todayEnd)
+        mDisposable.add(mViewModel.getRecord(todayBegin, todayEnd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenRecordListUpdated));
@@ -346,20 +342,23 @@ public class RecordFragment extends Fragment {
         // TODO: UI group: implement this function
 
         r = newRecords;
+        dates_in_list.clear();
+        cat_in_list.clear();
+        amount_in_list.clear();
         for (Record recordObj : newRecords) {
-            String str_date = (String.valueOf(recordObj.timestamp).substring(0,10));
+            String str_date = (String.valueOf(recordObj.timestamp).substring(0, 10));
             dates_in_list.add(str_date);
             cat_in_list.add(recordObj.categoryName);
             amount_in_list.add(String.valueOf(recordObj.amount));
 
         }
 
-        double[] amount_doubleList=new double[amount_in_list.size()];
-        double sum=0;
-        int sizes=amount_in_list.size();
-        for(int i=0;i<sizes;++i){
-            amount_doubleList[i]=Double.parseDouble(amount_in_list.get(i));
-            sum+=amount_doubleList[i];
+        double[] amount_doubleList = new double[amount_in_list.size()];
+        double sum = 0;
+        int sizes = amount_in_list.size();
+        for (int i = 0; i < sizes; ++i) {
+            amount_doubleList[i] = Double.parseDouble(amount_in_list.get(i));
+            sum += amount_doubleList[i];
 
         }
 
@@ -369,13 +368,7 @@ public class RecordFragment extends Fragment {
         CustomList adapter = new
                 CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
         list.setAdapter(adapter);
-
-
     }
-
-
-    // TODO: DB group: call this function when data changes
-
 
 
     private void insertOrUpdateRecord(Record record) {

@@ -50,7 +50,7 @@ public interface RecordDao {
 
     Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable addRecord(Record record);
 
     @Query("DELETE FROM Record WHERE timestamp = :timestamp")

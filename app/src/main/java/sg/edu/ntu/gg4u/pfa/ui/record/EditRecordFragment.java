@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.ui.target.EditTargetFragment;
@@ -33,18 +34,25 @@ public class EditRecordFragment extends DialogFragment {
     private View mView;
     EditText mEdit;
     Spinner mSpin;
-    int position;
-    List<String> catList;
-    String amount;
 
-    public EditRecordFragment(List<String> catList, int position, String amount) {
-        this.amount = amount;
-        this.position = position;
+    List<String> catList;
+    Record oldRecord;
+    int spinnerPosition;
+
+    private RecordViewModel mViewModel;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
+
+    public EditRecordFragment(List<String> catList, Record oldRecord) {
         this.catList = catList;
+        this.oldRecord = oldRecord;
+        this.spinnerPosition = catList.indexOf(oldRecord.getCategoryName());
     }
 
     public EditRecordFragment(List<String> catList) {
         this.catList = catList;
+        this.oldRecord = null;
+        this.spinnerPosition = 0;
     }
 
     @NonNull
