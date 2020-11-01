@@ -7,45 +7,53 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
+import sg.edu.ntu.gg4u.pfa.ui.CategoryDataSource;
 import sg.edu.ntu.gg4u.pfa.ui.RecordDataSource;
 
 public class RecordViewModel extends ViewModel {
 
-    private final RecordDataSource mDataSource;
+    private final RecordDataSource mRecordDataSource;
+    private final CategoryDataSource mCategoryDataSource;
     
-    public RecordViewModel(RecordDataSource recordDataSource) {
-        mDataSource = recordDataSource;
+    public RecordViewModel(RecordDataSource recordDataSource, CategoryDataSource categoryDataSource) {
+        mRecordDataSource = recordDataSource;
+        mCategoryDataSource = categoryDataSource;
     }
 
     public Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end) {
-        return mDataSource.getRecord(start, end);
+        return mRecordDataSource.getRecord(start, end);
     }
 
     public Flowable<List<Record>> getRecordByCategory(LocalDateTime start, LocalDateTime end, String name) {
-        return mDataSource.getRecord(start, end, name);
+        return mRecordDataSource.getRecord(start, end, name);
     }
 
     public Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end) {
-        return mDataSource.getRecordSum(start, end);
+        return mRecordDataSource.getRecordSum(start, end);
     }
 
     public Flowable<Double> getRecordSumByCategory
             (LocalDateTime start, LocalDateTime end, String name){
-        return mDataSource.getRecordSum(start, end, name);
+        return mRecordDataSource.getRecordSum(start, end, name);
     }
 
     public Flowable<List<SumByCategory>> getGroupedRecordSum
             (LocalDateTime start, LocalDateTime end) {
-        return mDataSource.getGroupedRecordSum(start, end);
+        return mRecordDataSource.getGroupedRecordSum(start, end);
     }
 
     public Completable addRecord(Record record) {
-        return mDataSource.addRecord(record);
+        return mRecordDataSource.addRecord(record);
     }
 
     public Completable deleteRecord(Record record) {
-        return mDataSource.deleteRecord(record);
+        return mRecordDataSource.deleteRecord(record);
+    }
+
+    public Flowable<List<Category>> getAllCategory() {
+        return mCategoryDataSource.getAllCategory();
     }
 }

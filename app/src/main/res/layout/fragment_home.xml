@@ -97,7 +97,8 @@
                       android:layout_height="590dp"
                       android:divider="@null"
                       android:dividerHeight="0dp"
-                      android:paddingLeft="10dp">
+                      android:paddingLeft="10dp"
+                      android:descendantFocusability="blocksDescendants">
 
 
                   </ListView>

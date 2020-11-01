@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,15 @@ public class HomeFragment extends Fragment {
        //Log.d("display" , cat_in_list2.toString());
 
         list = root.findViewById(R.id.listHome);
+        list.setClickable(true);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getActivity(), "You Clicked at " , Toast.LENGTH_LONG).show();
+            }
+        });
         totalExpense = root.findViewById(R.id.totalExpense_home);
 
 
@@ -120,6 +130,8 @@ public class HomeFragment extends Fragment {
 
     private void openRecordEditor() {
         // TODO link to the Edit Record Fragment
+
+
     }
 
 
