@@ -34,16 +34,16 @@ public class EditRecordFragment extends DialogFragment {
     EditText mEdit;
     Spinner mSpin;
     int position;
-    String[] catList;
+    List<String> catList;
     String amount;
 
-    public EditRecordFragment(String[] catList, int position, String amount) {
+    public EditRecordFragment(List<String> catList, int position, String amount) {
         this.amount = amount;
         this.position = position;
         this.catList = catList;
     }
 
-    public EditRecordFragment(String[] catList) {
+    public EditRecordFragment(List<String> catList) {
         this.catList = catList;
     }
 

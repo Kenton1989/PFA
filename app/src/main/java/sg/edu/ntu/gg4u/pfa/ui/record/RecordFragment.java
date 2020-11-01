@@ -163,7 +163,7 @@ public class RecordFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list, position, amount_in_list[position]);
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list, position, amount_in_list.get(position));
                 editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });

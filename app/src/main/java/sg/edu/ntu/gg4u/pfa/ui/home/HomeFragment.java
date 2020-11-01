@@ -137,6 +137,8 @@ public class HomeFragment extends Fragment {
        // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
 
+        sum_in_cat.clear();
+        cat_in_list.clear();
 
         if (newDailyCost.size() == 0){
             //display category name .
