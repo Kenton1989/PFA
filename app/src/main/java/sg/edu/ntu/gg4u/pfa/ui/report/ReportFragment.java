@@ -58,11 +58,16 @@ import sg.edu.ntu.gg4u.pfa.persistence.Record.LocalDateTimeConverter;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
 import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.AcademicQualification;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.Gender;
+import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobField;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
+import sg.edu.ntu.gg4u.pfa.persistence.ValueComparator;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 import sg.edu.ntu.gg4u.pfa.ui.record.CustomList;
 import sg.edu.ntu.gg4u.pfa.ui.record.RecordViewModel;
+import sg.edu.ntu.gg4u.pfa.visualizer.ExpenditureLineChart;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.persistence.Predictor;
@@ -99,19 +104,26 @@ public class ReportFragment extends Fragment {
     PieChartVisualizer pcv;
 
     LineChart lineChart;
+    LineChart ExpChart;
     LineChartVisualizer lcv;
+    ExpenditureLineChart ecv;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     //LineChart lineChart;
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_report, container, false);
 
-
+        //to find the chart
         lineChart = (LineChart) root.findViewById(R.id.chart);
 
         pieChart = (PieChart) root.findViewById(R.id.pieChart);
+
+        ExpChart = (LineChart) root.findViewById(R.id.Expchart);
+
+
 
 
         ImageButton dec, inc;
@@ -161,14 +173,14 @@ public class ReportFragment extends Fragment {
        //         CustomListReport(getActivity(), cat_in_list, percent_in_list, sugg_in_list);
         list = root.findViewById(R.id.report_listView);
         //list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      /*  list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Toast.makeText(getActivity(), "You Clicked at " + cat_in_list.get(+position), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
         return root;
@@ -197,6 +209,7 @@ public class ReportFragment extends Fragment {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenUserProfileChanged));
 
+    //    list.setOnClickListener(null);
 
     }
 
@@ -226,10 +239,10 @@ public class ReportFragment extends Fragment {
                 LocalDateTime.ofInstant(calendar.toInstant(), calendar.getTimeZone().toZoneId());
         localDateTime = localDateTime.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
 
-        mDisposable.add(mViewModel.getAllCurrentTarget(localDateTime.toLocalDate())
+     /*   mDisposable.add(mViewModel.getAllCurrentTarget(localDateTime.toLocalDate())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::whenTargetOfThisMonthUpdated));
+                .subscribe(this::whenTargetOfThisMonthUpdated));*/
 
         mDisposable.add(mViewModel.getRecord(localDateTime, localDateTime.plusMonths(1))
                 .subscribeOn(Schedulers.io())
@@ -244,7 +257,7 @@ public class ReportFragment extends Fragment {
 
     }
 
-    void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
+ /*   void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         for(Target newT:newTargets){
@@ -257,7 +270,7 @@ public class ReportFragment extends Fragment {
         list.setAdapter(adapter);
 
         // TODO: DB group: call this function when data changes
-    }
+    }*/
 
     void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
@@ -282,12 +295,13 @@ public class ReportFragment extends Fragment {
         String [] cat_and_total = new String[sum_in_cat_array.length];
         for (int k = 0 ; k < sum_in_cat_array.length ; k++ )
         {
-            cat_and_total[k] = cat_in_list.get(k) + "   " + "$" + sum_in_cat_float[k] + "  ";
+            cat_and_total[k] = cat_in_list.get(k) + "   " + "$" + sum_in_cat_float[k];
         }
 
 
         PieChartVisualizer pcv = new PieChartVisualizer();
         pieChart.clear();
+
         pcv.drawPie(pieChart,cat_and_total,sum_in_cat_float);
 
 
@@ -300,6 +314,7 @@ public class ReportFragment extends Fragment {
         r = newRecords;
 
         for (Record recordObj : newRecords) {
+            Log.d(recordObj.toString(), "test");
             String str_date = (String.valueOf(recordObj.timestamp).substring(0, 10));
             dates_in_list.add(str_date);
             cat_in_list.add(recordObj.categoryName);
@@ -313,7 +328,7 @@ public class ReportFragment extends Fragment {
         }
 
 
-        LineChartVisualizer lcv = new LineChartVisualizer();
+         lcv = new LineChartVisualizer();
         lineChart.clear();
         lcv.createLine(lineChart, amount_in_list_float, "temp chart");
 
@@ -332,12 +347,34 @@ public class ReportFragment extends Fragment {
         Predictor p = new Predictor(getContext());
         UserProfile up = newProfile;
 
-
         // Get Prediction Result
         HashMap<String, Double> categoryPrediction = p.predictDistributionByCategory(up);
         HashMap<String, Double> expenditurePrediction = p.predictDistributionByIncomeGroup(up);
 
+        //Create a treemap for sorted list of distribution
+        ValueComparator vc = new ValueComparator(expenditurePrediction);
+        TreeMap<String, Double> sortedExpediture = new TreeMap<String, Double>(vc);
+        sortedExpediture.putAll(expenditurePrediction);
+        //to store all the values for prediction
+        ArrayList<Double> prediction = new ArrayList<Double>(p.getValue(sortedExpediture));
 
+        // update expenditure chart
+        ecv = new ExpenditureLineChart();
+        ExpChart.clear();
+        ExpChart.refreshDrawableState();
+        ecv.createLine(ExpChart, prediction, "temp chart");
+
+        // to store all the category prediction
+        for (Map.Entry<String, Double> entry : categoryPrediction.entrySet()) {
+            t_cat_in_list.add(entry.getKey());
+
+            t_amount_in_list.add(entry.getValue().toString());
+        }
+
+        //set the data for category prediction
+        CustomListReport adapter = new
+                CustomListReport(getActivity(), t_cat_in_list , t_amount_in_list);
+        list.setAdapter(adapter);
 
 
         // TODO: DB group: call this function when data changes

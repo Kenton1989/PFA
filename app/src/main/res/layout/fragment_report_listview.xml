@@ -29,7 +29,7 @@
 
         <LinearLayout
             android:id="@+id/cat_cat_linearLayout"
-            android:layout_width="216dp"
+            android:layout_width="291dp"
             android:layout_height="41dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
@@ -37,12 +37,13 @@
 
             <TextView
                 android:id="@+id/reportlist_category"
-                android:layout_width="236dp"
+                android:layout_width="282dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="category"
                 android:textColor="#3E3D3D"
-                android:textSize="21sp"
+                android:textSize="15sp"
+                android:enabled="false"
                 tools:ignore="MissingConstraints" />
         </LinearLayout>
 
@@ -61,20 +62,9 @@
                 android:layout_toRightOf="@+id/reportlist_percentile"
                 android:text="000"
                 android:textColor="#3E3E3E"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/reportlist_percentile"
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="56dp"
-                android:layout_marginRight="56dp"
-                android:layout_toRightOf="@+id/reportlist_category"
-                android:text="000"
-                android:textColor="#3E3E3E"
-                android:textSize="18sp"
-                tools:ignore="MissingConstraints" />
         </LinearLayout>
     </LinearLayout>
 

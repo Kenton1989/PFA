@@ -20,24 +20,24 @@ public class CustomListReport extends ArrayAdapter<String> {
 
     private  List<String> cat_in_list;
     private  List<String> percent_in_list;
-    private  List<String> sugg_in_list;
+    //private  List<String> sugg_in_list;
 
-    public CustomListReport(Activity context,
+   /* public CustomListReport(Activity context,
                             List<String> cat_in_list, List<String> percent_in_list, List<String> sugg_in_list){
         super(context, R.layout.fragment_report_listview, cat_in_list);
         this.context = context;
         this.cat_in_list = cat_in_list;
         this.percent_in_list = percent_in_list;
-        this.sugg_in_list = sugg_in_list;
+      //  this.sugg_in_list = sugg_in_list;
 
-    }
+    }*/
 
     public CustomListReport(Activity context,
-                            List<String> cat_in_list, List<String> sugg_in_list){
+                            List<String> cat_in_list, List<String> percent_in_list){
         super(context, R.layout.fragment_report_listview, cat_in_list);
         this.context = context;
         this.cat_in_list = cat_in_list;
-        this.sugg_in_list = sugg_in_list;
+        this.percent_in_list = percent_in_list;
 
     }
 
@@ -48,11 +48,12 @@ public class CustomListReport extends ArrayAdapter<String> {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.fragment_report_listview, null, true);
         TextView catTitle = (TextView) rowView.findViewById(R.id.reportlist_category);
+
         catTitle.setText(cat_in_list.get(position));
 //        TextView percentTitle = (TextView) rowView.findViewById(R.id.reportlist_percentile);
 //        percentTitle.setText(String.valueOf(percent_in_list.get(position)));
-        TextView suggList = (TextView) rowView.findViewById(R.id.reportlist_suggestion);
-        suggList.setText(String.valueOf(sugg_in_list.get(position)));
+        TextView percentList = (TextView) rowView.findViewById(R.id.reportlist_suggestion);
+        percentList.setText(String.valueOf(percent_in_list.get(position)));
 
         return rowView;
     }
