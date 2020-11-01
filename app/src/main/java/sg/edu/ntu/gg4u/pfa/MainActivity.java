@@ -22,6 +22,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
@@ -45,6 +46,7 @@ import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileActivity;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SHARED_PREF_FILENAME = "sg.edu.ntu.gg4u.pfa.sharedPrefFile";
     private static final String IS_FIRST_LAUNCH_KEY = "sg.edu.ntu.gg4u.pfa.IS_FIRST_LAUNCH";
     private static final String GOV_DATABASE_LOADED_KEY = "sg.edu.ntu.gg4u.pfa.GOV_DATABASE_LOADED";
@@ -94,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         savePreferenceFile();
-
-        Log.d("MainActivity", JobField.OTHERS.toString());
     }
 
     @Override
@@ -175,17 +175,23 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void initDataBase() {
-        updateGovLocalDatabase();
-        insertUserProfile();
-        insertCategory();
-        insertRecord();
-        insertTarget();
+            updateGovLocalDatabase();
+            insertUserProfile();
+            insertCategory();
+            insertRecord();
+            insertTarget();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void insertTarget() {
         insertSingleTarget(new Target("Clothing", 150));
         insertSingleTarget(new Target("Food", 360));
+
+        insertSingleTarget(new Target("Transportation", 50, LocalDate.of(LocalDate.now().getYear(),
+                LocalDate.now().getMonth().minus(1), 1)));
+        insertSingleTarget(new Target("Food", 300, LocalDate.of(LocalDate.now().getYear(),
+                LocalDate.now().getMonth().minus(1), 1)));
+
     }
 
     private void insertSingleTarget(Target target) {
@@ -215,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         mDisposable.add(mViewModel.updateCategory(category)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());
+                .subscribe(()-> Log.d(TAG, "insertSingleCategory: inserted: "+category.getName())));
     }
 
 

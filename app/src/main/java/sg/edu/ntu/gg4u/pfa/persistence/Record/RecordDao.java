@@ -17,25 +17,38 @@ public interface RecordDao {
 
 
     @Query("SELECT * FROM Record WHERE timestamp > :start " +
-            "AND timestamp < :end")
+            "AND timestamp < :end ORDER BY timestamp DESC")
     Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT * FROM Record WHERE timestamp > :start " +
-            "AND timestamp < :end AND categoryName = :name")
+            "AND timestamp < :end AND categoryName = :name ORDER BY timestamp DESC")
     Flowable<List<Record>> getRecord(LocalDateTime start, LocalDateTime end,
                                           String name);
 
-    @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end")
+    @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end " +
+            "ORDER BY timestamp DESC")
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT SUM(amount) FROM Record WHERE timestamp > :start AND timestamp < :end " +
-            "AND categoryName = :name")
+            "AND categoryName = :name ORDER BY timestamp DESC")
     Flowable<Double> getRecordSum(LocalDateTime start, LocalDateTime end, String name);
 
+
+//    @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
+//            "FROM Category LEFT JOIN Record on Record.categoryName == Category.name " +
+//            "WHERE timestamp > :start AND timestamp < :end " +
+//            "GROUP BY categoryName")
     @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
-            "FROM Category left outer join Record on Record.categoryName = Category.name " +
+            "FROM Category JOIN Record " +
+            "ON Category.name = Record.categoryName " +
             "WHERE timestamp > :start AND timestamp < :end " +
             "GROUP BY categoryName")
+
+ //   @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
+ //           "FROM Category left outer join Record on Record.categoryName = Category.name " +
+ //           "WHERE timestamp > :start AND timestamp < :end " +
+ //           "GROUP BY categoryName ORDER BY timestamp DESC")
+
     Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
