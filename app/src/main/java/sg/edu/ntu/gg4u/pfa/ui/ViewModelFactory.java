@@ -42,13 +42,13 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new TargetViewModel(mTargetDataSource, mRecordDataSource);
         }
         if (modelClass.isAssignableFrom(RecordViewModel.class)) {
-            return (T) new RecordViewModel(mRecordDataSource);
+            return (T) new RecordViewModel(mRecordDataSource, mCategoryDataSource);
         }
         if (modelClass.isAssignableFrom(GuideInfoViewModel.class)) {
             return (T) new GuideInfoViewModel(mGuideInfoDataSource);
         }
         if (modelClass.isAssignableFrom(CategoryViewModel.class)) {
-            return (T) new CategoryViewModel(mCategoryDataSource);
+            return (T) new CategoryViewModel(mCategoryDataSource, mTargetDataSource);
         }
         if (modelClass.isAssignableFrom(ReportViewModel.class)) {
             return (T) new ReportViewModel
