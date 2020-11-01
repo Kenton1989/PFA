@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,6 +57,7 @@ public class HomeFragment extends Fragment {
     CustomListHome adapter;
     List<String> cat_in_list = new ArrayList<>();
     List<Double> sum_in_cat =new ArrayList<>();
+
     private static DecimalFormat df = new DecimalFormat("0.00");
 
 
@@ -72,12 +74,6 @@ public class HomeFragment extends Fragment {
         ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity());
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(HomeViewModel.class);
-        //Log.d("home output",mViewModel.getAllCategory().toString());
-     /*   mDisposable.add(mViewModel.getAllCategory()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::displayCat));*/
-
 
        //Log.d("display" , cat_in_list2.toString());
 
@@ -85,12 +81,8 @@ public class HomeFragment extends Fragment {
         totalExpense = root.findViewById(R.id.totalExpense_home);
 
 
-
-
-
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.addItemBtn);
         fab.setOnClickListener(view -> openRecordEditor());
-
 
 
         return root;
@@ -136,10 +128,22 @@ public class HomeFragment extends Fragment {
     public void whenDataUpdated(List<SumByCategory> newDailyCost) {
        // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
-
+        newDailyCost =new ArrayList<>();
 
         if (newDailyCost.size() == 0){
             //display category name .
+
+            //MutableLiveData<Object> mText = new MutableLiveData<>();
+            //mText.setValue("This is home fragment");
+       //     View header = (View)getLayoutInflater().inflate(R.layout.headerView,null);
+         //   list.addHeaderView(header);
+
+            cat_in_list.add("There is no data for today ! ");
+            double[] sum_in_cat_array =new double[1];
+            sum_in_cat_array[0]=0.0;
+            adapter = new
+                    CustomListHome(getActivity(), cat_in_list.toArray(new String[0]), sum_in_cat_array);
+            list.setAdapter(adapter);
         }
         else {
             for (SumByCategory catSum : newDailyCost) {
@@ -169,34 +173,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    /*@RequiresApi(api = Build.VERSION_CODES.O)
-    public void whenDataUpdated(List<Record> newRecords) {
-        // TODO: UI group: implement this function
-        // TODO: DB group: use this function when data changes
-
-        Record r1 = new Record("food",10.0);
-        Record r2 = new Record("food",10.0);
-        Record r3 = new Record("others",10.0);
-        newRecords.add(r1);
-        newRecords.add(r2);
-        newRecords.add(r3);
-
-        for (Record record :newRecords){
-                cat_in_list.add(record.getCategoryName());
-                sum_in_cat.add(record.getAmount());
-            }
-
-
-        double [] sum_in_cat_array = new double[sum_in_cat.size()];
-        for (int i = 0; i < sum_in_cat.size(); i++) {
-            sum_in_cat_array[i] = sum_in_cat.get(i);
-        }
-
-        adapter = new
-                CustomListHome(getActivity(),  cat_in_list.toArray(new String[0]), sum_in_cat_array);
-        list.setAdapter(adapter);
-
-    }*/
 
 
 }
