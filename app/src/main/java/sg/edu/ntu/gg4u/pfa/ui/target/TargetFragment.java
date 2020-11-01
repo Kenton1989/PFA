@@ -1,5 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Build;
@@ -89,6 +91,7 @@ public class TargetFragment extends Fragment {
     double [] temp_cost;
     double [] temp_target;
     View help;
+    Activity activity;
 
 
     ListView list;
@@ -203,8 +206,10 @@ public class TargetFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        activity = getActivity();
+
         // database stuff
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity());
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(activity);
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(TargetViewModel.class);
 
@@ -222,7 +227,6 @@ public class TargetFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenTargetAndCostChanged));
-        //Log.d("display xx" , String.valueOf(localDateTime.toLocalDate().minusMonths(1)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -275,9 +279,9 @@ public class TargetFragment extends Fragment {
             target_in_cat_array[i] = target_in_cat.get(i);
         }
 
-        Log.d(TAG, "whenTargetAndCostChanged: Context = "+String.valueOf(getActivity()));
+        Log.d(TAG, "whenTargetAndCostChanged: Context = "+String.valueOf(activity));
         CustomListTarget adapter = new
-                CustomListTarget(getActivity(),  cat_in_list.toArray(new String[0]) , target_in_cat_array, amt_in_cat_array);
+                CustomListTarget(activity,  cat_in_list.toArray(new String[0]) , target_in_cat_array, amt_in_cat_array);
         list.setAdapter(adapter);
         //Log.d("display xx" , String.valueOf(target_in_cat_array));
 
