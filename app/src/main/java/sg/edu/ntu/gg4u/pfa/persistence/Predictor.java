@@ -3,6 +3,7 @@ package sg.edu.ntu.gg4u.pfa.persistence;
 
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -21,6 +22,8 @@ import static sg.edu.ntu.gg4u.pfa.persistence.Dataloader.govDataSetFileNames;
 
 
 public class Predictor {
+
+    private static final String TAG = Predictor.class.getSimpleName();
 
     private Context context;
     private Dataloader loader;
@@ -68,9 +71,10 @@ public class Predictor {
     @RequiresApi(api = Build.VERSION_CODES.R)
     @NonNull
     public HashMap<String, Double> readSer(String key, String data) {
+        Log.d(TAG, "readSer: " + key + " " + data);
         HashMap<String, HashMap<String, Double>> dataset =
                 Objects.requireNonNull(loader.readFromSerial(govDataSetFileNames.get(key)));
-        return Objects.requireNonNull(dataset.get(key));
+        return Objects.requireNonNull(dataset.get(data));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -125,12 +129,14 @@ public class Predictor {
 
 
         String jobField, AQ, age;
-        AQ = userProfile.getQualification() == null ?
+        AQ = (userProfile.getQualification() == null || userProfile.getQualification() == AcademicQualification.UNKNOWN)?
                 "Total" : userProfile.getQualification().toString();
-        jobField = userProfile.getJobField() == null ?
+        jobField = (userProfile.getJobField() == null || userProfile.getJobField() == JobField.UNKNOWN)?
                 "Total" : userProfile.getJobField().toString();
         age = userProfile.getAge() == null ?
                 "Total" : userProfile.getAge().toString();
+
+        age = age2key(age);
 
         jobFieldPrediction = readSer("JobField", jobField);
         AQPrediction = readSer("Academic Qualification", AQ);
@@ -151,7 +157,7 @@ public class Predictor {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
-    public HashMap<String, Double> predictDistributeionByIncomeGroup(UserProfile userProfile) {
+    public HashMap<String, Double> predictDistributionByIncomeGroup(UserProfile userProfile) {
         String income = userProfile.getIncome() == null ?
                 "Total" : userProfile.getIncome().toString();
 

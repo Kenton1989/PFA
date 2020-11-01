@@ -39,8 +39,7 @@ public interface RecordDao {
 //            "WHERE timestamp > :start AND timestamp < :end " +
 //            "GROUP BY categoryName")
     @Query("SELECT categoryName AS categoryName, SUM(amount) AS sum " +
-            "FROM Category JOIN Record " +
-            "ON Category.name = Record.categoryName " +
+            "FROM Category join Record on Record.categoryName = Category.name " +
             "WHERE timestamp > :start AND timestamp < :end " +
             "GROUP BY categoryName")
 

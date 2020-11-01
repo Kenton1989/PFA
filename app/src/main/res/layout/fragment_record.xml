@@ -40,23 +40,7 @@
     -->
 
 
-    <EditText
-        android:id="@+id/record_date_to"
-        android:layout_width="98dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="4dp"
-        android:autofillHints=""
-        android:enabled="false"
-        android:hint="DD-MM-YYYY"
-        android:inputType="datetime"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.805"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_current_date"
-        app:layout_constraintVertical_bias="1.0" />
-
+    <!--
     <View
         android:id="@+id/record_end_view"
         android:layout_width="match_parent"
@@ -69,6 +53,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+-->
+
+    <EditText
+        android:id="@+id/record_date_to"
+        android:layout_width="98dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:autofillHints=""
+        android:enabled="false"
+        android:hint="YYYY-MM-DD"
+        android:inputType="datetime"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.817"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/record_current_date"
+        app:layout_constraintVertical_bias="0.261" />
 
     <TextView
         android:id="@+id/record_current_date"
@@ -107,7 +109,8 @@
         app:layout_constraintEnd_toStartOf="@+id/record_date_from"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_date_upview" />
+        app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
+        app:layout_constraintVertical_bias="0.171" />
 
     <View
         android:id="@+id/record_date_bottomview"
@@ -119,7 +122,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.145" />
+        app:layout_constraintVertical_bias="0.216" />
 
     <EditText
         android:id="@+id/record_date_from"
@@ -127,15 +130,15 @@
         android:layout_height="40dp"
         android:autofillHints=""
         android:enabled="false"
-        android:hint="DD-MM-YYYY"
+        android:hint="YYYY-MM-DD"
         android:inputType="date"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintHorizontal_bias="0.204"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.127" />
 
     <ImageView
         android:id="@+id/record_calpicker_from"
@@ -148,7 +151,8 @@
         app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
         app:layout_constraintEnd_toStartOf="@+id/record_text_to"
         app:layout_constraintStart_toEndOf="@+id/record_date_from"
-        app:layout_constraintTop_toBottomOf="@+id/record_date_upview" />
+        app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
+        app:layout_constraintVertical_bias="0.13" />
 
     <TextView
         android:id="@+id/record_text_to"
@@ -160,7 +164,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.568"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_date_upview" />
+        app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
+        app:layout_constraintVertical_bias="0.177" />
 
     <TextView
         android:id="@+id/record_text_tIncome"
@@ -173,7 +178,7 @@
         app:layout_constraintHorizontal_bias="0.116"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_date_bottomview"
-        app:layout_constraintVertical_bias="0.233" />
+        app:layout_constraintVertical_bias="0.145" />
 
     <TextView
         android:id="@+id/record_text_tExpense"
@@ -186,7 +191,7 @@
         app:layout_constraintHorizontal_bias="0.118"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
-        app:layout_constraintVertical_bias="0.796" />
+        app:layout_constraintVertical_bias="0.934" />
 
     <TextView
         android:id="@+id/record_mnthIncome"
@@ -198,8 +203,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.579"
         app:layout_constraintStart_toEndOf="@+id/record_text_tIncome"
-        app:layout_constraintTop_toBottomOf="@+id/record_date_bottomview"
-        app:layout_constraintVertical_bias="0.446" />
+        app:layout_constraintTop_toBottomOf="@+id/record_date_bottomview" />
 
     <TextView
         android:id="@+id/record_mnthExpense"
@@ -212,7 +216,7 @@
         app:layout_constraintHorizontal_bias="0.595"
         app:layout_constraintStart_toEndOf="@+id/record_text_tExpense"
         app:layout_constraintTop_toBottomOf="@+id/record_date_bottomview"
-        app:layout_constraintVertical_bias="0.72" />
+        app:layout_constraintVertical_bias="0.808" />
 
     <View
         android:id="@+id/record_list_upview"
@@ -226,6 +230,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.333" />
 
+
     <ImageView
         android:id="@+id/record_calpicker_to"
         android:layout_width="32dp"
@@ -235,11 +240,10 @@
         android:src="@drawable/calendar"
         app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="0.36"
         app:layout_constraintStart_toEndOf="@+id/record_date_to"
         app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
-        app:layout_constraintVertical_bias="0.625" />
-
+        app:layout_constraintVertical_bias="0.13" />
 
     <ListView
         android:id="@+id/record_listView"
@@ -249,10 +253,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_list_upview">
+        app:layout_constraintTop_toBottomOf="@+id/record_list_upview"
+        android:paddingLeft="20dp">
 
 
     </ListView>
+
+    <Button
+        android:id="@+id/record_go_btn"
+        android:layout_width="417dp"
+        android:layout_height="39dp"
+        android:enabled="false"
+        android:background="#7644CF"
+        android:text="Apply"
+        android:textColor="#F6F5F5"
+        app:layout_constraintBottom_toTopOf="@+id/record_date_bottomview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
+        app:layout_constraintVertical_bias="0.976" />
     <!--    <ScrollView-->
     <!--        android:id="@+id/record_scrollView"-->
     <!--        android:layout_width="0dp"-->
