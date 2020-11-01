@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.speech.RecognizerResultsIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -156,7 +157,7 @@ public class ReportFragment extends Fragment {
             }
         });
 
-
+/*
        // CustomListReport adapter = new
        //         CustomListReport(getActivity(), cat_in_list, percent_in_list, sugg_in_list);
         list = root.findViewById(R.id.report_listView);
@@ -170,7 +171,7 @@ public class ReportFragment extends Fragment {
             }
         });
 
-
+*/
         return root;
     }
 
@@ -247,15 +248,18 @@ public class ReportFragment extends Fragment {
     void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
+        /*
         for(Target newT:newTargets){
             t_cat_in_list.add(newT.getCategoryName());
             t_amount_in_list.add(String.valueOf(newT.getAmount()));
         }
+*/
 
+/*
         CustomListReport adapter = new
                 CustomListReport(getActivity(), t_cat_in_list , t_amount_in_list);
         list.setAdapter(adapter);
-
+*/
         // TODO: DB group: call this function when data changes
     }
 
