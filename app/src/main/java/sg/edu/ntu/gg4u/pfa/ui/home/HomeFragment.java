@@ -92,8 +92,13 @@ public class HomeFragment extends Fragment {
 
 
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.addItemBtn);
-        fab.setOnClickListener(view -> openRecordEditor());
-
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list);
+                editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
+            }
+        });
 
         return root;
     }
