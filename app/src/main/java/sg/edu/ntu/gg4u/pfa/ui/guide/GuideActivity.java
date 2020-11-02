@@ -1,6 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.ui.guide;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -40,4 +41,6 @@ public class GuideActivity extends AppCompatActivity {
     private void whenGuideInfoUpdated(List<GuideInfo> guideInfos) {
 
     }
+
+
 }

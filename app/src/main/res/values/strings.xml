@@ -28,7 +28,7 @@
     <string name="guide_title">Quick Guide</string>
 
     <string name="add_title">add Income / expense</string>
-    <string name="dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet enim a neque suscipit maximus. Aenean erat nulla, fringilla sed nunc eu, laoreet imperdiet risus. Donec a mi nec ante fermentum convallis vel sed libero. Suspendisse potenti. Curabitur accumsan rutrum nibh sit amet lobortis. In ultricies et nibh eget gravida. Curabitur lobortis rhoncus lacus at fringilla. In ultrices arcu at tortor dictum suscipit. Aenean vel ligula nulla. Proin sit amet dapibus metus. Quisque eu volutpat mi. Nullam id quam et quam vestibulum commodo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce non tincidunt leo, ac ullamcorper libero.</string>
+    <string name="dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet enim a neque suscipit maximus. </string>
     <string name="title_add_record">Add Record</string>
     <string-array name="guide_intro">
         <item>Introduction 1</item>
