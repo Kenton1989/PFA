@@ -116,7 +116,7 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginBottom="0dp"
                 android:gravity="bottom"
-                android:text="Record List"
+                android:text="Expenditure Timeline"
                 android:textSize="24sp"
                 android:textStyle="italic" />
 
