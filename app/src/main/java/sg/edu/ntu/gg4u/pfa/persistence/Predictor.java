@@ -70,15 +70,19 @@ public class Predictor {
         else
             intVal = intVal / 1000 * 1000;
 
-        return intVal.toString();
+        if (intVal < 1000)
+            return intVal.toString();
+
+        return String.format("%d,%03d", intVal/1000, intVal%1000);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @NonNull
     public HashMap<String, Double> readSer(String key, String data) {
-        Log.d(TAG, "readSer: " + key + " " + data);
+        Log.d(TAG, "readSer: key=" + key + " data=" + data);
         HashMap<String, HashMap<String, Double>> dataset =
                 Objects.requireNonNull(loader.readFromSerial(govDataSetFileNames.get(key)));
+        Log.d(TAG, "Read dataset with keys"+dataset.keySet());
         return Objects.requireNonNull(dataset.get(data));
     }
 
