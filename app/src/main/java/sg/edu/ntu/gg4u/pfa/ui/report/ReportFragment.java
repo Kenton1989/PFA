@@ -228,8 +228,9 @@ public class ReportFragment extends Fragment {
     void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-
+        boolean existData = false;
         for (SumByCategory catSum : newMonthlyCost) {
+            existData = existData || catSum.sum > 0;
             sum_in_cat.add(catSum.sum);
             cat_in_list.add(catSum.categoryName);
         }
@@ -252,10 +253,12 @@ public class ReportFragment extends Fragment {
         }
 
 
-        PieChartVisualizer pcv = new PieChartVisualizer();
         pieChart.clear();
 
-        pcv.drawPie(pieChart, cat_and_total, sum_in_cat_float);
+        if (existData) {
+            PieChartVisualizer pcv = new PieChartVisualizer();
+            pcv.drawPie(pieChart, cat_and_total, sum_in_cat_float);
+        }
 
 
         // TODO: DB group: call this function when data changes
