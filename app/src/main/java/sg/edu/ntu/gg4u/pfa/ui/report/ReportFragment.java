@@ -75,7 +75,7 @@ import sg.edu.ntu.gg4u.pfa.persistence.Predictor;
 import sg.edu.ntu.gg4u.pfa.persistence.Dataloader;
 
 public class ReportFragment extends Fragment {
-
+    private static final String TAG = ReportFragment.class.getSimpleName();
 
     ListView list;
 
@@ -375,9 +375,8 @@ public class ReportFragment extends Fragment {
         //set the data for category prediction
         CustomListReport adapter = new
                 CustomListReport(activity, t_cat_in_list, t_amount_in_list);
+        list.setMinimumHeight(0);
         list.setAdapter(adapter);
-
-
         // TODO: DB group: call this function when data changes
     }
 }
