@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -100,6 +101,7 @@ public class EditRecordFragment extends DialogFragment {
                             if (oldRecord == null) {}
                             else {
                                 deleteRecord(oldRecord);
+                                Toast.makeText(getActivity(), "Record deleted!", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else {
@@ -110,6 +112,7 @@ public class EditRecordFragment extends DialogFragment {
                                 oldRecord.setCategoryName(catName);
                             }
                             insertOrUpdateRecord(oldRecord);
+                            Toast.makeText(getActivity(), "Record updated", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
