@@ -335,6 +335,7 @@ public class ReportFragment extends Fragment {
         if (!newMonthlyCost.isEmpty()) {
             dec.setClickable(true);
             dec.setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.report_scrollView).setVisibility(View.VISIBLE);
         }
         for (SumByCategory catSum : newMonthlyCost) {
             sum_in_cat.add(catSum.sum);
