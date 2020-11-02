@@ -19,8 +19,10 @@ public class PieChartVisualizer {
         pieChart.setUsePercentValues(true);
 
         ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
-        for(int i =0; i < data.length;i++)
-            yvalues.add(new PieEntry(data[i], label[i], i));
+        for(int i =0; i < data.length;i++) {
+            if (data[i] != 0)
+                yvalues.add(new PieEntry(data[i], label[i], i));
+        }
 
 
         PieDataSet dataSet = new PieDataSet(yvalues, "Target");
