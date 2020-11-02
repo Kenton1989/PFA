@@ -1,6 +1,8 @@
 package sg.edu.ntu.gg4u.pfa.ui.home;
+
 import java.text.DecimalFormat;
 import java.math.RoundingMode;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -53,18 +55,19 @@ import sg.edu.ntu.gg4u.pfa.ui.record.EditRecordFragment;
 import sg.edu.ntu.gg4u.pfa.ui.profile.ProfileViewModel;
 
 public class HomeFragment extends Fragment {
-  //  private final static String TAG = HomeFragment.class.getSimpleName();
+    public static final String TAG = HomeFragment.class.getSimpleName();
+    //  private final static String TAG = HomeFragment.class.getSimpleName();
     ListView list;
     CustomListHome adapter;
     List<String> cat_in_list = new ArrayList<>();
-    List<Double> sum_in_cat =new ArrayList<>();
+    List<Double> sum_in_cat = new ArrayList<>();
 
     private static DecimalFormat df = new DecimalFormat("0.00");
 
 
     private HomeViewModel mViewModel;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
-    private TextView totalIncome,totalExpense,amount,categoryName;
+    private TextView totalIncome, totalExpense, amount, categoryName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class HomeFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(HomeViewModel.class);
 
-       //Log.d("display" , cat_in_list2.toString());
+        //Log.d("display" , cat_in_list2.toString());
 
         list = root.findViewById(R.id.listHome);
         list.setClickable(true);
@@ -85,7 +88,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " , Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "You Clicked at ", Toast.LENGTH_LONG).show();
             }
         });
         totalExpense = root.findViewById(R.id.totalExpense_home);
@@ -108,13 +111,13 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0)).minusMonths(10);
-        LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1000));
+        LocalDateTime todayBegin = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+        LocalDateTime todayEnd = todayBegin.plusDays(1);
       /*  mDisposable.add(mViewModel.getRecord(todayBegin, todayEnd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenDataUpdated));*/
-
+        Log.d(TAG, "onStart: get record between " + todayBegin + " and " + todayEnd);
         mDisposable.add(mViewModel.getGroupedRecordSum(todayBegin, todayEnd)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -140,31 +143,31 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void whenDataUpdated(List<SumByCategory> newDailyCost) {
-       // TODO: UI group: implement this function
+        // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
         sum_in_cat.clear();
         cat_in_list.clear();
-        
-        if (newDailyCost.size() == 0){
+
+        if (newDailyCost.size() == 0) {
             //display category name .
 
             //MutableLiveData<Object> mText = new MutableLiveData<>();
             //mText.setValue("This is home fragment");
-       //     View header = (View)getLayoutInflater().inflate(R.layout.headerView,null);
-         //   list.addHeaderView(header);
+            //     View header = (View)getLayoutInflater().inflate(R.layout.headerView,null);
+            //   list.addHeaderView(header);
 
             cat_in_list.add("There is no data for today ! ");
-            double[] sum_in_cat_array =new double[1];
-            sum_in_cat_array[0]=0.0;
+            double[] sum_in_cat_array = new double[1];
+            sum_in_cat_array[0] = 0.0;
             adapter = new
                     CustomListHome(getActivity(), cat_in_list.toArray(new String[0]), sum_in_cat_array);
             list.setAdapter(adapter);
-        }
-        else {
+        } else {
             for (SumByCategory catSum : newDailyCost) {
+//                if (catSum.sum == null)
+//                    catSum.sum = 0.0;
 
                 sum_in_cat.add(Math.round(catSum.sum * 10) / 10.0);
                 cat_in_list.add(catSum.categoryName);
@@ -190,7 +193,6 @@ public class HomeFragment extends Fragment {
 
         }
     }
-
 
 
 }

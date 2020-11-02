@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class SumByCategory {
     public String categoryName;
-    public Double sum;
+    public double sum;
 
 
     public SumByCategory() {
