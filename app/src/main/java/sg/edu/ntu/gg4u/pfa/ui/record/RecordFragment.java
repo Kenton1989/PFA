@@ -269,18 +269,9 @@ public class RecordFragment extends Fragment {
         super.onStart();
 
         // TODO: UI group : set default time interval here
-        LocalDate beginDate = LocalDate.now().minusMonths(0),
+        LocalDate beginDate = LocalDate.now().minusDays(7),
                 endDate = LocalDate.now();
         resetDataRange(beginDate, endDate, null);
-
-        LocalDateTime todayBegin = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0));
-        LocalDateTime todayEnd = todayBegin.plus(Duration.ofDays(1));
-        mDisposable.add(mViewModel.getRecord(todayBegin, todayEnd)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::whenRecordListUpdated));
-
-
     }
 
     private void printToast(String msg) {
