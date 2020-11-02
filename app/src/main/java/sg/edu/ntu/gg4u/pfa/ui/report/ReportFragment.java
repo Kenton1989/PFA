@@ -95,9 +95,6 @@ public class ReportFragment extends Fragment {
 
         ExpChart = (LineChart) root.findViewById(R.id.Expchart);
 
-
-
-
         final TextView month = root.findViewById(R.id.report_month);
         final Calendar cal = Calendar.getInstance();
 
@@ -117,39 +114,11 @@ public class ReportFragment extends Fragment {
                 month.setText(selectedMonth);
                 resetMonth(cal);
 
-                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
-                currentMonth = currentMonth.toLowerCase();
-                Log.d("datehelp", currentMonth);
-                Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
-                if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
-                {
-                    inc.setClickable(false);
-                    inc.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    inc.setClickable(true);
-                    inc.setVisibility(View.VISIBLE);
-                }
-
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData, "temp chart");
                 //pcv.drawPie(pieChart, labels, data);
             }
         });
-        cal.getTime();
-        String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
-        currentMonth = currentMonth.toLowerCase();
-        Log.d("datehelp", currentMonth);
-        Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
-        if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
-        {
-            inc.setClickable(false);
-            inc.setVisibility(View.INVISIBLE);
-        }
-        else {
-            inc.setClickable(true);
-            inc.setVisibility(View.VISIBLE);
-        }
 
         inc.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -160,19 +129,6 @@ public class ReportFragment extends Fragment {
                 month.setText(selectedMonth);
                 resetMonth(cal);
 
-                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
-                currentMonth = currentMonth.toLowerCase();
-                Log.d("datehelp", currentMonth);
-                Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
-                if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
-                {
-                    inc.setClickable(false);
-                    inc.setVisibility(View.INVISIBLE);
-                }
-                else {
-                    inc.setClickable(true);
-                    inc.setVisibility(View.VISIBLE);
-                }
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData2, "temp chart");
                 //pcv.drawPie(pieChart, labels2, data2);
@@ -225,6 +181,19 @@ public class ReportFragment extends Fragment {
         percent_in_list.clear();
         sugg_in_list.clear();
         sum_in_cat.clear();
+
+        Calendar currentCal = Calendar.getInstance();
+
+        if (calendar.get(Calendar.MONTH) == currentCal.get(Calendar.MONTH) &&
+            calendar.get(Calendar.YEAR) == currentCal.get(Calendar.YEAR))
+        {
+            inc.setClickable(false);
+            inc.setVisibility(View.INVISIBLE);
+        }
+        else {
+            inc.setClickable(true);
+            inc.setVisibility(View.VISIBLE);
+        }
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database
