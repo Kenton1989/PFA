@@ -1,5 +1,6 @@
 package sg.edu.ntu.gg4u.pfa.ui.report;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import sg.edu.ntu.gg4u.pfa.persistence.Predictor;
 public class ReportFragment extends Fragment {
     private static final String TAG = ReportFragment.class.getSimpleName();
 
+    ImageButton dec, inc;
     ListView list;
 
     List<Record> recordList;
@@ -94,7 +96,7 @@ public class ReportFragment extends Fragment {
         ExpChart = (LineChart) root.findViewById(R.id.Expchart);
 
 
-        ImageButton dec, inc;
+
 
         final TextView month = root.findViewById(R.id.report_month);
         final Calendar cal = Calendar.getInstance();
@@ -115,12 +117,39 @@ public class ReportFragment extends Fragment {
                 month.setText(selectedMonth);
                 resetMonth(cal);
 
+                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+                currentMonth = currentMonth.toLowerCase();
+                Log.d("datehelp", currentMonth);
+                Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
+                if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+                {
+                    inc.setClickable(false);
+                    inc.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    inc.setClickable(true);
+                    inc.setVisibility(View.VISIBLE);
+                }
+
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData, "temp chart");
                 //pcv.drawPie(pieChart, labels, data);
             }
         });
         cal.getTime();
+        String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+        currentMonth = currentMonth.toLowerCase();
+        Log.d("datehelp", currentMonth);
+        Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
+        if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+        {
+            inc.setClickable(false);
+            inc.setVisibility(View.INVISIBLE);
+        }
+        else {
+            inc.setClickable(true);
+            inc.setVisibility(View.VISIBLE);
+        }
 
         inc.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -130,6 +159,20 @@ public class ReportFragment extends Fragment {
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
                 resetMonth(cal);
+
+                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+                currentMonth = currentMonth.toLowerCase();
+                Log.d("datehelp", currentMonth);
+                Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
+                if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+                {
+                    inc.setClickable(false);
+                    inc.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    inc.setClickable(true);
+                    inc.setVisibility(View.VISIBLE);
+                }
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData2, "temp chart");
                 //pcv.drawPie(pieChart, labels2, data2);
@@ -228,7 +271,9 @@ public class ReportFragment extends Fragment {
     void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
+
         boolean existData = false;
+      
         for (SumByCategory catSum : newMonthlyCost) {
             existData = existData || catSum.sum > 0;
             sum_in_cat.add(catSum.sum);
