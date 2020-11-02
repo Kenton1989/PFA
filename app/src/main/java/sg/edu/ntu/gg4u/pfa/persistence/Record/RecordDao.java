@@ -40,7 +40,7 @@ public interface RecordDao {
 //            "GROUP BY categoryName")
     @Query("WITH DesiredRecord AS (SELECT * FROM Record WHERE timestamp > :start AND timestamp < :end) " +
             "SELECT Category.name AS categoryName, SUM(amount) AS sum " +
-            "FROM Category left join DesiredRecord on categoryName = Category.name " +
+            "FROM Category LEFT JOIN DesiredRecord ON categoryName = Category.name " +
             "GROUP BY Category.name ORDER BY timestamp DESC")
     Flowable<List<SumByCategory>> getGroupedRecordSum(LocalDateTime start, LocalDateTime end);
 

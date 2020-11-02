@@ -57,19 +57,21 @@ public interface TargetDao {
     @Query("DELETE FROM Target WHERE categoryName = :name AND startDate = :date")
     Completable deleteTarget(String name, LocalDate date);
 
-    @Query("With GroupedRecordSum as (" +
+    @Query("With GroupedRecordSum AS (" +
             "    SELECT categoryName AS categoryName, SUM(amount) AS sum" +
-            "    FROM Category" +
-            "             left outer join Record on Record.categoryName = Category.name" +
+            "    FROM Record " +
             "    WHERE timestamp > :startDate" +
             "      AND timestamp < :endDate" +
             "    GROUP BY categoryName" +
             ")" +
-            "select Target.amount as targetAmount, Target.categoryName as categoryName," +
-            " GroupedRecordSum.sum as cost " +
-            "from Target left join GroupedRecordSum " +
-            "on Target.categoryName = GroupedRecordSum.categoryName " +
-            "AND Target.startDate = :startDate " +
-            "order by targetAmount desc ")
+            "SELECT Target.amount AS targetAmount, Category.name AS categoryName," +
+            " GroupedRecordSum.sum AS cost " +
+            "FROM Category " +
+            "LEFT JOIN GroupedRecordSum " +
+            "ON Category.name = GroupedRecordSum.categoryName " +
+            "LEFT JOIN Target " +
+            "ON Target.categoryName = Category.name " +
+            "   AND Target.startDate = :startDate " +
+            "ORDER BY targetAmount DESC ")
     Flowable<List<TargetAndCost>> getTargetAndCost(LocalDate startDate, LocalDate endDate);
 }

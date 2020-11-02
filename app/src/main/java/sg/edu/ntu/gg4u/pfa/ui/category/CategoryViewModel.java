@@ -32,9 +32,7 @@ public class CategoryViewModel extends ViewModel {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Completable createNewCategory(Category category) {
-        return mCategoryDataSource.createNewCategory(category)
-                .concatWith(mTargetDataSource.insertOrUpdateTarget(
-                        new Target(category.getName(), 0)));
+        return mCategoryDataSource.createNewCategory(category);
     }
 
     public Completable deleteCategory(Category category) {
