@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Sampler;
-import android.speech.RecognizerResultsIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,8 +123,6 @@ public class ReportFragment extends Fragment {
 
         ExpChart = (LineChart) root.findViewById(R.id.Expchart);
 
-        list = (ListView) root.findViewById(R.id.report_listView);
-
 
         ImageButton dec, inc;
 
@@ -170,6 +167,20 @@ public class ReportFragment extends Fragment {
         });
 
 
+       // CustomListReport adapter = new
+       //         CustomListReport(getActivity(), cat_in_list, percent_in_list, sugg_in_list);
+        list = root.findViewById(R.id.report_listView);
+        //list.setAdapter(adapter);
+      /*  list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getActivity(), "You Clicked at " + cat_in_list.get(+position), Toast.LENGTH_SHORT).show();
+            }
+        });*/
+
+
         return root;
     }
 
@@ -195,9 +206,6 @@ public class ReportFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenUserProfileChanged));
-
-        //    list.setOnClickListener(null);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -244,23 +252,20 @@ public class ReportFragment extends Fragment {
 
     }
 
-    void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
+ /*   void whenTargetOfThisMonthUpdated(List<Target> newTargets) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        /*
         for(Target newT:newTargets){
             t_cat_in_list.add(newT.getCategoryName());
             t_amount_in_list.add(String.valueOf(newT.getAmount()));
         }
-*/
 
-/*
         CustomListReport adapter = new
                 CustomListReport(getActivity(), t_cat_in_list , t_amount_in_list);
         list.setAdapter(adapter);
-*/
+
         // TODO: DB group: call this function when data changes
-    }
+    }*/
 
     void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
@@ -282,8 +287,9 @@ public class ReportFragment extends Fragment {
             sum_in_cat_float[j++] = (float) value;
         }
 
-        String[] cat_and_total = new String[sum_in_cat_array.length];
-        for (int k = 0; k < sum_in_cat_array.length; k++) {
+        String [] cat_and_total = new String[sum_in_cat_array.length];
+        for (int k = 0 ; k < sum_in_cat_array.length ; k++ )
+        {
             cat_and_total[k] = cat_in_list.get(k) + "   " + "$" + sum_in_cat_float[k];
         }
 

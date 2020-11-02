@@ -50,7 +50,6 @@ public class CustomListReport extends ArrayAdapter<String> {
         TextView catTitle = (TextView) rowView.findViewById(R.id.reportlist_category);
 
         catTitle.setText(cat_in_list.get(position));
-        
 //        TextView percentTitle = (TextView) rowView.findViewById(R.id.reportlist_percentile);
 //        percentTitle.setText(String.valueOf(percent_in_list.get(position)));
         TextView percentList = (TextView) rowView.findViewById(R.id.reportlist_suggestion);
