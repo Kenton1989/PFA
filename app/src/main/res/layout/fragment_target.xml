@@ -27,8 +27,8 @@
         android:id="@+id/target_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="current"
         android:layout_marginTop="20dp"
+        android:text="current"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/target_upview"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,9 +51,9 @@
         android:id="@+id/right_arrow_target"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginTop="20dp"
         android:background="#00FFFFFF"
         android:scaleType="fitXY"
-        android:layout_marginTop="20dp"
         android:src="@drawable/right_arrow"
         app:layout_constraintBottom_toTopOf="@+id/target_upview"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,159 +62,146 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.571" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/target_scrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/target_upview"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/left_arrow_target">
 
+        <com.androidplot.xy.XYPlot
+            android:id="@+id/barChart"
+            style="@style/APDefacto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="0dp"
+            android:clickable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:orientation="vertical">
-            <com.androidplot.xy.XYPlot
-                android:id="@+id/barChart"
-                style="@style/APDefacto"
+            android:layout_gravity="right"
+            android:clickable="false"
+            android:focusable="false"
+            android:orientation="horizontal"
+            android:paddingTop="0dp">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:clickable="false"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="horizontal"
+                android:paddingLeft="15dp"
                 android:paddingTop="0dp"
-                android:clickable="false"
-                android:focusable="false">
+                android:paddingRight="15dp"
+                android:paddingBottom="0dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:paddingTop="0dp"
-                    android:paddingRight="15dp"
-                    android:paddingBottom="0dp">
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-
+                    <TextView
+                        android:id="@+id/actualAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/actualAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:textColor="@color/black"
-                            android:textSize="25sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Actual Amount"
-                            android:textAllCaps="true"
-                            android:textColor="@color/headings"
-                            android:textSize="13sp" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="5dp">
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="/"
+                        android:text="Actual Amount"
+                        android:textAllCaps="true"
                         android:textColor="@color/headings"
-                        android:textSize="25sp" />
+                        android:textSize="13sp" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
+            </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="/"
+                    android:textColor="@color/headings"
+                    android:textSize="25sp" />
 
-                    android:paddingLeft="15dp"
-                    android:paddingTop="0dp"
-                    android:paddingRight="15dp"
-                    android:paddingBottom="0dp">
+            </RelativeLayout>
 
-                    <LinearLayout
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:paddingLeft="15dp"
+                android:paddingTop="0dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="0dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/targetAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:fontFamily="sans-serif-light"
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
 
-                        <TextView
-                            android:id="@+id/targetAmount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:textColor="@color/black"
-                            android:textSize="25sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Target Amount"
+                        android:textAllCaps="true"
+                        android:textColor="@color/headings"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
-                            android:text="Target Amount"
-                            android:textAllCaps="true"
-                            android:textColor="@color/headings"
-                            android:textSize="13sp" />
+                </LinearLayout>
 
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/listViewTarget"
-                android:layout_width="match_parent"
-                android:layout_height="500dp"
-                android:paddingTop="5dp"
-                app:layout_constraintTop_toBottomOf="@+id/target_scrollView"
-                android:descendantFocusability="blocksDescendants">
-
-            </ListView>
+            </RelativeLayout>
 
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
 
+    </LinearLayout>
 
+    <ListView
+        android:id="@+id/listViewTarget"
+        android:layout_width="match_parent"
+        android:layout_height="265dp"
+        android:descendantFocusability="blocksDescendants"
+        android:paddingTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-
-
-
-
-
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

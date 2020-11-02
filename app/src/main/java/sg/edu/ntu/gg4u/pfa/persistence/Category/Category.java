@@ -32,4 +32,10 @@ public class Category {
     public void setName(@NonNull String name) {
         this.name = name;
     }
+
+    @Ignore
+    @Override
+    public String toString() {
+        return name;
+    }
 }

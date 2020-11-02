@@ -1,5 +1,6 @@
 package sg.edu.ntu.gg4u.pfa.ui.record;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,10 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
@@ -48,6 +58,7 @@ import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
+import sg.edu.ntu.gg4u.pfa.ui.target.EditTargetFragment;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
@@ -106,6 +117,7 @@ public class RecordFragment extends Fragment {
     private TextView tv_totalExpense, tv_userIncome, tv_amount, tv_categoryName, tv_timestamp;
     UserProfile userProfile = new UserProfile();
     Category category = new Category();
+    Activity activity;
 
     public Category getCategory() {
         return category;
@@ -153,7 +165,8 @@ public class RecordFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " + dates_in_list.get(+position), Toast.LENGTH_SHORT).show();
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list, position, amount_in_list.get(position));
+                editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });
 
@@ -245,6 +258,14 @@ public class RecordFragment extends Fragment {
 
         });
 
+        FloatingActionButton dummy = root.findViewById(R.id.addRecord);
+        dummy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list);
+                editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
+            }
+        });
         record_go_btn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -266,9 +287,12 @@ public class RecordFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ViewModelFactory factory = Injection.provideViewModelFactory(this.getActivity());
+        activity = getActivity();
+
+        ViewModelFactory factory = Injection.provideViewModelFactory(activity);
         mViewModel = new ViewModelProvider(this, factory)
                 .get(RecordViewModel.class);
+
 
     }
 
@@ -348,7 +372,7 @@ public class RecordFragment extends Fragment {
         tv_totalExpense.setText("$" + amount_stringdouble);
 
         CustomList adapter = new
-                CustomList(getActivity(), dates_in_list, cat_in_list, amount_in_list);
+                CustomList(activity, dates_in_list, cat_in_list, amount_in_list);
         list.setAdapter(adapter);
 
 

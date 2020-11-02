@@ -31,9 +31,11 @@ import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 public class CreateCategoryFragment extends DialogFragment {
 //    EditText mEdit = (EditText)findViewById(R.id.categoryInput);
 
+    private View mView;
+
     public interface NoticeDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
-        public void onDialogNegativeClick(DialogFragment dialog);
+        public void onDialogPositiveClick(CreateCategoryFragment dialog);
+        public void onDialogNegativeClick(CreateCategoryFragment dialog);
     }
 
     NoticeDialogListener listener;
@@ -43,13 +45,17 @@ public class CreateCategoryFragment extends DialogFragment {
         listener = (NoticeDialogListener) context;
     }
 
+    public View getMView() {
+        return mView;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
-        builder.setView(inflater.inflate(R.layout.activity_create_category, null))
+        mView = inflater.inflate(R.layout.activity_create_category, null);
+        builder.setView(mView)
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
@@ -59,7 +65,6 @@ public class CreateCategoryFragment extends DialogFragment {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-//                        CreateCategoryFragment.this.getDialog().cancel();
                         listener.onDialogNegativeClick(CreateCategoryFragment.this);
                     }
                 });

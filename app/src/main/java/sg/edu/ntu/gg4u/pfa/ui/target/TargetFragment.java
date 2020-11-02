@@ -1,5 +1,7 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Build;
@@ -78,6 +80,7 @@ import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.TargetBarChartVisualizer;
 
 public class TargetFragment extends Fragment {
+    private static final String TAG = TargetFragment.class.getSimpleName();
 
    // List<Target> targetList = null;
    // List<SumByCategory> monthlyCostList = null;
@@ -88,6 +91,7 @@ public class TargetFragment extends Fragment {
     double [] temp_cost;
     double [] temp_target;
     View help;
+    Activity activity;
 
 
     ListView list;
@@ -146,7 +150,8 @@ public class TargetFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " , Toast.LENGTH_LONG).show();
+                EditTargetFragment editFrag = new EditTargetFragment(cat_in_list.get(position));
+                editFrag.show(getActivity().getSupportFragmentManager(), "editTar");
             }
         });
 
@@ -192,8 +197,6 @@ public class TargetFragment extends Fragment {
         actualAmt = root.findViewById(R.id.actualAmount);
         targetAmt = root.findViewById(R.id.targetAmount);
 
-
-
         return root;
     }
 
@@ -201,8 +204,10 @@ public class TargetFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        activity = getActivity();
+
         // database stuff
-        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(getActivity());
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(activity);
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(TargetViewModel.class);
 
@@ -220,7 +225,6 @@ public class TargetFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::whenTargetAndCostChanged));
-        //Log.d("display xx" , String.valueOf(localDateTime.toLocalDate().minusMonths(1)));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -254,10 +258,11 @@ public class TargetFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
-     //   for (TargetAndCost sum: targetAndCosts) {
-     //       Log.d("display",sum.categoryName);
-     //   }
+        cat_in_list.clear();
+        target_in_cat.clear();
+        amt_in_cat.clear();
 
+        Log.d(TAG, "whenTargetAndCostChanged: targets number: "+targetAndCosts.size());
 
         for (TargetAndCost targetObj :targetAndCosts){
             cat_in_list.add(targetObj.categoryName);
@@ -274,8 +279,9 @@ public class TargetFragment extends Fragment {
             target_in_cat_array[i] = target_in_cat.get(i);
         }
 
+        Log.d(TAG, "whenTargetAndCostChanged: Context = "+String.valueOf(activity));
         CustomListTarget adapter = new
-                CustomListTarget(getActivity(),  cat_in_list.toArray(new String[0]) , target_in_cat_array, amt_in_cat_array);
+                CustomListTarget(activity,  cat_in_list.toArray(new String[0]) , target_in_cat_array, amt_in_cat_array);
         list.setAdapter(adapter);
         //Log.d("display xx" , String.valueOf(target_in_cat_array));
 
@@ -297,7 +303,6 @@ public class TargetFragment extends Fragment {
         barChart.clear();
         bar.plot(barChart,  cat_in_list.toArray(new String[0]), target_in_cat_array, amt_in_cat_array);
         barChart.redraw();
-
 
     }
 

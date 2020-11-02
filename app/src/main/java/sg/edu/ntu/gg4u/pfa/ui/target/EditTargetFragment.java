@@ -1,14 +1,23 @@
 package sg.edu.ntu.gg4u.pfa.ui.target;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -19,19 +28,18 @@ import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditTargetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EditTargetFragment extends DialogFragment {
 
     private TargetViewModel mViewModel;
-
     private CompositeDisposable mDisposable = new CompositeDisposable();
+    
+    private View mView;
+    private EditText mEdit;
+    private TextView mText;
+    private String catName;
 
-    public EditTargetFragment() {
-        // Required empty public constructor
+    public EditTargetFragment(String catName) {
+        this.catName = catName;
     }
 
     @Override
@@ -44,13 +52,35 @@ public class EditTargetFragment extends DialogFragment {
                 .get(TargetViewModel.class);
     }
 
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_target, container, false);
-    }
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+
+        mView = inflater.inflate(R.layout.fragment_edit_target, null);
+        mEdit = mView.findViewById(R.id.editTarget);
+        mText = mView.findViewById(R.id.editTargetCat);
+        mText.setText("Please enter a target for " + catName + ":");
+        builder.setView(mView)
+                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        double newValue = Double.parseDouble(mEdit.getText().toString());
+                        Log.d("target", String.valueOf(newValue));
+                        insertOrUpdateTarget(new Target(catName, newValue));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        return builder.create();
+    }
 
     private void insertOrUpdateTarget(Target target) {
         // TODO: UI group: use this function

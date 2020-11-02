@@ -169,17 +169,21 @@ public class MainActivity extends AppCompatActivity {
         // Do manual insertion...
         Log.d("MainActivity", "Start init database");
         initDataBase();
-
+        //insertDummyData();
         open(GuideActivity.class);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void initDataBase() {
-            updateGovLocalDatabase();
-            insertUserProfile();
-            insertCategory();
-            insertRecord();
-            insertTarget();
+        updateGovLocalDatabase();
+        insertUserProfile();
+        insertCategory();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void insertDummyData() {
+        insertRecord();
+        insertTarget();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

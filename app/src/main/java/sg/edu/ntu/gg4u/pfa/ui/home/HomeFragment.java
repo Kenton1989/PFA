@@ -92,8 +92,13 @@ public class HomeFragment extends Fragment {
 
 
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.addItemBtn);
-        fab.setOnClickListener(view -> openRecordEditor());
-
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list);
+                editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
+            }
+        });
 
         return root;
     }
@@ -140,8 +145,9 @@ public class HomeFragment extends Fragment {
     public void whenDataUpdated(List<SumByCategory> newDailyCost) {
        // TODO: UI group: implement this function
         // TODO: DB group: use this function when data changes
-        //newDailyCost =new ArrayList<>();
-
+        sum_in_cat.clear();
+        cat_in_list.clear();
+        
         if (newDailyCost.size() == 0){
             //display category name .
 
