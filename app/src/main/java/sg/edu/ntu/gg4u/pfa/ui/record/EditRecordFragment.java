@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
@@ -41,22 +43,22 @@ public class EditRecordFragment extends DialogFragment {
     private View mView;
     EditText mEdit;
     Spinner mSpin;
-    int position;
-    List<String> catList;
-    String amount;
+    TextView mText;
+    Record oldRecord;
+    int spinnerPosition;
 
     private RecordViewModel mViewModel;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
-    public EditRecordFragment(List<String> catList, int position, String amount) {
-        this.amount = amount;
-        this.position = position;
-        this.catList = catList;
+    public EditRecordFragment(Record oldRecord) {
+        this.oldRecord = oldRecord;
+        this.spinnerPosition = 0;
     }
 
-    public EditRecordFragment(List<String> catList) {
-        this.catList = catList;
+    public EditRecordFragment() {
+        this.oldRecord = null;
+        this.spinnerPosition = 0;
     }
 
     @NonNull
@@ -68,14 +70,14 @@ public class EditRecordFragment extends DialogFragment {
 
         mView = inflater.inflate(R.layout.fragment_edit_record,null);
         mEdit = mView.findViewById(R.id.editRecord);
-        mEdit.setText(amount);
-        mSpin = (Spinner) mView.findViewById(R.id.targetSpinner);
-        ArrayAdapter adapter = new ArrayAdapter(mView.getContext(), android.R.layout.simple_spinner_item, catList);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        mSpin.setAdapter(adapter);
-        if (position != 0) {
-            mSpin.setSelection(position);
+        if (oldRecord != null) {
+            mEdit.setText(String.valueOf(oldRecord.getAmount()));
         }
+        else {
+            mText = mView.findViewById(R.id.editRecordTitle);
+            mText.setText("   Add Record");
+        }
+        mSpin = (Spinner) mView.findViewById(R.id.targetSpinner);
         mSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -94,8 +96,21 @@ public class EditRecordFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String catName = mSpin.getSelectedItem().toString();
                         double newValue = Double.parseDouble(mEdit.getText().toString());
-                        insertOrUpdateRecord(new Record(catName, newValue));
-                        Log.d("record", String.valueOf(newValue));
+                        if (newValue == 0) {
+                            if (oldRecord == null) {}
+                            else {
+                                deleteRecord(oldRecord);
+                            }
+                        }
+                        else {
+                            if (oldRecord == null) {
+                                oldRecord = new Record(catName, newValue);
+                            } else {
+                                oldRecord.setAmount(newValue);
+                                oldRecord.setCategoryName(catName);
+                            }
+                            insertOrUpdateRecord(oldRecord);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -130,9 +145,16 @@ public class EditRecordFragment extends DialogFragment {
         // TODO: UI group: use this function
         // TODO: DB group: implement this function
 
-        ArrayAdapter<Category> adapter = new ArrayAdapter<>(mView.getContext(), android.R.layout.simple_spinner_item, newCategoryList);
+        List<String> categoryNameList = new ArrayList<>();
+        for (int i = 0; i < newCategoryList.size(); i++) {
+            categoryNameList.add(newCategoryList.get(i).getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mView.getContext(), android.R.layout.simple_spinner_item, categoryNameList);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         mSpin.setAdapter(adapter);
+        if (oldRecord != null) {
+            mSpin.setSelection(categoryNameList.indexOf(oldRecord.getCategoryName()));
+        }
     }
 
     private void insertOrUpdateRecord(Record record) {

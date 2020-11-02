@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditRecordFragment editFrag = new EditRecordFragment(cat_in_list);
+                EditRecordFragment editFrag = new EditRecordFragment();
                 editFrag.show(getActivity().getSupportFragmentManager(), "editRec");
             }
         });
