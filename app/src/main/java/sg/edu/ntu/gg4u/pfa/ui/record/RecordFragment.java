@@ -144,7 +144,7 @@ public class RecordFragment extends Fragment {
                 int mDate = Cal.get(Calendar.DATE);
                 int mMonth = Cal.get(Calendar.MONTH);
                 int mYear = Cal.get(Calendar.YEAR);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
                         //to add in the '0' in front of single digit date, datepicker does not provide the 0
@@ -184,7 +184,7 @@ public class RecordFragment extends Fragment {
                 int mDate = Cal1.get(Calendar.DATE);
                 int mMonth = Cal1.get(Calendar.MONTH);
                 int mYear = Cal1.get(Calendar.YEAR);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
                         int month1 = month + 1;
@@ -299,7 +299,12 @@ public class RecordFragment extends Fragment {
 
         displaying_date_from = beginDate;
         displaying_date_to = endDate;
+        localDate_from = beginDate;
+        localDate_to = endDate;
         textview_displaying_date_range.setText(displaying_date_from+" ~ "+displaying_date_to);
+
+        dateTXT_from.setText(displaying_date_from.toString());
+        dateTXT_to.setText(displaying_date_to.toString());
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database

@@ -104,7 +104,7 @@
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChart"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -116,14 +116,14 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginBottom="0dp"
                 android:gravity="bottom"
-                android:text="Record List"
+                android:text="Expenditure Timeline"
                 android:textSize="24sp"
                 android:textStyle="italic" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="0dp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp"></com.github.mikephil.charting.charts.LineChart>
@@ -136,14 +136,14 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginBottom="0dp"
                 android:gravity="bottom"
-                android:text="Expenditure Distribution"
+                android:text="Expected Cost Distribution"
                 android:textSize="24sp"
                 android:textStyle="italic" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/Expchart"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="0dp"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="0dp"></com.github.mikephil.charting.charts.LineChart>

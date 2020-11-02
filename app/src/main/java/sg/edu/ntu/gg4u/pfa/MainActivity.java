@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void insertUserProfile() {
         UserProfile userProfile = new UserProfile();
-        userProfile.setName("Nameless");
+        userProfile.setName(UserProfile.NAMELESS);
         userProfile.setAge(null);
         userProfile.setFamilySize(1);
         userProfile.setGender(Gender.UNKNOWN);
