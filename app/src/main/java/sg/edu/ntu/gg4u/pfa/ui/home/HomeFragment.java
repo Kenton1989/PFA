@@ -79,15 +79,15 @@ public class HomeFragment extends Fragment {
        //Log.d("display" , cat_in_list2.toString());
 
         list = root.findViewById(R.id.listHome);
-        list.setClickable(true);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setClickable(false);
+//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " , Toast.LENGTH_LONG).show();
-            }
-        });
+ //           @Override
+ ///           public void onItemClick(AdapterView<?> parent, View view,
+  //                                  int position, long id) {
+   //             Toast.makeText(getActivity(), "You Clicked at " , Toast.LENGTH_LONG).show();
+    //        }
+    //    });
         totalExpense = root.findViewById(R.id.totalExpense_home);
 
 
