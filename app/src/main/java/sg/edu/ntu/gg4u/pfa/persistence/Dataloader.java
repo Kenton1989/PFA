@@ -68,7 +68,7 @@ public class Dataloader {
         System.out.println("Printing content...");
         for (Map.Entry<String, HashMap<String, Double>> oneEntry : hashMap.entrySet()) {
             for (Map.Entry<String, Double> val : oneEntry.getValue().entrySet()) {
-                System.out.println(oneEntry.getKey() + " " + val.getKey() + " " + val.getValue());
+                // System.out.println(oneEntry.getKey() + " " + val.getKey() + " " + val.getValue());
             }
         }
     }

@@ -1,10 +1,13 @@
 package sg.edu.ntu.gg4u.pfa.persistence;
 
+import android.util.Log;
+
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 
 public class ValueComparator implements Comparator<String> {
+    private static final String TAG = ValueComparator.class.getSimpleName();
     Map<String, Double> base;
 
     public ValueComparator(Map<String, Double> base) {
@@ -14,8 +17,8 @@ public class ValueComparator implements Comparator<String> {
     public int firstWord(String i)
     {
     	String arr[] = i.split(" ", 2);
-    	String temp = arr[0].replaceAll("[^\\d]", ""); 
-    	System.out.println(temp);
+    	String temp = arr[0].replaceAll("[^\\d]", "");
+        // Log.d(TAG, "firstWord: "+temp);
     	int result = Integer.parseInt(temp);
     	return result;
     }

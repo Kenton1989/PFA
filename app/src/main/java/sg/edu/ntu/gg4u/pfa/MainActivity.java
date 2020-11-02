@@ -261,17 +261,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void insertUserProfile() {
         UserProfile userProfile = new UserProfile();
-        userProfile.setName("Wen Zhengyu");
-        userProfile.setAge(19);
-        userProfile.setFamilySize(5);
-        userProfile.setGender(Gender.MALE);
-        userProfile.setJobField(JobField.NOT_WORKING);
-        userProfile.setIncome(500.00);
+        userProfile.setName("Nameless");
+        userProfile.setAge(null);
+        userProfile.setFamilySize(1);
+        userProfile.setGender(Gender.UNKNOWN);
+        userProfile.setJobField(JobField.UNKNOWN);
+        userProfile.setIncome(null);
 
         mDisposable.add(mViewModel.updateUserProfile(userProfile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> Log.d("MainActivity", "Database Initialization Done...")));
+                .subscribe(() -> Log.d("MainActivity", "Profile initialization done")));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)
