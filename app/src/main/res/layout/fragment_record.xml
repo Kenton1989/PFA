@@ -176,7 +176,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
         app:layout_constraintVertical_bias="0.177" />
-
+<!--
     <TextView
         android:id="@+id/record_text_tIncome"
         android:layout_width="wrap_content"
@@ -189,20 +189,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_date_bottomview"
         app:layout_constraintVertical_bias="0.145" />
-
-    <TextView
-        android:id="@+id/record_text_tExpense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total Expense :"
-        android:textSize="21sp"
-        app:layout_constraintBottom_toTopOf="@+id/record_list_upview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.118"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
-        app:layout_constraintVertical_bias="0.934" />
-
+-->
+    <!--
     <TextView
         android:id="@+id/record_mnthIncome"
         android:layout_width="wrap_content"
@@ -214,6 +202,20 @@
         app:layout_constraintHorizontal_bias="0.579"
         app:layout_constraintStart_toEndOf="@+id/record_text_tIncome"
         app:layout_constraintTop_toBottomOf="@+id/record_date_bottomview" />
+-->
+
+    <TextView
+        android:id="@+id/record_text_tExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Expense :"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toTopOf="@+id/record_list_upview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.132"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/record_date_upview"
+        app:layout_constraintVertical_bias="0.828" />
 
     <TextView
         android:id="@+id/record_mnthExpense"
@@ -223,10 +225,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/record_list_upview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.595"
+        app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toEndOf="@+id/record_text_tExpense"
         app:layout_constraintTop_toBottomOf="@+id/record_date_bottomview"
-        app:layout_constraintVertical_bias="0.808" />
+        app:layout_constraintVertical_bias="0.491" />
 
     <View
         android:id="@+id/record_list_upview"

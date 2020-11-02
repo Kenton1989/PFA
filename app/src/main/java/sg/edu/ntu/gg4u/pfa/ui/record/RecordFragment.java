@@ -80,6 +80,8 @@ public class RecordFragment extends Fragment {
     LocalDate localDate_from;
     LocalDate localDate_to;
 
+    private static String datez1;
+    private static String datez2;
 
     ListView list;
 
@@ -119,6 +121,9 @@ public class RecordFragment extends Fragment {
     Category category = new Category();
     Activity activity;
 
+    public RecordFragment() {
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -149,10 +154,11 @@ public class RecordFragment extends Fragment {
         final TextView todaydate = root.findViewById(R.id.record_current_date);
         todaydate.setText(date_n);
 
-        record_go_btn = root.findViewById(R.id.record_go_btn);
+        record_go_btn = root.findViewById(R.id.record_go_btn) ;
+        /*
         tv_userIncome = root.findViewById(R.id.record_mnthIncome);
         tv_userIncome.setText(String.valueOf(getUserProfile().getIncome()));
-
+*/
         tv_totalExpense = root.findViewById(R.id.record_mnthExpense);
         tv_amount = root.findViewById(R.id.recordlist_amnt);
         tv_categoryName = root.findViewById(R.id.recordlist_category);
@@ -195,13 +201,16 @@ public class RecordFragment extends Fragment {
                         if (date < 10) {
                             fd = "0" + date;
                         }
-                        String datez = "" + year + "-" + fm + "-" + fd;
 
-                        dateTXT_from.setText(datez);
+                        //String datez = "" + year + "-" + fm + "-" + fd;
+                        datez1= ""+year+"-"+fm+"-"+fd;
+
+                        dateTXT_from.setText(datez1);
                         //dateTXT_from.setText(date + "-" + (month + 1) + "-" + year);
                         // String fulldate1 = (year + "-" + (month + 1) + "-" + date);
                         //dateTXT_from.setText(fulldate1);
-                        localDate_from = LocalDate.parse((datez), formatter);
+                        // localDate_from = LocalDate.parse((datez), formatter);
+                        localDate_from = LocalDate.parse((datez1), formatter);
 
 
                     }
@@ -233,14 +242,23 @@ public class RecordFragment extends Fragment {
                         if (date < 10) {
                             fd = "0" + date;
                         }
-                        String datez = "" + year + "-" + fm + "-" + fd;
-                        dateTXT_to.setText(datez);
+
+                        // String datez = "" + year + "-" + fm + "-" + fd;
+                        // dateTXT_to.setText(datez);
+                        // //dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
+                        // //String fulldate2 = (year + "-" + (month + 1) + "-" + date);
+                        // //dateTXT_to.setText(fulldate2);
+                        // localDate_to = LocalDate.parse(datez, formatter);
+
+                        // if (datez.isEmpty()) {
+                        datez2= ""+year+"-"+fm+"-"+fd;
+                        dateTXT_to.setText(datez2);
                         //dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
                         //String fulldate2 = (year + "-" + (month + 1) + "-" + date);
                         //dateTXT_to.setText(fulldate2);
-                        localDate_to = LocalDate.parse(datez, formatter);
+                        localDate_to = LocalDate.parse(datez2 , formatter);
 
-                        if (datez.isEmpty()) {
+                        if (datez2.isEmpty()){
                             record_go_btn.setEnabled(false);
                         } else {
                             record_go_btn.setEnabled(true);
@@ -328,13 +346,13 @@ public class RecordFragment extends Fragment {
 
 
         if (selectedCategory == null) {
-            mDisposable.add(mViewModel.getRecord(beginDate.atStartOfDay(), endDate.atStartOfDay())
+            mDisposable.add(mViewModel.getRecord(beginDate.atStartOfDay(), endDate.atStartOfDay().plus(Duration.ofDays(1)))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::whenRecordListUpdated));
         } else {
             mDisposable.add(mViewModel.getRecordByCategory
-                    (beginDate.atStartOfDay(), endDate.atStartOfDay(), selectedCategory.getName())
+                    (beginDate.atStartOfDay(), endDate.atStartOfDay().plus(Duration.ofDays(1)), selectedCategory.getName())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::whenRecordListUpdated));
