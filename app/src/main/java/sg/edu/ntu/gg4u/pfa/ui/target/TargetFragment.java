@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -92,7 +93,7 @@ public class TargetFragment extends Fragment {
     double [] temp_cost;
     double [] temp_target;
     View help;
-    Activity activity;
+    FragmentActivity activity;
 
 
     ListView list;
@@ -153,7 +154,7 @@ public class TargetFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 EditTargetFragment editFrag = new EditTargetFragment(cat_in_list.get(position));
-                editFrag.show(getActivity().getSupportFragmentManager(), "editTar");
+                editFrag.show(activity.getSupportFragmentManager(), "editTar");
             }
         });
 
@@ -303,26 +304,26 @@ public class TargetFragment extends Fragment {
         target_in_cat.clear();
         amt_in_cat.clear();
 
-        boolean check = true;
-        for (int i = 0; i < targetAndCosts.size(); i++) {
-            if (targetAndCosts.get(i).cost == 0) {}
-            else {
-                check =  false;
-            }
-            if (check) {
-                decT.setClickable(false);
-                decT.setVisibility(View.INVISIBLE);
-                Toast.makeText(getContext(), "No prior data available", Toast.LENGTH_SHORT).show();
-                getActivity().findViewById(R.id.linearLayout3).setVisibility(View.GONE);
-                getActivity().findViewById(R.id.listViewTarget).setVisibility(View.GONE);
-            }
-            else {
-                decT.setClickable(true);
-                decT.setVisibility(View.VISIBLE);
-                getActivity().findViewById(R.id.linearLayout3).setVisibility(View.VISIBLE);
-                getActivity().findViewById(R.id.listViewTarget).setVisibility(View.VISIBLE);
-            }
-        }
+//        boolean check = true;
+//        for (int i = 0; i < targetAndCosts.size(); i++) {
+//            if (targetAndCosts.get(i).cost == 0) {}
+//            else {
+//                check =  false;
+//            }
+//            if (check) {
+//                decT.setClickable(false);
+//                decT.setVisibility(View.INVISIBLE);
+//                Toast.makeText(getContext(), "No data available", Toast.LENGTH_SHORT).show();
+//                activity.findViewById(R.id.linearLayout3).setVisibility(View.GONE);
+//                activity.findViewById(R.id.listViewTarget).setVisibility(View.GONE);
+//            }
+//            else {
+//                decT.setClickable(true);
+//                decT.setVisibility(View.VISIBLE);
+//                activity.findViewById(R.id.linearLayout3).setVisibility(View.VISIBLE);
+//                activity.findViewById(R.id.listViewTarget).setVisibility(View.VISIBLE);
+//            }
+//        }
         Log.d(TAG, "whenTargetAndCostChanged: targets number: "+targetAndCosts.size());
 
         for (TargetAndCost targetObj :targetAndCosts){
