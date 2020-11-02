@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         // Do manual insertion...
         Log.d("MainActivity", "Start init database");
         initDataBase();
-        //insertDummyData();
+        insertDummyData();
         open(GuideActivity.class);
     }
 
