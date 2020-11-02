@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Arrays;
 
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,8 +37,6 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     private String[] academicQualifications;
 //    String[] income = {"1000-2000", "2000-3000", "3000-4000", "4000-5000", "above 5000", "no income"};
 //    String[] familySize = {"1", "2", "3", "4", "5", "above 5"};
-
-    private ViewModelFactory mViewModelFactory;
 
     private ProfileViewModel mViewModel;
 
@@ -64,11 +65,11 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
         confirmButton = (Button) findViewById(R.id.profileConfirm);
         spinGender = (Spinner) findViewById(R.id.gender_spinner);
         spinJob = (Spinner) findViewById(R.id.job_spinner);
-        spinAcademicQualification =(Spinner) findViewById(R.id.academicQualification_spinner);
+        spinAcademicQualification = (Spinner) findViewById(R.id.academicQualification_spinner);
         textEditIncome = (EditText) findViewById(R.id.income_edittext);
         textEditFamSize = (EditText) findViewById(R.id.family_size_edittext);
         textEditName = (EditText) findViewById(R.id.nameEdit);
-        textEditAge= (EditText) findViewById(R.id.age_editText);
+        textEditAge = (EditText) findViewById(R.id.age_editText);
 
         spinGender.setOnItemSelectedListener(this);
         spinJob.setOnItemSelectedListener(this);
@@ -95,7 +96,7 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
         confirmButton.setOnClickListener(this::onConfirmClicked);
 
-        mViewModelFactory = Injection.provideViewModelFactory(this);
+        ViewModelFactory mViewModelFactory = Injection.provideViewModelFactory(this);
         mViewModel = new ViewModelProvider(this, mViewModelFactory)
                 .get(ProfileViewModel.class);
 
@@ -104,6 +105,11 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onStart() {
         super.onStart();
+
+        mDisposable.add(mViewModel.getUserProfile()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::whenProfileChanged));
     }
 
     @Override
@@ -126,12 +132,32 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
 
     }
 
+    private void whenProfileChanged(UserProfile newProfile) {
+        textEditIncome.setText(String.valueOf(newProfile.getIncome()));
+        textEditFamSize.setText(String.valueOf(newProfile.getFamilySize()));
+        textEditName.setText(String.valueOf(newProfile.getName()));
+        textEditAge.setText(String.valueOf(newProfile.getAge()));
+
+        spinGender.setSelection(search(genders, newProfile.getGender().getFullName()));
+        spinJob.setSelection(search(jobs, newProfile.getJobField().getFullName()));
+        spinAcademicQualification.setSelection(search(academicQualifications, newProfile.getQualification().getFullName()));
+    }
+
+    private int search(String[] array, String value) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(value)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void updateProfile(UserProfile newUserProfile) {
         confirmButton.setEnabled(false);
         mDisposable.add(mViewModel.updateUserProfile(newUserProfile)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(()->confirmButton.setEnabled(true)));
+                .subscribe(() -> confirmButton.setEnabled(true)));
     }
 
     private void printToast(String text) {
