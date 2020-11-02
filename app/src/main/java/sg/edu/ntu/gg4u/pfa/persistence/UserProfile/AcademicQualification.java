@@ -1,6 +1,8 @@
 package sg.edu.ntu.gg4u.pfa.persistence.UserProfile;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 public enum AcademicQualification {
     UNKNOWN("unknown"),
@@ -52,8 +54,14 @@ public enum AcademicQualification {
     }
 
     public static String[] getAllAcademicQualification() {
-        String[] ret = new String[0];
-        ret = str2AQ.keySet().toArray(ret);
+        Map.Entry<String, AcademicQualification>[] entrys = new Map.Entry[0];
+        entrys = str2AQ.entrySet().toArray(entrys);
+        Arrays.sort(entrys, (a, b)->(a.getValue().compareTo(b.getValue())));
+
+        String[] ret = new String[entrys.length];
+        for (int i = 0; i < entrys.length; i++) {
+            ret[i] = entrys[i].getKey();
+        }
         return ret;
     }
 }
