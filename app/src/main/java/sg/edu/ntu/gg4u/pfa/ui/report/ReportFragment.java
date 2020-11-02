@@ -1,5 +1,6 @@
 package sg.edu.ntu.gg4u.pfa.ui.report;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.app.DatePickerDialog;
 import android.os.Build;
@@ -107,6 +108,9 @@ public class ReportFragment extends Fragment {
     LineChart ExpChart;
     LineChartVisualizer lcv;
     ExpenditureLineChart ecv;
+
+    private Activity activity;
+
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     //LineChart lineChart;
@@ -168,7 +172,7 @@ public class ReportFragment extends Fragment {
 
 
        // CustomListReport adapter = new
-       //         CustomListReport(getActivity(), cat_in_list, percent_in_list, sugg_in_list);
+       //         CustomListReport(activity, cat_in_list, percent_in_list, sugg_in_list);
         list = root.findViewById(R.id.report_listView);
         //list.setAdapter(adapter);
       /*  list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -176,7 +180,7 @@ public class ReportFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "You Clicked at " + cat_in_list.get(+position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "You Clicked at " + cat_in_list.get(+position), Toast.LENGTH_SHORT).show();
             }
         });*/
 
@@ -188,7 +192,9 @@ public class ReportFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ViewModelFactory factory = Injection.provideViewModelFactory(this.getActivity());
+        activity = getActivity();
+
+        ViewModelFactory factory = Injection.provideViewModelFactory(activity);
         mViewModel = new ViewModelProvider(this, factory)
                 .get(ReportViewModel.class);
     }
@@ -261,7 +267,7 @@ public class ReportFragment extends Fragment {
         }
 
         CustomListReport adapter = new
-                CustomListReport(getActivity(), t_cat_in_list , t_amount_in_list);
+                CustomListReport(activity, t_cat_in_list , t_amount_in_list);
         list.setAdapter(adapter);
 
         // TODO: DB group: call this function when data changes
@@ -329,7 +335,7 @@ public class ReportFragment extends Fragment {
 
 /*
         CustomList adapter = new
-                CustomList(getActivity(), cat_in_list, percent_in_list, sugg_in_list);;
+                CustomList(activity, cat_in_list, percent_in_list, sugg_in_list);;
         list.setAdapter(adapter);
 */
         // TODO: DB group: call this function when data changes
@@ -339,7 +345,7 @@ public class ReportFragment extends Fragment {
     void whenUserProfileChanged(UserProfile newProfile) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        Predictor p = new Predictor(getContext());
+        Predictor p = new Predictor(activity);
         UserProfile up = newProfile;
 
         // Get Prediction Result
@@ -368,7 +374,7 @@ public class ReportFragment extends Fragment {
 
         //set the data for category prediction
         CustomListReport adapter = new
-                CustomListReport(getActivity(), t_cat_in_list, t_amount_in_list);
+                CustomListReport(activity, t_cat_in_list, t_amount_in_list);
         list.setAdapter(adapter);
 
 
