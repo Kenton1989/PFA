@@ -63,7 +63,8 @@ public abstract class Database extends RoomDatabase {
                 new GuideInfo(3, R.drawable.guide_img_3, R.string.guide_intro_3),
                 new GuideInfo(4, R.drawable.guide_img_4, R.string.guide_intro_4),
                 new GuideInfo(5, R.drawable.guide_img_5, R.string.guide_intro_5),
-                new GuideInfo(6, R.drawable.guide_img_6, R.string.guide_intro_6)
+                new GuideInfo(6, R.drawable.guide_img_6, R.string.guide_intro_6),
+                new GuideInfo(7,R.drawable.ic_profile_dark, R.string.guide_intro_7)
         };
     }
 

@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
         UserProfile userProfile = new UserProfile();
         userProfile.setName(UserProfile.NAMELESS);
         userProfile.setAge(null);
-        userProfile.setFamilySize(1);
+        userProfile.setFamilySize(null);
         userProfile.setGender(Gender.UNKNOWN);
         userProfile.setJobField(JobField.UNKNOWN);
         userProfile.setIncome(null);
