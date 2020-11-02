@@ -1,10 +1,12 @@
 package sg.edu.ntu.gg4u.pfa.ui.report;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Sampler;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,8 +77,10 @@ import sg.edu.ntu.gg4u.pfa.persistence.Dataloader;
 
 public class ReportFragment extends Fragment {
 
-
+    Calendar cal2;
+    SimpleDateFormat month_date2;
     ListView list;
+    ImageButton dec, inc;
 
     List<Record> r;
     List<String> cat_in_list = new ArrayList<>();
@@ -126,12 +130,14 @@ public class ReportFragment extends Fragment {
 
 
 
-        ImageButton dec, inc;
+
 
         final TextView month = root.findViewById(R.id.report_month);
         final Calendar cal = Calendar.getInstance();
-
         final SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
+        cal2 = cal;
+        month_date2 = month_date;
+
         String selectedMonth = month_date.format(cal.getTime());
         month.setText(selectedMonth);
 
@@ -146,6 +152,19 @@ public class ReportFragment extends Fragment {
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
                resetMonth(cal);
+                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+                currentMonth = currentMonth.toLowerCase();
+                Log.d("datehelp", currentMonth);
+                Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
+                if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+                {
+                    inc.setClickable(false);
+                    inc.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    inc.setClickable(true);
+                    inc.setVisibility(View.VISIBLE);
+                }
 
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData, "temp chart");
@@ -154,7 +173,23 @@ public class ReportFragment extends Fragment {
         });
         cal.getTime();
 
+        String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+        currentMonth = currentMonth.toLowerCase();
+        Log.d("datehelp", currentMonth);
+        Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
+        if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+        {
+            inc.setClickable(false);
+            inc.setVisibility(View.INVISIBLE);
+        }
+        else {
+            inc.setClickable(true);
+            inc.setVisibility(View.VISIBLE);
+        }
+
+
         inc.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
@@ -162,6 +197,20 @@ public class ReportFragment extends Fragment {
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
                 resetMonth(cal);
+                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+                currentMonth = currentMonth.toLowerCase();
+                Log.d("datehelp", currentMonth);
+                Log.d("datehelp", month_date.format(cal.getTime()).toLowerCase());
+                if ( month_date.format(cal.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+                {
+                    inc.setClickable(false);
+                    inc.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    inc.setClickable(true);
+                    inc.setVisibility(View.VISIBLE);
+                }
+
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData2, "temp chart");
                 //pcv.drawPie(pieChart, labels2, data2);
@@ -272,10 +321,21 @@ public class ReportFragment extends Fragment {
         // TODO: DB group: call this function when data changes
     }*/
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     void whenMonthlyCostSumUpdated(List<SumByCategory> newMonthlyCost) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
 
+        if (newMonthlyCost.isEmpty()) {
+            dec.setClickable(false);
+            dec.setVisibility(View.INVISIBLE);
+            Toast.makeText(getContext(), "No prior data available", Toast.LENGTH_SHORT).show();
+            getActivity().findViewById(R.id.report_scrollView).setVisibility(View.GONE);
+        }
+        if (!newMonthlyCost.isEmpty()) {
+            dec.setClickable(true);
+            dec.setVisibility(View.VISIBLE);
+        }
         for (SumByCategory catSum : newMonthlyCost) {
             sum_in_cat.add(catSum.sum);
             cat_in_list.add(catSum.categoryName);
