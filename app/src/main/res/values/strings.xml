@@ -12,6 +12,18 @@
     <string name="expenseAmount">1000</string>
     <string name="transportCat">Transportation</string>
     <string name="transportAmount">25</string>
+<<<<<<< Updated upstream
+=======
+
+    <string name="guide_intro_1">Home Page: View all the expense for different categories</string>
+    <string name="guide_intro_2">Category Management: Add or remove custom category</string>
+    <string name="guide_intro_3">Record Page: View all records within certain time frame</string>
+    <string name="guide_intro_4">Target Page: View expense compared to set target </string>
+    <string name="guide_intro_5">Report Page: View monthly report</string>
+    <string name="guide_intro_6">Report Page: View prediction based on your income</string>
+
+    <string name="buttonProfile">Edit</string>
+>>>>>>> Stashed changes
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_guide">GuideActivity</string>
