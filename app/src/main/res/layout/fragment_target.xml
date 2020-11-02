@@ -195,6 +195,8 @@
         android:id="@+id/listViewTarget"
         android:layout_width="match_parent"
         android:layout_height="265dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:descendantFocusability="blocksDescendants"
         android:paddingTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"

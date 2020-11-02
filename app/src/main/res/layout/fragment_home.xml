@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="Total Expense :"
+                    android:text="Total Expense Today :"
                     android:textSize="20sp"
                     tools:ignore="MissingConstraints" />
                 <TextView
@@ -80,34 +80,19 @@
 
           </RelativeLayout>
 
-          <ScrollView
-
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-
-              <RelativeLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
-
-                  <ListView
-                      android:id="@+id/listHome"
-                      android:layout_width="match_parent"
-                      android:layout_height="590dp"
-                      android:divider="@null"
-                      android:dividerHeight="0dp"
-                      android:paddingLeft="10dp"
-                      android:descendantFocusability="blocksDescendants">
+        <ListView
+            android:id="@+id/listHome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:paddingLeft="10dp">
 
 
-                  </ListView>
+        </ListView>
 
-              </RelativeLayout>
-
-          </ScrollView>
-
-      </LinearLayout>
+    </LinearLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
