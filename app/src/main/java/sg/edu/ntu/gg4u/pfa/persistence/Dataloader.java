@@ -176,9 +176,11 @@ public class Dataloader {
             } catch (IOException e) {
                 printToast("Network failure.\nCannot load data from data.gov.sg.");
                 Log.e(DATA_LOADER_TAG, Log.getStackTraceString(e));
+                return;
             } catch (JSONException e) {
                 printToast("Cannot parse data from data.gov.sg as JSON.");
                 Log.e(DATA_LOADER_TAG, Log.getStackTraceString(e));
+                return;
             }
             doOnFinishLoad.run();
         };
