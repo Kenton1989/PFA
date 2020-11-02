@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
@@ -56,6 +57,7 @@ public class CustomListCategory extends ArrayAdapter<Category>{
                 public void onClick(View v) {
                     Log.d(TAG, "onClick: "+position+" "+catList.get(position).getName());
                     deleteCategory(catList.get(position));
+                    Toast.makeText(parent.getContext(), "Category deleted!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
