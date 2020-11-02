@@ -62,6 +62,11 @@ public class EditRecordFragment extends DialogFragment {
         this.spinnerPosition = 0;
     }
 
+    public EditRecordFragment(String category) {
+        this.oldRecord = new Record(category, -1);
+        this.spinnerPosition = 0;
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -71,7 +76,7 @@ public class EditRecordFragment extends DialogFragment {
 
         mView = inflater.inflate(R.layout.fragment_edit_record,null);
         mEdit = mView.findViewById(R.id.editRecord);
-        if (oldRecord != null) {
+        if (oldRecord != null && oldRecord.getAmount() >= 0) {
             mEdit.setText(String.valueOf(oldRecord.getAmount()));
         }
         else {
@@ -154,6 +159,7 @@ public class EditRecordFragment extends DialogFragment {
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(mView.getContext(), android.R.layout.simple_spinner_item, categoryNameList);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+
         mSpin.setAdapter(adapter);
         if (oldRecord != null) {
             mSpin.setSelection(categoryNameList.indexOf(oldRecord.getCategoryName()));
