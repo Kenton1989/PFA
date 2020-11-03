@@ -354,10 +354,11 @@ public class ReportFragment extends Fragment {
 
         //Create a treemap for sorted list of distribution
         ValueComparator vc = new ValueComparator(expenditurePrediction);
-        TreeMap<String, Double> sortedExpediture = new TreeMap<String, Double>(vc);
-        sortedExpediture.putAll(expenditurePrediction);
+        TreeMap<String, Double> sortedExpenditure = new TreeMap<String, Double>(vc);
+        sortedExpenditure.putAll(expenditurePrediction);
+
         //to store all the values for prediction
-        ArrayList<Double> prediction = new ArrayList<Double>(p.getValue(sortedExpediture));
+        ArrayList<Double> prediction = new ArrayList<Double>(p.getValue(sortedExpenditure));
 
         // update expenditure chart
         ecv = new ExpenditureLineChart();

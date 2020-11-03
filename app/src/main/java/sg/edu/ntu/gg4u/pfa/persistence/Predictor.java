@@ -61,8 +61,8 @@ public class Predictor {
         Integer intVal = value.intValue();
         if (intVal < 1000)
             intVal = 0;
-        else if (intVal > 20000)
-            intVal = 20000;
+        else if (intVal > 15000)
+            intVal = 15000;
         else if (intVal > 12000)
             intVal = 12000;
         else if (intVal > 6000)
@@ -177,20 +177,17 @@ public class Predictor {
 
         HashMap<String, Double> prediction = new HashMap<>();
 
-        DecimalFormat df = new DecimalFormat("0.00");
-
         BigDecimal bd;
         double cat;
 
         for (String category : categorySet) {
-           bd =  new BigDecimal(jobFieldPrediction.get(category) * 0.24 +
+           bd = BigDecimal.valueOf(jobFieldPrediction.get(category) * 0.24 +
                    AQPrediction.get(category) * 0.36 +
                    agePrediction.get(category) * 0.4).setScale(3, RoundingMode.HALF_UP);
 
            cat = bd.doubleValue();
 
-            prediction.put(category,
-                    cat);
+            prediction.put(category, cat);
         }
         prediction.remove("TOTAL");
         return prediction;
@@ -198,12 +195,12 @@ public class Predictor {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     public HashMap<String, Double> predictDistributionByIncomeGroup(UserProfile userProfile) {
-        HashMap<String, Double> distribution = new HashMap<String, Double>();
         String income = userProfile.getIncome() == null ?
                 "Total" : userProfile.getIncome().toString();
 
         income = income2key(income);
-        distribution.putAll(Objects.requireNonNull(readSer("Income Group", income)));
+        HashMap<String, Double> distribution =
+                new HashMap<>(Objects.requireNonNull(readSer("Income Group", income)));
 
         Double obj = distribution.remove("Below 1,000");
         distribution.put("0 - 1,000", obj);
