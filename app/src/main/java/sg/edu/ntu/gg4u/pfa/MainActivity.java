@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         // Do manual insertion...
         Log.d("MainActivity", "Start init database");
         initDataBase();
-        //insertDummyData();
+        insertDummyData();
         open(GuideActivity.class);
     }
 
@@ -261,9 +261,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void insertUserProfile() {
         UserProfile userProfile = new UserProfile();
-        userProfile.setName("Nameless");
+        userProfile.setName(UserProfile.NAMELESS);
         userProfile.setAge(null);
-        userProfile.setFamilySize(1);
+        userProfile.setFamilySize(null);
         userProfile.setGender(Gender.UNKNOWN);
         userProfile.setJobField(JobField.UNKNOWN);
         userProfile.setIncome(null);

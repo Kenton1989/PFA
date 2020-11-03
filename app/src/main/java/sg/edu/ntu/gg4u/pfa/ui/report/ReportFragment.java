@@ -1,92 +1,62 @@
 package sg.edu.ntu.gg4u.pfa.ui.report;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Color;
-import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.*;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
-import sg.edu.ntu.gg4u.pfa.persistence.Record.LocalDateTimeConverter;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.SumByCategory;
-import sg.edu.ntu.gg4u.pfa.persistence.Target.Target;
-import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.AcademicQualification;
-import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.Gender;
-import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.JobField;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.persistence.ValueComparator;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
-import sg.edu.ntu.gg4u.pfa.ui.record.CustomList;
-import sg.edu.ntu.gg4u.pfa.ui.record.RecordViewModel;
 import sg.edu.ntu.gg4u.pfa.visualizer.ExpenditureLineChart;
 import sg.edu.ntu.gg4u.pfa.visualizer.LineChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.visualizer.PieChartVisualizer;
 import sg.edu.ntu.gg4u.pfa.persistence.Predictor;
-import sg.edu.ntu.gg4u.pfa.persistence.Dataloader;
 
 public class ReportFragment extends Fragment {
     private static final String TAG = ReportFragment.class.getSimpleName();
 
+    ImageButton dec, inc;
     ListView list;
 
-    List<Record> r;
+    List<Record> recordList;
     List<String> cat_in_list = new ArrayList<>();
     List<String> dates_in_list = new ArrayList<>();
     List<String> amount_in_list = new ArrayList<>();
-    List<String> t_start_date_list = new ArrayList<>();
     List<String> t_cat_in_list = new ArrayList<>();
     List<String> t_amount_in_list = new ArrayList<>();
-    List<String> t_target_in_cat = new ArrayList<>();
     List<String> percent_in_list = new ArrayList<>();
     List<String> sugg_in_list = new ArrayList<>();
     List<Double> sum_in_cat = new ArrayList<>();
@@ -102,11 +72,9 @@ public class ReportFragment extends Fragment {
     private ReportViewModel mViewModel;
 
     PieChart pieChart;
-    PieChartVisualizer pcv;
 
     LineChart lineChart;
     LineChart ExpChart;
-    LineChartVisualizer lcv;
     ExpenditureLineChart ecv;
 
     private Activity activity;
@@ -127,13 +95,10 @@ public class ReportFragment extends Fragment {
 
         ExpChart = (LineChart) root.findViewById(R.id.Expchart);
 
-
-        ImageButton dec, inc;
-
         final TextView month = root.findViewById(R.id.report_month);
         final Calendar cal = Calendar.getInstance();
 
-        final SimpleDateFormat month_date = new SimpleDateFormat("MMMM yyyy");
+        final SimpleDateFormat month_date = new SimpleDateFormat("MMM yyyy");
         String selectedMonth = month_date.format(cal.getTime());
         month.setText(selectedMonth);
 
@@ -154,7 +119,6 @@ public class ReportFragment extends Fragment {
                 //pcv.drawPie(pieChart, labels, data);
             }
         });
-        cal.getTime();
 
         inc.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -164,27 +128,14 @@ public class ReportFragment extends Fragment {
                 String selectedMonth = month_date.format(cal.getTime());
                 month.setText(selectedMonth);
                 resetMonth(cal);
+
                 //to re-insert then add the data into the charts again
                 //lcv.createLine(lineChart, tempData2, "temp chart");
                 //pcv.drawPie(pieChart, labels2, data2);
             }
         });
 
-
-       // CustomListReport adapter = new
-       //         CustomListReport(activity, cat_in_list, percent_in_list, sugg_in_list);
         list = root.findViewById(R.id.report_listView);
-        //list.setAdapter(adapter);
-      /*  list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(activity, "You Clicked at " + cat_in_list.get(+position), Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-
         return root;
     }
 
@@ -224,12 +175,25 @@ public class ReportFragment extends Fragment {
         pieChart.clear();
         lineChart.refreshDrawableState();
         pieChart.refreshDrawableState();
-        cat_in_list = new ArrayList<>();
-        dates_in_list = new ArrayList<>();
-        amount_in_list = new ArrayList<>();
-        percent_in_list = new ArrayList<>();
-        sugg_in_list = new ArrayList<>();
-        sum_in_cat = new ArrayList<>();
+        cat_in_list.clear();;
+        dates_in_list.clear();
+        amount_in_list.clear();
+        percent_in_list.clear();
+        sugg_in_list.clear();
+        sum_in_cat.clear();
+
+        Calendar currentCal = Calendar.getInstance();
+
+        if (calendar.get(Calendar.MONTH) == currentCal.get(Calendar.MONTH) &&
+            calendar.get(Calendar.YEAR) == currentCal.get(Calendar.YEAR))
+        {
+            inc.setClickable(false);
+            inc.setVisibility(View.INVISIBLE);
+        }
+        else {
+            inc.setClickable(true);
+            inc.setVisibility(View.VISIBLE);
+        }
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database
@@ -277,7 +241,10 @@ public class ReportFragment extends Fragment {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
 
+        boolean existData = false;
+      
         for (SumByCategory catSum : newMonthlyCost) {
+            existData = existData || catSum.sum > 0;
             sum_in_cat.add(catSum.sum);
             cat_in_list.add(catSum.categoryName);
         }
@@ -300,10 +267,12 @@ public class ReportFragment extends Fragment {
         }
 
 
-        PieChartVisualizer pcv = new PieChartVisualizer();
         pieChart.clear();
 
-        pcv.drawPie(pieChart, cat_and_total, sum_in_cat_float);
+        if (existData) {
+            PieChartVisualizer pcv = new PieChartVisualizer();
+            pcv.drawPie(pieChart, cat_and_total, sum_in_cat_float);
+        }
 
 
         // TODO: DB group: call this function when data changes
@@ -312,26 +281,41 @@ public class ReportFragment extends Fragment {
     void whenRecordListUpdated(List<Record> newRecords) {
         // this function will be called when the fragment is created.
         // TODO: UI group: implement this function
-        r = newRecords;
-
-        for (Record recordObj : newRecords) {
-            Log.d(recordObj.toString(), "test");
-            String str_date = (String.valueOf(recordObj.timestamp).substring(0, 10));
-            dates_in_list.add(str_date);
-            cat_in_list.add(recordObj.categoryName);
-            amount_in_list.add(String.valueOf(recordObj.amount));
+//        recordList = newRecords;
+//
+//        for (Record recordObj : newRecords) {
+////            Log.d(recordObj.toString(), "test");
+//            String str_date = (String.valueOf(recordObj.timestamp).substring(0, 10));
+//            dates_in_list.add(str_date);
+//            cat_in_list.add(recordObj.categoryName);
+//            amount_in_list.add(String.valueOf(recordObj.amount));
+//        }
+//
+        if (newRecords.isEmpty()) {
+            lineChart.clear();
+            lineChart.notifyDataSetChanged();
+            return;
         }
 
-        float[] amount_in_list_float = new float[amount_in_list.size()];
-        int i = 0;
-        for (String value : amount_in_list) {
-            amount_in_list_float[i++] = Float.valueOf(value);
+        LocalDate begDate = newRecords.get(0).getTimestamp().toLocalDate().withDayOfMonth(1);
+        LocalDate endDate = (LocalDate) min(LocalDate.now(), begDate.plusMonths(1).minusDays(1));
+        endDate = (LocalDate) max(endDate, newRecords.get(0).getTimestamp().toLocalDate());
+        int totalDisplayedDays = (int) begDate.until(endDate, ChronoUnit.DAYS) + 1;
+        
+        Log.d(TAG, "whenRecordListUpdated: begDate="+begDate);
+        Log.d(TAG, "whenRecordListUpdated: endDate="+endDate);
+        Log.d(TAG, "whenRecordListUpdated: Current Month has "+totalDisplayedDays+" days.");
+        float[] amount_in_list_float = new float[totalDisplayedDays];
+
+        for (Record record: newRecords) {
+            Log.d(TAG, "whenRecordListUpdated: record date"+record.getTimestamp());
+            int dayInMonth = record.getTimestamp().toLocalDate().getDayOfMonth();
+            amount_in_list_float[dayInMonth-1] += record.getAmount();
         }
 
-
-        lcv = new LineChartVisualizer();
+        LineChartVisualizer lcv = new LineChartVisualizer();
         lineChart.clear();
-        lcv.createLine(lineChart, amount_in_list_float, "temp chart");
+        lcv.createLine(lineChart, amount_in_list_float, "daily expenditure");
 
 /*
         CustomList adapter = new
@@ -339,6 +323,18 @@ public class ReportFragment extends Fragment {
         list.setAdapter(adapter);
 */
         // TODO: DB group: call this function when data changes
+    }
+
+    private <T extends Comparable<T>> T min(T obj1, T obj2) {
+        if (obj2.compareTo(obj1) < 0)
+            return obj2;
+        return obj1;
+    }
+
+    private <T extends Comparable<T>> T max(T obj1, T obj2) {
+        if (obj2.compareTo(obj1) > 0)
+            return obj2;
+        return obj1;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.R)

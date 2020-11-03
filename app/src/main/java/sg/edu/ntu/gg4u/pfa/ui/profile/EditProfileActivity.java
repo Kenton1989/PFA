@@ -133,10 +133,14 @@ public class EditProfileActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void whenProfileChanged(UserProfile newProfile) {
-        textEditIncome.setText(String.valueOf(newProfile.getIncome()));
-        textEditFamSize.setText(String.valueOf(newProfile.getFamilySize()));
-        textEditName.setText(String.valueOf(newProfile.getName()));
-        textEditAge.setText(String.valueOf(newProfile.getAge()));
+        if (newProfile.getIncome() != null)
+            textEditIncome.setText(String.valueOf(newProfile.getIncome()));
+        if (newProfile.getFamilySize() != null)
+            textEditFamSize.setText(String.valueOf(newProfile.getFamilySize()));
+        if (newProfile.getName() != null && !newProfile.getName().equals(UserProfile.NAMELESS))
+            textEditName.setText(String.valueOf(newProfile.getName()));
+        if (newProfile.getAge() != null)
+            textEditAge.setText(String.valueOf(newProfile.getAge()));
 
         spinGender.setSelection(search(genders, newProfile.getGender().getFullName()));
         spinJob.setSelection(search(jobs, newProfile.getJobField().getFullName()));

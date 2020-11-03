@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -71,6 +72,7 @@ public class EditTargetFragment extends DialogFragment {
                         double newValue = Double.parseDouble(mEdit.getText().toString());
                         Log.d("target", String.valueOf(newValue));
                         insertOrUpdateTarget(new Target(catName, newValue));
+                        Toast.makeText(getActivity(), "Target updated!", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,26 +19,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,18 +38,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.text.DecimalFormat;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import sg.edu.ntu.gg4u.pfa.R;
 import sg.edu.ntu.gg4u.pfa.persistence.Category.Category;
 import sg.edu.ntu.gg4u.pfa.persistence.UserProfile.UserProfile;
 import sg.edu.ntu.gg4u.pfa.persistence.Record.Record;
-import sg.edu.ntu.gg4u.pfa.ui.target.EditTargetFragment;
 import sg.edu.ntu.gg4u.pfa.ui.Injection;
 import sg.edu.ntu.gg4u.pfa.ui.ViewModelFactory;
 
@@ -77,47 +64,21 @@ public class RecordFragment extends Fragment {
     List<String> cat_in_list = new ArrayList<>();
     List<String> dates_in_list = new ArrayList<>();
     List<String> amount_in_list = new ArrayList<>();
+    TextView textview_displaying_date_range;
     LocalDate localDate_from;
     LocalDate localDate_to;
-
+    private LocalDate displaying_date_from;
+    private LocalDate displaying_date_to;
 
     ListView list;
-
-    //String[] dates_in_list = {
-    //        "20-10-2020",
-    //        "10-01-2020",
-    //        "20-03-2020",
-    //        "30-10-2020",
-    //        "22-02-2020",
-    //        "31-02-2021",
-    //        "01-20-2021"
-    //};
-
-    //String[] cat_in_list = {
-    //        "Food",
-    //        "Transportation",
-    //        "Leisure",
-    //        "Entertainment",
-    //        "Restaurant",
-    //        "Birthday",
-    //        "Vacation"
-    //};
-
-    //String[] amount_in_list= {
-    //        "10",
-    //        "14",
-    //        "50",
-    //        "144",
-    //        "77",
-    //        "88",
-    //        "900"
-    // };
-
 
     private TextView tv_totalExpense, tv_userIncome, tv_amount, tv_categoryName, tv_timestamp;
     UserProfile userProfile = new UserProfile();
     Category category = new Category();
     Activity activity;
+
+    public RecordFragment() {
+    }
 
     public Category getCategory() {
         return category;
@@ -146,13 +107,14 @@ public class RecordFragment extends Fragment {
 
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
         //String date_n = new SimpleDateFormat("YYYY-MM-DD", Locale.getDefault()).format(new Date());
-        final TextView todaydate = root.findViewById(R.id.record_current_date);
-        todaydate.setText(date_n);
+        textview_displaying_date_range = root.findViewById(R.id.record_current_date);
+        textview_displaying_date_range.setText(date_n);
 
-        record_go_btn = root.findViewById(R.id.record_go_btn);
+        record_go_btn = root.findViewById(R.id.record_go_btn) ;
+        /*
         tv_userIncome = root.findViewById(R.id.record_mnthIncome);
         tv_userIncome.setText(String.valueOf(getUserProfile().getIncome()));
-
+*/
         tv_totalExpense = root.findViewById(R.id.record_mnthExpense);
         tv_amount = root.findViewById(R.id.recordlist_amnt);
         tv_categoryName = root.findViewById(R.id.recordlist_category);
@@ -182,7 +144,7 @@ public class RecordFragment extends Fragment {
                 int mDate = Cal.get(Calendar.DATE);
                 int mMonth = Cal.get(Calendar.MONTH);
                 int mYear = Cal.get(Calendar.YEAR);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
                         //to add in the '0' in front of single digit date, datepicker does not provide the 0
@@ -195,15 +157,16 @@ public class RecordFragment extends Fragment {
                         if (date < 10) {
                             fd = "0" + date;
                         }
-                        String datez = "" + year + "-" + fm + "-" + fd;
 
-                        dateTXT_from.setText(datez);
+                        //String datez = "" + year + "-" + fm + "-" + fd;
+                        String selected_date_begin = ""+year+"-"+fm+"-"+fd;
+
+                        dateTXT_from.setText(selected_date_begin);
                         //dateTXT_from.setText(date + "-" + (month + 1) + "-" + year);
                         // String fulldate1 = (year + "-" + (month + 1) + "-" + date);
                         //dateTXT_from.setText(fulldate1);
-                        localDate_from = LocalDate.parse((datez), formatter);
-
-
+                        // localDate_from = LocalDate.parse((datez), formatter);
+                        localDate_from = LocalDate.parse((selected_date_begin), formatter);
                     }
                 }, mYear, mMonth, mDate);
                 datePickerDialog.show();
@@ -221,7 +184,7 @@ public class RecordFragment extends Fragment {
                 int mDate = Cal1.get(Calendar.DATE);
                 int mMonth = Cal1.get(Calendar.MONTH);
                 int mYear = Cal1.get(Calendar.YEAR);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(activity, android.R.style.Theme_DeviceDefault_Dialog, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int date) {
                         int month1 = month + 1;
@@ -233,14 +196,23 @@ public class RecordFragment extends Fragment {
                         if (date < 10) {
                             fd = "0" + date;
                         }
-                        String datez = "" + year + "-" + fm + "-" + fd;
-                        dateTXT_to.setText(datez);
+
+                        // String datez = "" + year + "-" + fm + "-" + fd;
+                        // dateTXT_to.setText(datez);
+                        // //dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
+                        // //String fulldate2 = (year + "-" + (month + 1) + "-" + date);
+                        // //dateTXT_to.setText(fulldate2);
+                        // localDate_to = LocalDate.parse(datez, formatter);
+
+                        // if (datez.isEmpty()) {
+                        String selected_date_end = ""+year+"-"+fm+"-"+fd;
+                        dateTXT_to.setText(selected_date_end);
                         //dateTXT_to.setText(date + "-" + (month + 1) + "-" + year);
                         //String fulldate2 = (year + "-" + (month + 1) + "-" + date);
                         //dateTXT_to.setText(fulldate2);
-                        localDate_to = LocalDate.parse(datez, formatter);
+                        localDate_to = LocalDate.parse(selected_date_end, formatter);
 
-                        if (datez.isEmpty()) {
+                        if (selected_date_end.isEmpty()){
                             record_go_btn.setEnabled(false);
                         } else {
                             record_go_btn.setEnabled(true);
@@ -311,12 +283,28 @@ public class RecordFragment extends Fragment {
 
     }
 
+    private void printToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void resetDataRange(LocalDate beginDate, LocalDate endDate, Category selectedCategory) {
+        if (beginDate.compareTo(endDate) > 0) {
+            printToast("The the begin date cannot be later than then end date");
+            return;
+        }
         // When the selectedCategory is NULL, display all the record.
         // TODO: UI group: 1. implement this function, update the UI related to date
         //                 2. use this function when date range need to change
 
+        displaying_date_from = beginDate;
+        displaying_date_to = endDate;
+        localDate_from = beginDate;
+        localDate_to = endDate;
+        textview_displaying_date_range.setText(displaying_date_from+" ~ "+displaying_date_to);
+
+        dateTXT_from.setText(displaying_date_from.toString());
+        dateTXT_to.setText(displaying_date_to.toString());
 
         // TODO: DB group: implement this function
         //                 re-select the data from the database
@@ -328,13 +316,12 @@ public class RecordFragment extends Fragment {
 
 
         if (selectedCategory == null) {
-            mDisposable.add(mViewModel.getRecord(beginDate.atStartOfDay(), endDate.atStartOfDay())
+            mDisposable.add(mViewModel.getRecord(beginDate.atStartOfDay(), endDate.atStartOfDay().plusDays(1))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::whenRecordListUpdated));
         } else {
-            mDisposable.add(mViewModel.getRecordByCategory
-                    (beginDate.atStartOfDay(), endDate.atStartOfDay(), selectedCategory.getName())
+            mDisposable.add(mViewModel.getRecordByCategory(beginDate.atStartOfDay(), endDate.atStartOfDay().plusDays(1), selectedCategory.getName())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::whenRecordListUpdated));
@@ -350,7 +337,7 @@ public class RecordFragment extends Fragment {
         cat_in_list.clear();
         amount_in_list.clear();
         for (Record recordObj : newRecords) {
-            String str_date = (String.valueOf(recordObj.timestamp).substring(0, 10));
+            String str_date = recordObj.getTimestamp().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm"));
             dates_in_list.add(str_date);
             cat_in_list.add(recordObj.categoryName);
             amount_in_list.add(String.valueOf(recordObj.amount));

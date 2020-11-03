@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -88,10 +89,11 @@ public class TargetFragment extends Fragment {
     List<String> cat_in_list =new ArrayList<>();
     List<Double> target_in_cat =new ArrayList<>();
     List<Double> amt_in_cat =new ArrayList<>();
+    ImageButton decT, incT;
     double [] temp_cost;
     double [] temp_target;
     View help;
-    Activity activity;
+    FragmentActivity activity;
 
 
     ListView list;
@@ -132,6 +134,7 @@ public class TargetFragment extends Fragment {
         return localDateTime.truncatedTo(ChronoUnit.DAYS).withDayOfMonth(1);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -151,12 +154,11 @@ public class TargetFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 EditTargetFragment editFrag = new EditTargetFragment(cat_in_list.get(position));
-                editFrag.show(getActivity().getSupportFragmentManager(), "editTar");
+                editFrag.show(activity.getSupportFragmentManager(), "editTar");
             }
         });
 
 
-        ImageButton decT, incT;
         final TextView month = root.findViewById(R.id.target_month);
         final Calendar calT = Calendar.getInstance();
 
@@ -176,9 +178,35 @@ public class TargetFragment extends Fragment {
                 month.setText(selectedMonth);
                // Log.d("display xx" , calT.toString());
                 resetMonth(calT);
+                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+                currentMonth = currentMonth.toLowerCase();
+                Log.d("datehelp", currentMonth);
+                Log.d("datehelp", month_date.format(calT.getTime()).toLowerCase());
+                if ( month_date.format(calT.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+                {
+                    incT.setClickable(false);
+                    incT.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    incT.setClickable(true);
+                    incT.setVisibility(View.VISIBLE);
+                }
             }
         });
         calT.getTime();
+        String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+        currentMonth = currentMonth.toLowerCase();
+        Log.d("datehelp", currentMonth);
+        Log.d("datehelp", month_date.format(calT.getTime()).toLowerCase());
+        if ( month_date.format(calT.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+        {
+            incT.setClickable(false);
+            incT.setVisibility(View.INVISIBLE);
+        }
+        else {
+            incT.setClickable(true);
+            incT.setVisibility(View.VISIBLE);
+        }
 
         incT.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -189,8 +217,22 @@ public class TargetFragment extends Fragment {
                 month.setText(selectedMonth);
                // Log.d("display xx" , calT.toString());
                 resetMonth(calT);
+                String currentMonth = LocalDate.now().getMonth().toString() + " " + LocalDate.now().getYear();
+                currentMonth = currentMonth.toLowerCase();
+                Log.d("datehelp", currentMonth);
+                Log.d("datehelp", month_date.format(calT.getTime()).toLowerCase());
+                if ( month_date.format(calT.getTime()).toLowerCase().equalsIgnoreCase(currentMonth))
+                {
+                    incT.setClickable(false);
+                    incT.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    incT.setClickable(true);
+                    incT.setVisibility(View.VISIBLE);
+                }
             }
         });
+
 
 
         barChart =  root.findViewById(R.id.barChart);
@@ -262,6 +304,26 @@ public class TargetFragment extends Fragment {
         target_in_cat.clear();
         amt_in_cat.clear();
 
+//        boolean check = true;
+//        for (int i = 0; i < targetAndCosts.size(); i++) {
+//            if (targetAndCosts.get(i).cost == 0) {}
+//            else {
+//                check =  false;
+//            }
+//            if (check) {
+//                decT.setClickable(false);
+//                decT.setVisibility(View.INVISIBLE);
+//                Toast.makeText(getContext(), "No data available", Toast.LENGTH_SHORT).show();
+//                activity.findViewById(R.id.linearLayout3).setVisibility(View.GONE);
+//                activity.findViewById(R.id.listViewTarget).setVisibility(View.GONE);
+//            }
+//            else {
+//                decT.setClickable(true);
+//                decT.setVisibility(View.VISIBLE);
+//                activity.findViewById(R.id.linearLayout3).setVisibility(View.VISIBLE);
+//                activity.findViewById(R.id.listViewTarget).setVisibility(View.VISIBLE);
+//            }
+//        }
         Log.d(TAG, "whenTargetAndCostChanged: targets number: "+targetAndCosts.size());
 
         for (TargetAndCost targetObj :targetAndCosts){

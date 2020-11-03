@@ -14,12 +14,13 @@
     <string name="transportCat">Transportation</string>
     <string name="transportAmount">25</string>
 
-    <string name="guide_intro_1">Introduction 1</string>
-    <string name="guide_intro_2">Introduction 2</string>
-    <string name="guide_intro_3">Introduction 3</string>
-    <string name="guide_intro_4">Introduction 4</string>
-    <string name="guide_intro_5">Introduction 5</string>
-    <string name="guide_intro_6">Introduction 6</string>
+    <string name="guide_intro_1">Home Page: View all the expense for different categories today</string>
+    <string name="guide_intro_2">Category Management: Add or remove custom category</string>
+    <string name="guide_intro_3">Record Page: View all records within certain time frame</string>
+    <string name="guide_intro_4">Target Page: View expense compared to set target </string>
+    <string name="guide_intro_5">Report Page: View monthly report</string>
+    <string name="guide_intro_6">Report Page: View prediction based on your income</string>
+    <string name="guide_intro_7">With your profile, we can give better advice on you financial management</string>
 
     <string name="buttonProfile">Edit</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -30,13 +31,4 @@
     <string name="add_title">add Income / expense</string>
     <string name="dummy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquet enim a neque suscipit maximus. </string>
     <string name="title_add_record">Add Record</string>
-    <string-array name="guide_intro">
-        <item>Introduction 1</item>
-        <item>Introduction 2</item>
-        <item>Introduction 3</item>
-        <item>Introduction 4</item>
-        <item>Introduction 5</item>
-        <item>Introduction 6</item>
-    </string-array>
-
 </resources>

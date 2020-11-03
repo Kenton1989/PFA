@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "UserProfile")
 public class UserProfile {
+    public static String NAMELESS = "Nameless";
     private static String THE_ONLY_ID = "10271ryh9e";
     @NonNull
     @PrimaryKey

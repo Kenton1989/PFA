@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -81,6 +82,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         listView.requestLayout();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onDialogPositiveClick(CreateCategoryFragment dialog) {
         mEdit = dialog.getMView().findViewById(R.id.createCategory);
         String categoryName = mEdit.getText().toString();
@@ -88,6 +90,7 @@ public class CategoryActivity extends FragmentActivity implements CreateCategory
         if (categoryName.equals("Food") || categoryName.equals("Transportation") || categoryName.equals("Clothing") || categoryName.equals("Entertainment")) {}
         else {
             insertCategory(new Category(categoryName));
+            Toast.makeText(this, "Category created!", Toast.LENGTH_SHORT).show();
         }
     }
 
