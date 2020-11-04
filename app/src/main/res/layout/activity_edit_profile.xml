@@ -38,8 +38,10 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/profile_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/profileConfirm"
         android:layout_below="@+id/rellay">
 
         <androidx.core.widget.NestedScrollView
@@ -270,23 +272,21 @@
                 </LinearLayout>
 
 
-                <Button
-                    android:id="@+id/profileConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="20dp"
-
-                    android:background="@drawable/shape"
-                    android:text="confirm"
-                    android:textColor="#FFFFFF">
-
-                </Button>
-
-
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/profileConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/shape"
+        android:text="confirm"
+        android:textColor="#FFFFFF">
+
+    </Button>
 
 
 </RelativeLayout>
