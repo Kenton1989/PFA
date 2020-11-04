@@ -269,7 +269,7 @@ public class RecordFragment extends Fragment {
         super.onStart();
 
         // TODO: UI group : set default time interval here
-        LocalDate beginDate = LocalDate.now().minusDays(7),
+        LocalDate beginDate = LocalDate.now(),
                 endDate = LocalDate.now();
         resetDataRange(beginDate, endDate, null);
     }
