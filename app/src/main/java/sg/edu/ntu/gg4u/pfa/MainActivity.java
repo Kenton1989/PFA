@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void insertRecord() {
-        int month = LocalDateTime.now().getMonth().getValue();
+        int month = LocalDateTime.now().getMonth().getValue()-1;
         insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 13, 13, 12),
                 "Food", 5.30));
         insertSingleRecord(new Record(LocalDateTime.of(2020, month - 1, 28, 18, 50),
