@@ -181,9 +181,13 @@ public class Predictor {
 
         BigDecimal bd;
         double cat;
-        agePrediction.put("NON-ASSIGNABLE EXPENDITURE", 0.0);
         Log.d(TAG, "predictDistributionByCategory: "+categorySet);
         Log.d(TAG, "predictDistributionByCategory: "+agePrediction.keySet());
+        for (String category : categorySet) {
+            if (jobFieldPrediction.get(category) == null) jobFieldPrediction.put(category, 0.0);
+            if (AQPrediction.get(category) == null) AQPrediction.put(category, 0.0);
+            if (agePrediction.get(category) == null) agePrediction.put(category, 0.0);
+        }
         for (String category : categorySet) {
             Log.d(TAG, "predictDistributionByCategory: Checking category: "+category);
            bd =  new BigDecimal(jobFieldPrediction.get(category) * 0.24 +
